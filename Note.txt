@@ -1,0 +1,23 @@
+paper -> chapter
+ArcEngine -> ArcObjects
+3.3 GHz -> $3.3\,$GHz; 8 GB RAM -> $8\,$GB RAM
+every figure is referred
+section -> \sect; figure -> \fig; table -> \tab
+n,m,N,M in LSA?
+radii in DataStr
+BFS in Bldg, Imai_Iri, DT based close points
+data set(s) or dataset(s)
+corresponding points or corresponding vertices
+Dirk Burghardt
+
+cite (2016)Representation of continuously changing data over time and space
+
+
+new from May 10, 2018
+comprise, compromise -> mediate between
+
+new from July 01, 2018
+a strange building in the MST; in the right hand side of Figure 4.14
+
+new from Nov 13, 2018
+immediately previous -> preceding

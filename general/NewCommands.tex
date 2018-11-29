@@ -1,0 +1,69 @@
+%General
+
+
+\newcommand{\revise}[2]{#2}
+\newcommand{\mypar}[1]{\bigskip\noindent\textbf{#1.}~}
+
+%Preface: Adminstrative Boundaries
+\newcommand{\ml}{\ensuremath{M_+}\xspace}
+\newcommand{\ms}{\ensuremath{M_-}\xspace}
+%\newcommand*{\mine}[1]{{\color{red}#1}}
+\newcommand*{\mine}[1]{{#1}}
+
+\def\circled#1{%
+	~#1%
+	\pdfliteral{
+		q .5 w
+		10 0 0 10 -2.5 3.5 cm .05 w .5 0 m
+		.5 .276 .276 .5 0 .5 c -.276 .5 -.5 .276 -.5 0 c
+		-.5 -.276 -.276 -.5 0 -.5 c .276 -.5 .5 -.276 .5 0 c h
+		S Q
+	}~%
+}
+
+
+%\newcolumntype{x}[1]{>{\raggedleft\arraybackslash\hspace{0pt}}b{#1}}
+%\newcolumntype{y}[1]{>{\centering\arraybackslash\hspace{0pt}}b{#1}}
+%%\newcolumntype{y}[2]{>{\centering\arraybackslash\hspace{0pt}}D{.}{.}{#1}b{#2}}
+%%\newcolumntype{d}[1]{D{.}{.}{#1}}
+%\newcolumntype{L}{>{$}l<{$}}% math-mode version of "l" column 
+%%type
+%\newcolumntype{R}{>{$}r<{$}}% math-mode version of "r" column 
+%%type
+%\newcolumntype{C}{>{$}c<{$}}% math-mode version of "c" column 
+%%type
+
+\newcommand{\dtrm}[2][]{d_{\mathrm{#2}, 
+t\ifthenelse{\equal{#1}{}}{}{_#1}}}
+
+%%Area Aggregation
+%%**************************************************************
+\newcommand{\Astar}{A$^{\!\star}$\xspace}
+\newcommand{\tstar}{\ensuremath{t\xspace}}
+\newcommand{\Pistar}{\ensuremath{\Pi}} % 
+%\newcommand{\Comp}[1]{c_#1} % 
+\newcommand{\comp}[1]{[#1]} % 
+\newcommand{\edgenum}[1]{\|#1\|}
+\newcommand{\area}[1]{\overline{#1}}
+%{\Pi_{\mathrm{start}}(\tstar)}
+\newcommand{\Pstart}{\ensuremath{P_\mathrm{start}}\xspace}
+\newcommand{\Pgoal}{\ensuremath{P_\mathrm{goal}}\xspace}
+\newcommand{\Pnode}{\ensuremath{P_{t,i}}\xspace}
+\newcommand{\Psnode}{\ensuremath{P_{s,i}}\xspace}
+\newcommand{\Tgoal}{\ensuremath{T_\mathrm{goal}}\xspace}
+
+
+
+\newcommand{\e}[1]{\times 10^{#1}}
+\newcommand{\fig}{Figure~}
+\newcommand{\eq}{Equation~}
+\newcommand{\fo}{Formula~}
+\newcommand{\sect}{Section~}
+\newcommand{\tab}{Table~}
+\newcommand{\chap}{Chapter~}
+\newcommand{\figs}{Figures~}
+\newcommand{\eqs}{Equations~}
+\newcommand{\fos}{Formulas~}
+\newcommand{\sects}{Sections~}
+\newcommand{\tabs}{Tables~}
+\newcommand{\chaps}{Chapters~}

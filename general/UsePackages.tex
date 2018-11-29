@@ -1,0 +1,258 @@
+\usepackage[utf8]{inputenc}
+\graphicspath{{images/}}
+
+%\usepackage[ngerman]{babel}
+\usepackage[english]{babel} % to write documents in languages
+%\usepackage{caption} %was defined in wup.cls
+\captionsetup{labelfont=bf,
+justification=justified %make sure caption for table is both 
+%raggedright and raggedleft
+}
+\captionsetup[subfigure]{
+	justification=centering,
+	font=normalsize,
+	labelformat=empty,
+}
+
+\usepackage{lipsum}  % Loading lipsum to write blind text
+
+
+
+\usepackage{amsfonts}  %for \mathbb{Z}
+\usepackage{amsmath}  %align equations; text inside math
+
+\usepackage{amsthm} %for using open problem
+\theoremstyle{definition}
+\newtheorem{open}{Open Problem}
+
+%\usepackage{array}%for making new column types; included
+\usepackage{bm} %make a variable bold in math mode 
+\usepackage{booktabs} %for using \toprule, \midrule, and 
+%\bottomrule in a table
+\usepackage{float} %option "H" for placing a figure
+\usepackage[bottom]{footmisc}% places footnotes at page bottom
+\usepackage{gensymb}  % for degree sign
+% when including figure files
+\usepackage[defaultlines=4,all]{nowidow}%forbid widow or orphan
+
+
+\usepackage{hyperref}
+\hypersetup{linktocpage=true}
+\hypersetup{colorlinks=true}
+\hypersetup{hidelinks}
+\hypersetup{pdftitle = {An Optimization-Based Approach for 
+		Continuous Map Generalization}}
+\hypersetup{pdfauthor = {AUTHOR}}
+\hypersetup{pdfsubject = {DISSERTATION}}
+\hypersetup{pdfkeywords = {KEYWORDS}}
+\hypersetup{pdfdisplaydoctitle = true}
+\newcommand{\dlpLinkColor}{darkgray}
+\hypersetup{
+	linktoc=all,
+	colorlinks,
+	citecolor=\dlpLinkColor,
+	filecolor=\dlpLinkColor,
+	linkcolor=black,
+	urlcolor=\dlpLinkColor
+}
+
+%prevent links in bibliography overflowing into the margin
+%https://tex.stackexchange.com/questions/115690/urls-in-bibliography-latex-not-breaking-line-as-expected
+%\hypersetup{breaklinks=true}
+\usepackage{url}
+\urlstyle{same}
+%\Urlmuskip=0mu plus 1mu\relax
+
+\usepackage[charter]{mathdesign} %make the font of math charter
+\usepackage{multicol}        % used for the two-column index
+%\pgfplotsset{compat=1.3} %make the label tight in axis picture
+
+%\usepackage{sansmathfonts}%make the font in math model sansserif
+\usepackage{tabularx} %to define the style of a column in a table
+
+
+%To encourage LaTeX not to move your figure, 
+%you may need to loosen its demands.
+%https://texfaq.org/FAQ-floats
+\renewcommand{\textfraction}{0.01}
+\renewcommand{\topfraction}{0.99}
+\renewcommand{\bottomfraction}{0.99}
+\renewcommand{\dbltopfraction}{0.99} % fit big float above 
+%\renewcommand{\topfraction}{.85}
+%\renewcommand{\bottomfraction}{.7}
+%\renewcommand{\textfraction}{.15}
+\renewcommand{\floatpagefraction}{.66}
+%\renewcommand{\dbltopfraction}{.66}
+\renewcommand{\dblfloatpagefraction}{.66}
+\setcounter{topnumber}{9}
+\setcounter{bottomnumber}{9}
+\setcounter{totalnumber}{20}
+\setcounter{dbltopnumber}{9}
+
+
+\usepackage[disable]{todonotes} %need package tikz
+%\usepackage[textwidth=2cm]{todonotes}
+\makeatletter %make package todonotes compatible with wup.cls 
+\providecommand\@dotsep{5}
+\renewcommand{\listoftodos}[1][\@todonotes@todolistname]{%
+	\@starttoc{tdo}{#1}}
+\makeatother
+
+\usepackage{xspace} %we use \xspace for \Astar
+
+%if a figure is on an empty last page,
+%the figure will be placed at the top instead in the middle of 
+%the page
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{8pt} %8pt between two figures at last page
+\makeatother
+
+%style: Loads bibliography style .bbx and citation style cbx
+%bibstyle: Loads bibliography style .bbx
+\usepackage[backend=bibtex,
+style=alphabetic, %style for my thesis
+sorting=nyvt, %sort by name, year, volume, title
+%bibstyle=authoryear, %no indices before names; year after names
+%bibstyle=numeric, %number the references
+hyperref=true,%transform citations and back references into 
+%clickable hyperlinks
+backref=true, %to print back references in the bibliography
+backrefstyle=three, %Compress three or more consecutive pages 
+%to a range
+%,
+%citestyle=authoryear,
+maxbibnames=9, %the author names appearing in bibliography
+maxcitenames=2, %the author names appearing in text
+giveninits=true,
+terseinits=true,%remove periods after initials of first names
+%doi=true,
+%isbn=false,url=false,
+eprint=false,
+%dashed=false,
+useprefix=false,%sort bibliography not using prefix like "van"
+natbib=true]{biblatex}
+\addbibresource{general/Reference/BibReference.bib}
+
+%suppress "In:" for journal names
+%https://tex.stackexchange.com/questions/10682/suppress-in-biblatex
+%\renewbibmacro{in:}{}
+\renewbibmacro{in:}{%
+	\ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+
+%add commas after journal names
+%https://tex.stackexchange.com/questions/249010/adding-comma-after-journal-name-in-biblatex
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
+\renewbibmacro*{journal+issuetitle}{%
+	\usebibmacro{journal}%
+	\setunit*{\addcomma\space}%
+	\iffieldundef{series}
+	{}
+	{\newunit
+		\printfield{series}%
+		\setunit{\addspace}}%
+	\usebibmacro{volume+number+eid}%
+	\setunit{\addspace}%
+	\usebibmacro{issue+date}%
+	\setunit{\addcolon\space}%
+	\usebibmacro{issue}%
+	\newunit}
+
+
+%if a reference has doi, then we print only doi in bibliography;
+%otherwise, we print only url
+%we don't use eprint
+%we must deactivate eprint by using "eprint=false"
+\renewbibmacro*{doi+eprint+url}{% 
+	\iftoggle{bbx:url} 
+	{\iffieldundef{doi}{\usebibmacro{url+urldate}}{}} 
+	{}% 
+	%	\newunit\newblock 
+	%	\iftoggle{bbx:eprint} 
+	%	{\usebibmacro{eprint}} 
+	%	{}% 
+	\newunit\newblock 
+	\iftoggle{bbx:doi} 
+	{\printfield{doi}} 
+	{}}	
+
+
+
+%remove the information we don't want to present
+\AtEveryBibitem{% Clean up the bibtex rather than editing it
+	\clearlist{address}
+	\clearfield{date}
+%	\clearfield{eprint}
+	\clearfield{isbn}
+	\clearfield{issn}
+	\clearlist{location}
+	\clearfield{month}
+	\clearlist{language}
+	%	\clearfield{series}
+	
+	\ifentrytype{book}{}{% Remove publisher and editor except for books
+		\clearlist{publisher}
+		%		\clearname{editor}
+	}
+}
+
+%%display pagetotal of proceedings
+%\DeclareFieldFormat[inproceedings]{pagetotal}{\mkpagetotal[bookpagination]{#1}}
+%\renewbibmacro*{chapter+pages}{%
+%	\printfield{note}%
+%	\setunit{\bibpagespunct}%
+%	\printfield{pages}%
+%	\setunit{\bibpagespunct}%
+%	\printfield{pagetotal}%
+%	\newunit}
+
+
+
+%%%%----SET THE STYLE OF BIBLIOGRAPHY----%%%%
+%Remove the quotation marks for the titles in the reference
+\DeclareFieldFormat[article,inbook,incollection,
+inproceedings,patent,thesis,unpublished]{citetitle}{#1}
+\DeclareFieldFormat[article,inbook,incollection,
+inproceedings,patent,thesis,unpublished]{title}{#1}
+\DeclareNameAlias{author}{last-first} %last name before first 
+%name
+\renewcommand*{\revsdnamepunct}{} %remove commas between last 
+%and first names
+
+
+%mke titles sentence case
+%https://tex.stackexchange.com/questions/86043/in-biblatex-make-title-sentence-case-but-not-journal-name/86051
+%https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/biblatex.def
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+{titlecase}{\MakeSentenceCase*{#1}}
+%keep the names of journals as they are
+\newbibmacro*{journal}{%
+	\iffieldundef{journaltitle}
+	{}
+	{\printtext[journaltitle]{%
+			\printfield[myplain]{journaltitle}%
+			\setunit{\subtitlepunct}%
+			\printfield[myplain]{journalsubtitle}}}}
+%keep the names of booktitles as they are
+\newbibmacro*{booktitle}{%
+	\ifboolexpr{
+		test {\iffieldundef{booktitle}}
+		and
+		test {\iffieldundef{booksubtitle}}
+	}
+	{}
+	{\printtext[booktitle]{%
+			\printfield[myplain]{booktitle}%
+			\setunit{\subtitlepunct}%
+			\printfield[myplain]{booksubtitle}}%
+		\newunit}%
+	\printfield{booktitleaddon}}
+\DeclareFieldFormat{myplain}{#1}
+
+
+%make the prefix of a name capital, e.g., van Dijk -> Van Dijk
+%https://tex.stackexchange.com/questions/226893/biblatex-handling-of-dutch-van-prefix
+\renewbibmacro*{begentry}{\midsentence} %lower-case in the bibliography
+\makeatletter
+\AtBeginDocument{\toggletrue{blx@useprefix}}
+\makeatother

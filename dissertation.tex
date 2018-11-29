@@ -1,0 +1,38 @@
+\RequirePackage{tikz} %solve the confilict with package graphicx 
+%package tikz contains package graphicx
+%we need package tikz for package todonotes
+
+\documentclass[
+alternativefont, %Use WUP default font Charter and 0.9Helvetica
+%nofrontmatter, %does not print the front matter pages 
+%nohalftitle, %a page with halftitle at the very beginning
+%notitle, %does not print the title page
+%noimprint, %the page with advisor, ISBN, and so on
+acknowledgments, %prints the acknowledgments page
+nopreface, %print the preface
+%abstract, %prints the abstract page
+headline, %the line at the top of each page
+%notableofcontents, %does not print the table of contents page
+nographic %avoid the conflict between packages graphicx and tikz
+]{general/wup}
+
+
+\input{general/UsePackages}
+\input{general/NewCommands}
+\input{general/CoverAcknowledgmentsPrefaceAbstract}
+
+
+\begin{document}
+	
+
+%\include{chapters/Introduction}
+%\include{chapters/AreaAgg}
+%\include{chapters/AdminBound}
+%\include{chapters/BldgGrow}
+%\include{chapters/Morph}
+\include{chapters/DataStr}
+%\include{chapters/Conclusion}	
+
+
+\printbibliography
+\end{document}
