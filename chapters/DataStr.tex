@@ -1,6 +1,6 @@
 \chapter %\chapter[<ToC-title>]{<Title>}
-%[Choosing the Right Data Strucures]
-{Choosing the Right Data Strucures\\
+[Choosing the Right Data Structures for Solving Spatial Problems]
+{Choosing the Right Data Structures\\
 for Solving Spatial Problems}
 \label{chap:DataStr}
 
@@ -44,13 +44,13 @@ are the differences of $x$- and $y$-coordinates, respectively;
 see \fig\ref{fig:DataStr_Problem}.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics{DataStr_Problem}
-	\caption{For point~$p$, the four linked points are 
-		its close points.
-		These close points lie in the square 
-		with side length~$2 \varepsilon$ centered at $p$.}
-	\label{fig:DataStr_Problem}
+\centering
+\includegraphics{DataStr_Problem}
+\caption{For point~$p$, the four linked points are 
+	its close points.
+	These close points lie in the square 
+	with side length~$2 \varepsilon$ centered at $p$.}
+\label{fig:DataStr_Problem}
 \end{figure}
 
 When implementing and testing some ad-hoc solutions 
@@ -76,7 +76,7 @@ Hence, it is desirable to use algorithms
 whose running time do not only depend on 
 the size of the input ($n$, the number of points), 
 but also on the size of the output, that is, 
-the number of close pairs, 
+the number of pairs of close points, 
 which we denote by~$k$. 
 Such an algorithm is called \emph{output-sensitive}. 
 Our problem is different from \textcite{Saalfeld1988}. 
@@ -189,30 +189,30 @@ it suffices to sort the $2n$ $y-$coordinates
 and store the sorted coordinates in an array.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{DataStr_Algorithms}
-	\caption{An illustration of our SL algorithm.
-		The sweep line $l$ is moving from top to bottom.
-		The black points are the data that 
-		we are looking for close points.
-		The gray points are the references 
-		to the corresponding black points.
-		The gray strip represents the status which is 
-		implemented by a BBST.
-		The black points in the status are the potential 
-		close points.
-		When the sweep line hits a black point,
-		we search for close points in the status and then
-		enter the black point into the status;
-		when the sweep line hits a gray point, 
-		we remove the corresponding black point from the status.
-		In this example, the sweep line hits point~$p_i=(x_i, y_i)$. 
-		It is sufficient to search in the interval
-		$[x_i-\varepsilon, x_i+\varepsilon]$ of the status.
-		As a result, we find two close points, 
-		which are linked to~$p_i$.
+\centering
+\includegraphics[page=1]{DataStr_Algorithms}
+\caption{An illustration of our SL algorithm.
+	The sweep line $l$ is moving from top to bottom.
+	The black points are the data that 
+	we are looking for close points.
+	The gray points are the references 
+	to the corresponding black points.
+	The gray strip represents the status which is 
+	implemented by a BBST.
+	The black points in the status are 
+    the potential close points.
+	When the sweep line hits a black point,
+	we search for close points in the status and then
+	enter the black point into the status;
+	when the sweep line hits a gray point, 
+	we remove the corresponding black point from the status.
+	In this example, the sweep line hits point~$p_i=(x_i, y_i)$. 
+	It is sufficient to search in the interval
+	$[x_i-\varepsilon, x_i+\varepsilon]$ of the status.
+	As a result, we find two close points, 
+	which are linked to~$p_i$.
 }
-	\label{fig:DataStr_SL}
+\label{fig:DataStr_SL}
 \end{figure}
 
 We have only two types of events: \emph{enter} and \emph{leave}.
@@ -246,7 +246,7 @@ that the strip, with height~$\varepsilon$ and above the sweep line,
 never contains many points. 
 In the worst case, however, 
 the running time becomes quadratic even 
-if there are no close pairs at all. 
+if there is no pair of close points at all. 
 Luckily, the BBST implementations 
 \emph{SortedSet} (SS) from .NET Framework 4.0 and
 \emph{TreeSet} (TS) from library C5
@@ -281,7 +281,7 @@ We say that~$r_{1}=(1+\sqrt{2})\varepsilon /2\approx
 is the \emph{radius} of our BFS. 
 The reason for using~$r_{1} $ is simply that 
 a radius of~$\varepsilon$ is not sufficient; 
-we may, in rare cases, oversee some close pairs. 
+we may, in rare cases, oversee some pairs of close points. 
 In \fig\ref{fig:DataStr_DTIllustration}, for an instance, 
 if we set~$\varepsilon =0.003$, 
 then~$p$ and~$q$ are a pair of close points. 
@@ -340,35 +340,35 @@ because the DT-based algorithm is slower than
 other algorithms even when we use radius~$r_1$.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=2]{DataStr_Algorithms}
-	\caption{
-		An instance of the DT.
-		The line segments between the points are the edges of 
-		the DT.
-		The side length of the square is $2\varepsilon	
-		=0.006$; 
-		$p=(0.169134, 0.264491)$ and $q=(0.171957, 0.261496)$, 
-		thus $\vert \Delta x_{pq}\vert =0.002823$ 
-		and  $\vert \Delta y_{pq}\vert =0.002995$.
-	}
-	\label{fig:DataStr_DTIllustration}
-	%	
-\par\vspace{\intextsep} %Leave a gap between the two figures
+\centering
+\includegraphics[page=2]{DataStr_Algorithms}
+\caption{
+	An instance of the DT.
+	The line segments between the points are the edges of 
+	the DT.
+	The side length of the square is $2\varepsilon	
+	=0.006$; 
+	$p=(0.169134, 0.264491)$ and $q=(0.171957, 0.261496)$, 
+	thus $\vert \Delta x_{pq}\vert =0.002823$ 
+	and  $\vert \Delta y_{pq}\vert =0.002995$.
+}
+\label{fig:DataStr_DTIllustration}
+%	
+\vspace{8mm}
 %
-	\centering
-	\includegraphics[page=3]{DataStr_Algorithms}
-	\caption{Among all points of~$L_{\infty}$-distance 
-		at most~$\varepsilon$ from~$p$, 
-		the point~$q=(\varepsilon,\varepsilon)$ gives rise 
-		to an ellipse~$E_{pq}$ 
-		whose right vertical tangent~$T$ 
-		has maximum~$x$-coordinate (a). 
-		For deriving the equation of~$T$ more easily, 
-		we transform~$p$, $q$, $E_{pq}$, and~$T$ 
-		into the coordinate system of (b).
-	}
-	\label{fig:DataStr_Ellipse}
+\centering
+\includegraphics[page=3]{DataStr_Algorithms}
+\caption{Among all points of~$L_{\infty}$-distance 
+	at most~$\varepsilon$ from~$p$, 
+	the point~$q=(\varepsilon,\varepsilon)$ gives rise 
+	to an ellipse~$E_{pq}$ 
+	whose right vertical tangent~$T$ 
+	has maximum~$x$-coordinate (a). 
+	For deriving the equation of~$T$ more easily, 
+	we transform~$p$, $q$, $E_{pq}$, and~$T$ 
+	into the coordinate system of (b).
+}
+\label{fig:DataStr_Ellipse}
 \end{figure}
 
 
@@ -394,9 +394,8 @@ It makes sense to set the side length~$\sigma$ of the grid cells
 to at least~$\varepsilon$
 (see \fig\ref{fig:DataStr_Grid}). 
 Then, for each input point~$p$, 
-it suffices to compute the cell that contains~$p$ and 
-to check the points 
-in that cell and in the at most eight neighboring cells. 
+it suffices to check the points in the cell containing~$p$ 
+and in the eight neighboring cells. 
 To represent the grid, 
 we use a two-dimensional array of 
 size~$(y_\mathrm{max}-y_\mathrm{min})/\sigma \times 
@@ -407,7 +406,7 @@ $x_\mathrm{min}$, $y_\mathrm{max}$, and~$y_\mathrm{min}$ are
 defined analogously to~$x_\mathrm{max}$. 
 Each entry of the grid has a reference 
 to a list (LinkedList in C\#) 
-that stores the points that lie in the corresponding cell. 
+that stores the points in the corresponding cell. 
 In order to ensure a memory consumption of~$O(n)$, 
 we set~$\sigma$ to~$\max (\varepsilon ,\sqrt{c/n})$, 
 where~$c$ is the expected number of points 
@@ -417,23 +416,21 @@ where they used the grid-based algorithm to find the closest
 point.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=4]{DataStr_Algorithms}
-	\caption{Overlaying the points with a grid.}
-	\label{fig:DataStr_Grid}
+\centering
+\includegraphics[page=4]{DataStr_Algorithms}
+\caption{Overlaying the points with a grid.}
+\label{fig:DataStr_Grid}
 \end{figure}
 
-After we have computed the size of the grid cells, 
-we go through the input points once 
-to compute the two indices of the cell 
-that contains each input point~$p$. 
-This corresponds to 
+For each of the input points,
+we compute the two indices of the cell containing that point.
+This computation includes 
 (i) dividing the coordinates of~$p$ by~$\sigma$ and 
 (ii) applying the floor function. 
 If we assume that the input is u.i.d. in the unit square, 
 the expected number of point pairs 
 we check in total is~$O(\varepsilon ^{2}n^{2})=O(k)$, 
-and our algorithm runs in~$O(k+n)$ time.
+and the grid-based algorithm runs in~$O(k+n)$ time.
 
 
 
@@ -445,8 +442,8 @@ in C\# (using the .NET Framework~4.0).
 We ran our experiments under 
 Windows~7 on a~$3.3\,$GHz dual core CPU with~$8\,$GB RAM. 
 We measured time and memory consumption by using 
-the built-in C\# methods System.Environment.TickCount and 
-GC.GetTotalMemory(true), respectively. 
+the built-in C\# methods System.Environment.TickCount 
+and GC.GetTotalMemory(true). 
 For the DT, we took advantage of 
 an implementation available in ArcGIS Engine~10.1.
 As we did not find a way 
@@ -455,15 +452,15 @@ we saved the files for the DT, i.e., files in .adf format
 from ArcGIS Engine~10.1 
 (an instance of the DT consists of~$10$ files), 
 to the hard disk and 
-measured the sum of the sizes of the~$10$ files. 
+measured the sum of the~$10$ files' sizes. 
 We show the results obtained by the DT-based algorithm 
 with both radii~$r_{1}$ and~$r_{2}$; 
 we use \emph{DT~$r_1$} and \emph{DT~$r_2$} 
 to denote the respective total running times. 
 We use \emph{DT total} to denote 
-the memory consumption of the DT-based algorithm and 
-\emph{DT constr.} to denote the time or memory consumption of 
-the DT construction; 
+the memory consumption of the DT-based algorithm 
+and use \emph{DT constr.} to denote 
+the time or memory consumption of the DT construction; 
 these values are independent of the radius.
 Recall that we denote SortedDictionary from C\# by SD,
 SortedSet from C\# by SS, and TreeSet from C5 by TS.
@@ -473,13 +470,13 @@ real-world data.
 There were ten sets of points for each type of data. 
 We used~$N$ to denote the number of points 
 in the set that had most points among the ten sets. 
-We considered two different ways to set~$\varepsilon$. 
+We considered two different ways 
+to set side length~$\varepsilon$. 
 One way was that we set~$\varepsilon$ to a certain value, 
-say~$\varepsilon_{0}$, independently of the instance size. 
+say~$\varepsilon_{0}$, independent of the instance size. 
 This means that the size of the output, 
 $k=\Theta (\varepsilon ^{2}n^{2})$, grows quadratically. 
-The other way was that 
-we set~$\varepsilon =\varepsilon_{0}\sqrt{N/n}$, 
+The other way was to set~$\varepsilon =\varepsilon_{0}\sqrt{N/n}$, 
 which means that $\varepsilon$ decreases 
 from~$\varepsilon_{0}\sqrt{N/n}$ to~$\varepsilon_{0}$ 
 and~$k$ grows linearly.
@@ -488,47 +485,49 @@ and~$k$ grows linearly.
 
 \subsection{Case study on random data}
 \label{sec:DataStr_CaseStudy_RandomData} 
-We randomly generated ten point sets u.i.d. in the unit square. 
-The sizes of the point sets range from~$20{,}000$ to~$200{,}000$ 
+We randomly generated ten point sets u.i.d. 
+in the unit square. 
+The sizes of the point sets range 
+from~$20{,}000$ to~$200{,}000$ 
 with steps of size~$20{,}000$
-(see for example \fig\ref{fig:DataStr_RandomData}). 
-We set~$\varepsilon_{0}=0.003$, 
-and according to our description~$N=200{,}000$. 
-We set the side length~$\sigma$ to~$\varepsilon_{0}\sqrt{N/n}$
-for the grid-based algorithm.
+(see for example \fig\ref{fig:DataStr_RandomData}).
+According to our definition, $N=200{,}000$. 
+We set~$\varepsilon_{0}=0.003$. 
+For the grid-based algorithm,
+we set side length~$\sigma=\varepsilon_{0}\sqrt{N/n}$.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{DataStr_Data}
-	\caption{As it is difficult to present too many points.
-		we randomly select about $10\%$, $2046$,
-		of the points from dataset with $20{,}000$ points
-		u.i.d. in the unit square.
-	}
-	\label{fig:DataStr_RandomData}
+\centering
+\includegraphics[page=1]{DataStr_Data}
+\caption{As it is difficult to present too many points.
+	we randomly select about $10\%$, $2046$,
+	of the points from our dataset 
+	with $20{,}000$ points
+	u.i.d. in the unit square.
+}
+\label{fig:DataStr_RandomData}
 \end{figure}
 
 \subsubsection{Time consumption}
+
 In the experiment with~$\varepsilon =\varepsilon_{0}$ 
 (see \fig\ref{fig:DataStr_RandomTimeEpsilonFix}), 
 the quadratic size of the output dominates the 
 actual time consumption of the DT-based algorithm.
-The same holds for the C\# SortedDictionary implementation of 
-the SL algorithm. 
-The 
-corresponding C\# SortedSet and C5 TreeSet implementations 
-perform 
-linearithmically, and the grid-based algorithm performs 
-linearly: in 
-these cases, the actual time consumption is dominated by the 
-term that 
-depends on the size~$n$ of the input.
+The same holds for the C\# SortedDictionary 
+implementation of the SL algorithm. 
+The implementations of C\# SortedSet and C5 TreeSet  
+both perform linearithmically, 
+and the grid-based algorithm performs linearly: 
+In these cases, the actual time consumption is 
+dominated by the term 
+that depends on the size~$n$ of the input.
 
 
 In the experiment with~$\varepsilon =\varepsilon_{0}\sqrt{N/n}$ 
 (see \fig\ref{fig:DataStr_RandomTimeEpsilonDecrease}), 
 the DT-based algorithm, however, now shows 
-a (near-) linear time consumption. 
+a (near-)linear time consumption. 
 Still, it is much slower than the other four implementations. 
 Interestingly, the C\# SortedDictionary 
 implementation still shows a quadratic behavior. 
@@ -542,86 +541,107 @@ implementations
 perform similarly as in the experiment 
 with~$\varepsilon =\varepsilon_{0}$
 . In both experiments, the simple grid-based algorithm is by 
-far (by a factor of roughly~$7$) the fastest.
-
-\begin{figure}[tb]	
-	\centering
-	\includegraphics[page=2]{DataStr_Plot_Random}
-	\caption{Time consumption of the algorithms for 
-		$\varepsilon=\varepsilon_{0}$. 
-		The DT-based algorithm took 
-		$109\,$s with radius $r_1$ (``DT $r_1$'') and  
-		$217\,$s with radius $r_2$ (``DT $r_2$'') 
-		for $n=200,000$.}
-	\label{fig:DataStr_RandomTimeEpsilonFix}
-	%	
-	\par\vspace{\intextsep} %Leave a gap between the two figures
-	%
-	\centering
-	\includegraphics[page=3]{DataStr_Plot_Random}
-	\caption{Time consumption of the algorithms for
-		$\varepsilon=\varepsilon_{0} \sqrt{N/n}$. 
-		The DT-based algorithm took 
-		$106\,$s with radius $r_1$ (``DT $r_1$'') and  
-		$216\,$s with radius $r_2$ (``DT $r_2$'') for 
-		$n=200{,}000$.}
-	\label{fig:DataStr_RandomTimeEpsilonDecrease}
-\end{figure}
+far the fastest
+(by a factor of roughly~$7$; 
+see \figs\ref{fig:DataStr_RandomTimeEpsilonFix}b
+and~\ref{fig:DataStr_RandomTimeEpsilonDecrease}b).
 
 
-We also observe that in both experiments the time it took to 
-only 
-compute the DT was about the same as the running times of the 
-two 
-implementations of the SL algorithms. In addition, The DT-based 
+
+
+We also observed that, in both experiments, 
+the time of computing the DT was about 
+the same as the running times of 
+the two SL implementations. 
+In addition, The DT-based 
 algorithm with radius~$r_{1}$ is faster than 
 that with radius~$r_{2}$ by a factor of~$2$.
 
 
 
 \subsubsection{Output size and memory consumption}
-The curves of the output size perform as expected. 
+The curves of the output size perform as expected
+(see \fig\ref{fig:DataStr_RandomMemory}). 
 The output size grows in a quadratic way
-when we set~$\varepsilon =\varepsilon _{0}$, 
+when we set~$\varepsilon =\varepsilon _{0}$ 
 and grows linearly 
-when we set~$\varepsilon =\varepsilon_{0}\sqrt{N/n}$ 
+when we set~$\varepsilon =\varepsilon_{0}\sqrt{N/n}$
 (see \fig\ref{fig:DataStr_RandomMemory}a). 
-As said before, we did not record the pairs of close points 
+As said before, we did not record 
+the pairs of close points 
 but just counted the number of pairs, 
 we basically did not need any extra memory for the output.
-Therefore, the two experiments with 
-different values of~$\varepsilon$ need the same amount of 
-memory. 
-\fig\ref{fig:DataStr_RandomMemory}b shows that the memory 
-consumption of all our 
-methods grows 
-linearly. Among the five implementations, the grid-based 
-algorithm uses 
-the least amount of memory, which is less than the DT-based 
-algorithm by 
-a factor of~$1.2$. 
+Therefore, the two experiments with different values 
+of~$\varepsilon$ need the same amount of memory. 
+\fig\ref{fig:DataStr_RandomMemory}b 
+shows that the memory consumption of all our 
+methods grows linearly. 
+Among the five implementations, 
+the grid-based algorithm uses 
+the least amount of memory, 
+which is less than the DT-based algorithm 
+by a factor of~$1.2$. 
 We can also see that the C\# SortedSet BBST needs 
 the least memory to implement the SL algorithm; 
 about~$10\%$ less than the C5 TreeSet implementation. 
 
+
 \begin{figure}[tb]	
-	\centering
-	\includegraphics[page=4]{DataStr_Plot_Random}
-	\caption{Output size and memory consumption of the 
-		algorithms for the random data.}
-	\label{fig:DataStr_RandomMemory}
+\centering
+\includegraphics[page=2]{DataStr_Plot_Random}
+\vspace{-3mm}
+\caption{Time consumption of the algorithms for 
+	$\varepsilon=\varepsilon_{0}$. 
+	The DT-based algorithm took 
+	$109\,$s with radius $r_1$ (``DT $r_1$'') and  
+	$217\,$s with radius $r_2$ (``DT $r_2$'') 
+	for $n=200,000$.}
+\label{fig:DataStr_RandomTimeEpsilonFix}
+%
+\vspace{8mm}
+%
+\centering
+\includegraphics[page=3]{DataStr_Plot_Random}
+\vspace{-3mm}
+\caption{Time consumption of the algorithms for
+	$\varepsilon=\varepsilon_{0} \sqrt{N/n}$. 
+	The DT-based algorithm took 
+	$106\,$s with radius $r_1$ (``DT $r_1$'') and  
+	$216\,$s with radius $r_2$ (``DT $r_2$'') for 
+	$n=200{,}000$.}
+\label{fig:DataStr_RandomTimeEpsilonDecrease}
+%	
+\vspace{8mm}
+%
+\centering
+\includegraphics[page=4]{DataStr_Plot_Random}
+\vspace{-3mm}
+\caption{Output size and memory consumption 
+	of the 	algorithms for the random data.}
+\label{fig:DataStr_RandomMemory}	
 \end{figure}
+
+%\begin{figure}[tb]	
+%	\centering
+%	\includegraphics[page=4]{DataStr_Plot_Random}
+%	\caption{Output size and memory consumption of the 
+%		algorithms for the random data.}
+%	\label{fig:DataStr_RandomMemory}
+%\end{figure}
 
 \subsection{Case study on real-world data}
 \label{sec:DataStr_CaseStudy_RealData} 
-We use a set~$P$ of~$277{,}034$ points from OpenStreetMap that 
-represent bus stops, milestones, hotels, post boxes etc. in the 
-state of Bavaria, Germany (see \fig\ref{fig:DataStr_RealData}). 
-After deleting duplicates, we had~$n=276{,}992 $ points left. 
+We use a set~$P$ of~$277{,}034$ points 
+from OpenStreetMap that represent 
+bus stops, milestones, hotels, post boxes, etc. 
+in the state of Bavaria, Germany 
+(see \fig\ref{fig:DataStr_RealData}). 
+After deleting duplicates, 
+we had~$N_0=276{,}992$ points left. 
 We computed the \emph{average distance} as
 $$
 d_\mathrm{avg}=\sqrt{(x_\mathrm{max}-x_\mathrm{min})\cdot 
-(y_\mathrm{max}-y_\mathrm{min})/n},
+(y_\mathrm{max}-y_\mathrm{min})/N_0},
 $$
 where~$x_\mathrm{max}$, $x_\mathrm{min}$, $y_\mathrm{max}$, 
 and~$y_\mathrm{min}$ are defined as in 
@@ -630,28 +650,28 @@ According to our data,
 $x_\mathrm{max}=13.846676 \degree$, 
 $x_\mathrm{min}=8.974805 \degree$, 
 $y_\mathrm{max}=50.555617 \degree$,
-$y_\mathrm{min}=47.270111 \degree$, 
-and thus~$d_\mathrm{avg}=0.007602 \degree$.
+and~$y_\mathrm{min}=47.270111 \degree$.
+Therefore, we have~$d_\mathrm{avg}=0.007602 \degree$.
 
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=2]{DataStr_Data}
-	\caption{The point data of Bavaria. 
-		There are originally~$277{,}034$ points.
-		We present about $1\%$, $2{,}722$, 
-		of the points in this figure.
-		The presented points are selected randomly.
-	}
-	\label{fig:DataStr_RealData}
+\centering
+\includegraphics[page=2]{DataStr_Data}
+\caption{The point data of Bavaria. 
+	There are originally~$277{,}034$ points.
+	We present about $1\%$, $2{,}722$, 
+	of the points in this figure.
+	The presented points are selected randomly.
+}
+\label{fig:DataStr_RealData}
 \end{figure}
 
-
-
-We perturbed the points according to a Gaussian distribution. 
+We perturbed the points 
+according to a Gaussian distribution. 
 For each point, we generated 
 a pair of normally distributed numbers~$X$ and~$Y$ 
-by the Box-Muller method. 
+by the Box-Muller transform
+\parencite[see][]{BoxMuller1958}. 
 Then we set the new coordinates as
 \begin{equation}
 \begin{array}{l}
@@ -661,61 +681,65 @@ y'_i=y_i+\delta \cdot Y_i
 \bigg\}, \nonumber
 \end{equation}
 where~$x_i$ and~$y_i$ are the original coordinates, 
-and we use the standard 
-deviation~$\delta =d_\mathrm{avg}/6=0.001267 \degree$. 
+and standard deviation~$\delta =
+d_\mathrm{avg}/6=0.001267 \degree$. 
 After perturbing, we had two points sets, 
-i.e., the original set~$P$ and a perturbed set~$P'$. 
-This models the problem that we have two point sets from 
-different sources, and 
-we try to find the corresponding points. 
+i.e., the original set~$P$ and a perturbed set~$P'$, 
+which models that 
+we have two point sets from different sources.
+Now, we try to find the corresponding points. 
 In order to extract from~$P$ 
-ten data sets~$P_{1},\ldots,P_{10}$ of different sizes, 
+ten datasets~$P_{1},\ldots,P_{10}$ of different sizes, 
 we selected for~$P_{j}$ each point in~$P$ 
-with probability $j/10$. 
-Hence, $\vert P_{j}\vert \approx \vert P\vert \cdot j/10$ 
+with probability~$j/10$. 
+Hence, datasets~$\vert P_{j}\vert \approx 
+\vert P\vert \cdot j/10$ 
 and~$\vert P_{10}\vert =\vert P\vert$.
 
 
-For~$j=1,\ldots ,10$, let~$\bar{P}_{j}=P_{j}\cup P_{j}'$,
+For~$j=1,\ldots ,10$, 
+let dataset~$\bar{P}_{j}=P_{j}\cup P_{j}'$,
 where~$P_{j}'$ is the set of perturbed points 
-corresponding to the points in~$P_{j}$. 
+obtained from the points in~$P_{j}$. 
 These are the sets we used in our experiments
 (see \figs\ref{fig:DataStr_BavariaTimeEpsilonFix}, 
-\ref{fig:DataStr_BavariaTimeEpsilonDecrease}, and 
-\ref{fig:DataStr_BavariaMemory}).
+\ref{fig:DataStr_BavariaTimeEpsilonDecrease}, 
+and~\ref{fig:DataStr_BavariaMemory}).
 
 
 
-We set~$\varepsilon_{0}=\delta$, 
-and according to our description~$N=2\cdot 276{,}992=553{,}984$. 
+We set~$\varepsilon_{0}=\delta$.
+Because of the perturbation,
+we have~$N=2\cdot 276{,}992=553{,}984$. 
 For the grid-based algorithm, 
 setting~$\sigma$ to~$\varepsilon _{0}\sqrt{N/n}$ 
 would yield too many grid cells 
 ($18$ times the number of points). 
-This would occupy a lot of memory 
-and take a lot of time to initialize the LinkedList entries. 
-Instead, we set~$\sigma$ 
-to~$\frac{d_\mathrm{avg}}{\sqrt{2}}\sqrt{N/n}$, 
-which means that 
-we have roughly the same numbers of grid cells and points.
+We would need a lot of memory to record these cells 
+and a lot of time to initialize the LinkedList entries. 
+To avoid this problem, we set~$\sigma$ 
+to~$\frac{d_\mathrm{avg}}{\sqrt{2}}\sqrt{N/n}$.
+By this setting, the number of grid cells is 
+roughly the same as the number of points.
 
 
 
 \subsubsection{Time consumption}
-Basically, we got similar results as in
+We got similar results as in
 \sect\ref{sec:DataStr_CaseStudy_RandomData}. 
 An interesting difference is that 
 although the grid-based algorithm is still the fastest, 
-the factor decreases to roughly~$2$. 
+the factor decreases to roughly~$2$
+(see \fig\ref{fig:DataStr_BavariaTimeEpsilonFix}b). 
 There are two reasons. 
-One is that the ratio of~$\sigma$ to~$\varepsilon$ changes. 
+One is that the ratio of~$\sigma$ to~$\varepsilon$ has changed. 
 When~$n=N$, the ratio is~$1$ for the case study on random data,
 while it is~$3\sqrt{2}$ for the case study 
 on real-world data. 
 This increasing leads the grid-based algorithm 
 to check more points in the case study on real-world data. 
 The other reason is that the size of the real-world output 
-dominates the running time a little bit more. 
+dominates the running time a bit more. 
 There are on average~$10.8$ close points 
 for one point in the case study on real-world data 
 when~$N=553{,}984$ and~$\varepsilon =\delta$, 
@@ -723,14 +747,21 @@ while the number is~$7.2$ for the case study on random data
 when~$N=200{,}000$ and~$\varepsilon=0.003$. 
 Also note that now the construction time of the DT 
 is less than the running time of 
-the two implementations of the SL algorithm. 
+the two implementations of the SL algorithm
+(e.g., comparing \figs\ref{fig:DataStr_RandomTimeEpsilonFix}b
+and~\ref{fig:DataStr_BavariaTimeEpsilonFix}b). 
 The DT-based algorithm with radius~$r_{1}$ is faster than 
-that with radius~$r_{2}$ by a factor of roughly~$3$.
+that with radius~$r_{2}$ by a factor of roughly~$3$
+(see \figs\ref{fig:DataStr_BavariaTimeEpsilonFix}a
+and~\ref{fig:DataStr_BavariaTimeEpsilonDecrease}a).
 
-\begin{figure}[tb]	
-	\centering
-	\includegraphics[page=2]{DataStr_Plot_Bavaria}
-	\caption{Time consumption of the algorithms for 
+
+
+\begin{figure}[h]	
+\centering
+\includegraphics[page=2]{DataStr_Plot_Bavaria}
+\vspace{-3mm}
+\caption{Time consumption of the algorithms for 
 	$\varepsilon=\delta$. 
 	The DT-based algorithm took  
 	$262\,$s with radius $r_1$ (``DT $r_1$'') and  
@@ -739,41 +770,52 @@ that with radius~$r_{2}$ by a factor of roughly~$3$.
 	The axes and the notations are as in 
 	\fig\ref{fig:DataStr_RandomTimeEpsilonFix}.}
 \label{fig:DataStr_BavariaTimeEpsilonFix}
-	%	
-	\par\vspace{\intextsep} %Leave a gap between the two figures
-	%
-	\centering
-	\includegraphics[page=3]{DataStr_Plot_Bavaria}
-	\caption{Time consumption of the algorithms for 
+%	
+\vspace{8mm}
+%
+\centering
+\includegraphics[page=3]{DataStr_Plot_Bavaria}
+\vspace{-3mm}
+\caption{Time consumption of the algorithms for 
 	$\varepsilon=\delta\sqrt{N/n}$. 
 	The DT-based algorithm took 
 	$267\,$s with radius $r_1$ (``DT $r_1$'') and  
 	$810\,$s with radius $r_2$ (``DT $r_2$'') for 
 	$n=553{,}984$.}
 \label{fig:DataStr_BavariaTimeEpsilonDecrease}
+%	
+\vspace{8mm}
+%
+\centering
+\includegraphics[page=4]{DataStr_Plot_Bavaria}
+\vspace{-6mm}
+\caption{Output size and memory consumption 
+	of the algorithms for the real-world data.}
+\label{fig:DataStr_BavariaMemory}
 \end{figure}
+
+%\begin{figure}[tb]	
+%\centering
+%\includegraphics[page=4]{DataStr_Plot_Bavaria}
+%\vspace{-6mm}
+%\caption{Output size and memory consumption 
+%	of the algorithms for the real-world data.}
+%\label{fig:DataStr_BavariaMemory}
+%\end{figure}
 
 \subsubsection{Output size and memory consumption}
 Also, the curves of the output size perform as expected
 (see \fig\ref{fig:DataStr_BavariaMemory}a). 
-For the grid-based algorithm, when we try to 
-promise that 
-there are roughly the same numbers of entries and points, we 
-need more 
-memory compared to the case study on random data. However, the 
-grid-based algorithm still uses less memory than the DT-based 
-algorithm 
-by a factor of~$1.1$, and it also still uses less than the SL 
-implementations by a factor of~$1.6$.
-
-\begin{figure}[tb]	
-	\centering
-	\includegraphics[page=4]{DataStr_Plot_Bavaria}
-	\caption{Output size and memory consumption of the 
-	algorithms for the real-world data.
-}
-\label{fig:DataStr_BavariaMemory}
-\end{figure}
+For the grid-based algorithm, when we try to achieve that 
+there are roughly the same numbers of entries and points, 
+we need more memory compared to the case study on random data
+(comparing \figs\ref{fig:DataStr_RandomMemory}b
+and~\ref{fig:DataStr_BavariaMemory}b). 
+However, the grid-based algorithm still uses less memory 
+than the DT-based algorithm by a factor of~$1.1$, 
+and it still uses less memory than the SL 
+implementations by a factor of~$1.6$;
+see \fig\ref{fig:DataStr_BavariaMemory}b.
 
 
 \section{Concluding Remarks}\label{sec:DataStr_Conclusion}
@@ -796,21 +838,26 @@ Even from the slowest algorithm, based on the DT,
 we have learned something. 
 By comparison with the other implementations, 
 we noticed that 
-the radius-$\varepsilon$ BFS missed a few close pairs 
+the radius-$\varepsilon$ BFS missed a few pairs of close points
 in the case study on random data 
-(just~$5$ out of the~$718{,}775$ close pairs 
+(just~$5$ out of the~$718{,}775$ pairs of close points
 that were reported in the~$200{,}000$-point instance 
 for~$\varepsilon =0.003$). 
 Then we conjectured that 
-a radius of~$(1+\sqrt{2})\varepsilon /2$ is sufficient, 
+a radius of~$(1+\sqrt{2})\varepsilon /2 
+\approx 1.2\varepsilon$ is sufficient, 
 which was supported by our experiments 
 where we found all pairs of close points. 
 We also proved that 
-a radius of~$(1+\sqrt{7})\varepsilon /2$ is sufficient. 
-Of course, enlarging the radius slowed down our code. 
-It turned out, however, 
-that a radius of~$(1+\sqrt{2})\varepsilon /2$ 
+a radius of~$(\sqrt{2}+\sqrt{14})\varepsilon /4
+\approx 1.3\varepsilon$ is sufficient. 
+Of course, enlarging the radius slowed down the method. 
+It turned out that, however, 
+a radius of~$(1+\sqrt{2})\varepsilon /2$ 
 is sometimes necessary.
-
+An interesting future work is to prove that,
+in the DT-based algorithm,
+radius~$(1+\sqrt{2})\varepsilon /2$ is sufficient 
+for finding all the pairs of close points.
 
 

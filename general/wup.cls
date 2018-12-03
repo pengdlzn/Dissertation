@@ -292,7 +292,7 @@
 
 \RequirePackage{titlesec}
 
-\titleformat{\chapter}[display]{\normalfont\sffamily\LARGE\bfseries}{%   %dongliang's change
+\titleformat{\chapter}[display]{\normalfont\sffamily\huge\bfseries}{%   %dongliang's change \huge -> \LARGE; changed back
 	\chaptertitlename\ \thechapter}{8pt}{}
 \titlespacing*{\chapter}{0pt}{*2}{*3}
 \titleformat{\section}{\normalfont\sffamily\Large\bfseries}{\thesection}{1em}{}
