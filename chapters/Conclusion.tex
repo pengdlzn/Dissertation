@@ -1,43 +1,47 @@
 \chapter{Conclusion}
 \label{chap:Conclusion}
 
-In this thesis, we have studied various topics of 
+In this thesis, we have studied four topics of 
 continuous map generalization.
 These topics include area aggregation, 
 morphing between administrative boundaries,
 building generalization, and
 defining trajectories for morphing polylines.
+The intermediate-scale results of all the four methods
+may be used as valid maps.
 Also, we have presented some lessons that 
 we learned from implementing our algorithms.
 In order to achieve continuous map generalization 
-of high quality, we have integrated optimization into our 
-methods.
+of high quality, 
+we have integrated optimization into our methods.
 
 A number of methods have been developed for
 continuous map generalization.
-An urgent issue is to unify these methods.
-Currently, each of my methods deals with only one type of 
-feature, i.e., 
-land-cover area, building, or administrative boundary.
+As maps are complicated,
+we need to develop more methods 
+in order to fully automate continuous map generalization.
+Besides, an urgent issue is to unify the methods.
+Currently, each of our methods deals with 
+only one type of feature, i.e., 
+land-cover areas, buildings, or administrative boundaries.
 A map usually contains many kinds of features.
 It would be interesting to work on a complete map,
 where we would need to care about the relations 
 between different kinds of features.
 For example, depending on the situations, 
 we may use streets to confine the growing of 
-buildings to built-up areas, or we may cover the 
-streets with built-up areas 
+buildings to built-up areas, 
+or we may cover the streets with built-up areas 
 because we want to aggregate several blocks into one.
 
 The main goal of continuous map generalization is to provide 
 users with better zoom experience.
-Hence, more usability tests are needed to see if 
-the results of continuous map generalization are indeed better 
-than other zoom strategies.
-My work about building generalization 
-(see \chap\ref{chap:Bldg}) was meant 
-to be compared with the results of 
-\emph{progressive block graying} 
+Hence, more usability tests are needed to see 
+if the results of continuous map generalization 
+are indeed better than other zoom strategies.
+We planed to compare our work about building generalization 
+(see \chap\ref{chap:Bldg}) 
+with the results of \emph{progressive block graying} 
 \parencite[see][]{Touya2017Progressive}.
 As they and we have obtained results 
 based on different strategies, 
@@ -46,72 +50,76 @@ based on some usability test.
 To this end, we should design some tasks 
 (e.g., pointing out the 
 position of a building during zooming out), 
-and then ask participants to complete these tasks.
-Then we can compare the time users need 
-and the accuracies of their results.
+and then ask participants to complete these tasks
+\parencite[e.g.,][]{Midtbo2007}.
+Then we can compare the time and the accuracies
+of users' working on the tasks.
 Moreover, \textcite{Suba2016Usability} 
 have already made a plan for 
-testing vario-scale maps, which is related to my research.
+testing vario-scale maps, which is related to our research.
 
 
-It is important to generate intermediate-scale results that have 
-simple relations among each other.
+It is important to generate intermediate-scale results 
+that have simple relations among each other.
 These simple relations often result in 
-that little extra storage is needed, and 
-that real-time visualization is possible.
+small extra storage and real-time visualization.
 Our intermediate-scale maps of area aggregation 
 (see \chap\ref{chap:AreaAgg}) 
 have simple relations.
 These maps can be stored easily
 using the generalized area partitioning tree (GAP-tree).
-In order to display our morphing between two sets of 
-administrative boundaries, we only need to store the two sets of 
-data and a set of the relations between the two sets of data. 
+In order to display our morphing between 
+two sets of administrative boundaries, 
+we only need to store the two datasets 
+and a set of relations between the two datasets. 
 When users are zooming,
-we simply need to interpolate linearly between the two sets of 
-administrative boundaries on the fly\footnote{For
-some examples, see 
+we only need to interpolate linearly between 
+the two sets of administrative boundaries 
+on the fly\footnote{For some examples, see 
 \url{www1.pub.informatik.uni-wuerzburg.de/pub/data/agile2016/}.}.
 Our intermediate-scale maps of buildings 
 (see \chap\ref{chap:Bldg}), 
 however, have no simple relations.
-Currently, we can clumsily store many
-intermediate-scale maps,
+Currently, we clumsily store many intermediate-scale maps
 and then transfer all these maps to users when they are zooming.
-This strategy may cause time lags to them.
+This strategy may cause time lags.
 We should either improve our method of generating 
-intermediate-scale maps or find a way 
-to construct simple relations 
+intermediate-scale maps 
+or find a way to construct simple relations 
 between our current intermediate-scale maps.
 
-We want to make my prototype more easily accessible for other 
-scientists.
-Although my prototype is open access on GitHub\footnote{See 
+We want to make our prototype more easily accessible 
+for other scientists.
+Although our prototype is open access on GitHub\footnote{See 
 \url{https://github.com/IGNF/ContinuousGeneralisation}.},
 one needs to install and configure many libraries in order to 
 run the prototype on their own computers.
-We wish to put my prototype on a server, and then allow 
-other scientists to access my prototype through a website
+We wish to put our prototype on a server and allow 
+other scientists to access our prototype through a website
 software as a service.
 The computation should be on the server,
 while the users can input their own data and get the output.
-Also, We would like to make my prototype more user-friendly.
+Also, We would like to make our prototype more user-friendly.
 In the following, we show concrete open problems.
 
-In \chap\ref{chap:AreaAgg}, we have shown how to compute optimal
+In \chap\ref{chap:AreaAgg}, 
+we have shown how to compute optimal
 aggregation sequences for % maps with land-cover areas.
 land-cover maps.
-We tried solving this problem by both the \Astar algorithm
+We tried solving this problem by a greedy algorithm,
+the \Astar algorithm,
 and a method based on integer linear programming.
 % I'd use "ILP" only for "integer linear program", 
 % not for the "integer linear programming" technique.
-For the \Astar algorithm, we have a good estimation for the cost of type 
-change, which helps a lot to reduce the search space, 
-but our current estimation for the cost of shape (compactness or edge 
-length) is rather poor.
-The ILP on the other hand, could not even find \emph{feasible}
-solutions for some of our test instances.
-This yields the following open problems.
+For the \Astar algorithm, 
+we have a good estimation for the cost of type change, 
+which helps a lot to reduce the search space, 
+but our estimation for the cost of shape 
+(compactness or edge length) is rather poor.
+The ILP-based algorithm, on the other hand, 
+could not even find \emph{feasible} solutions 
+for some of our test instances.
+We have the following open problems.
  
 \begin{open}
 How to find a better estimation for the cost of shape 
@@ -119,78 +127,104 @@ How to find a better estimation for the cost of shape
 \end{open} 
 
 \begin{open}
-  Is there an ILP formulation that can be solved faster than ours?
+Do we need to consider other aspects in our cost function?
 \end{open}
 
-In \chap\ref{chap:Admin}, we have continuously generalized county 
-boundaries to provincial boundaries by morphing.
+\begin{open}
+Is there an ILP formulation that can be solved faster than ours?
+\end{open}
+
+In \chap\ref{chap:Admin}, 
+we have continuously generalized 
+county boundaries to provincial boundaries by morphing.
 Recall that there are more boundaries on the county map.
-In order to morph a county boundary that is not at the same time a
-provincial boundary to a corresponding boundary on the provincial map,
-we used compatible triangulations.
-We observed that some of the boundaries that we generated using
-compatible triangulations are heavily
-distorted.  This leads us to the following open problems.
+In order to morph a county boundary 
+that is not at the same time a provincial boundary,
+we generate the corresponding boundary based on
+compatible triangulations.
+We observed that some of the boundaries 
+that we generated using are heavily distorted.  
+These distortions lead us to the following open problems.
 
 \begin{open}
-  Can we efficiently minimize distortion over all generated boundaries?
+  How much can we reduce the distortion 
+  if we use common chords as many as possible
+  when constructing compatible triangulations?
 \end{open} 
 
 \begin{open}
-  How can our continuous generalization of administrative boundaries
-  be evaluated?
+  Can we efficiently minimize the distortion 
+  over all generated boundaries?
+\end{open} 
+
+\begin{open}
+  How to properly evaluate our continuous generalization 
+  of administrative boundaries?
 \end{open}
 
-In \chap\ref{chap:Bldg}, we proposed a method to continuously 
-generalize buildings to built-up areas
+In \chap\ref{chap:Bldg}, we continuously 
+generalized buildings to built-up areas
 by aggregating and growing.
 We managed to produce a sequence of maps 
-in which the buildings are always growing and are, at the same time, 
-simplified.
-We compared the numbers of buildings with the numbers implied 
+in which we grew and simplified the buildings.
+We compared the numbers of buildings 
+with the numbers implied 
 by the law of \textcite{Topfer1966}.
-However, this law has been criticized by \textcite{Jiang2015Fractal},
+Although this law has been criticized by 
+\textcite{Jiang2015Fractal},
 who proposed calculating the numbers of objects
 according to the fractal nature of maps,
-but so far there is no generally accepted formula for computing the
-numbers.  Therefore, the following questions remain open.
+there is no generally accepted formula for 
+computing the numbers so far.  
+Therefore, the following questions remain open.
 
 \begin{open}
-  For a given map and scale, how many buildings should be kept after
-  generalization?
+  For a given map and a scale, 
+  how many buildings should be kept after generalization?
 \end{open}
 
 \begin{open}
-  Again, for a given map and scale, how much total area of buildings
-  should be kept after generalization? What about the total number of
-  edges?
+  Again, for a given map and a scale, 
+  how much total area of buildings should be kept 
+  after generalization? 
+  What about the total number of edges?
 \end{open}
 
 \begin{open}
-  How can we design a meaningful user study to evaluate our and other
-  approaches to continuous building generalization?
+  How to avoid the lengthy buildings generated by our method?
 \end{open}
 
-In \chap\ref{chap:Morph}, we have introduced a morphing method 
-for polylines that tries 
-to change angles and edge lengths linearly over time. 
+\begin{open}
+  How to design a meaningful user study 
+  to evaluate our and other approaches 
+  to continuous building generalization?
+\end{open}
+
+In \chap\ref{chap:Morph}, 
+we have introduced a morphing method for polylines 
+that tries to change angles and edge lengths linearly over time. 
 Our approach is based on least-squares adjustment;
 it allows us to handle both hard and soft constraints. 
 Our first results are promising. 
 Still, there are open problems. 
 
 \begin{open}
-  How can we ensure that our LSA-based method always converges to a
-  good solution?
+  How can we ensure that our LSA-based method always 
+  converges to a good solution?
 \end{open}
 
 \begin{open}
-  How to avoid self-intersections of a polyline during a morph?  How
-  to avoid a polyline intersecting other polylines?
+  Do we have better models for the changes of 
+  angles and edge lengths, instead of using linear functions?
+\end{open}
+
+\begin{open}
+  How to avoid self-intersections of a polyline during a morph?
+  How to avoid a polyline intersecting other polylines?
 \end{open}
 
 In \chap\ref{chap:DataStr}, we have compared three methods
-for finding close point pairs; a sweep-line algorithm, 
+for finding close-point pairs, i.e., a sweep-line algorithm, 
 an algorithm based on the Delaunay triangulation, 
 and a grid-based algorithm.
 The grid-based algorithm was 
@@ -202,13 +236,18 @@ e.g., computing the Voronoi diagram
 The following questions remain open.
 
 \begin{open}
-  What is the smallest radius such that the Delaunay-based algorithm
+  What is the smallest radius such that 
+  the algorithm based on Delaunay triangulation
   finds \emph{all} pairs of close points?
 \end{open}
 
 \begin{open}
-  Is the grid-based algorithm faster than other algorithms, including
-  those not mentioned in the chapter, in finding close edges or close
-  polygons?
+  Is the grid-based algorithm faster than other algorithms, 
+  including those not mentioned in the chapter, 
+  in finding close edges or close polygons?
 \end{open}
 
+\begin{open}
+  Will the grid-based algorithm be the winner
+  when we extend the three methods to higher dimensions?
+\end{open}
