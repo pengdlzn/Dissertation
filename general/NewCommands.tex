@@ -22,16 +22,34 @@
 }
 
 
-%\newcolumntype{x}[1]{>{\raggedleft\arraybackslash\hspace{0pt}}b{#1}}
-%\newcolumntype{y}[1]{>{\centering\arraybackslash\hspace{0pt}}b{#1}}
-%%\newcolumntype{y}[2]{>{\centering\arraybackslash\hspace{0pt}}D{.}{.}{#1}b{#2}}
-%%\newcolumntype{d}[1]{D{.}{.}{#1}}
-%\newcolumntype{L}{>{$}l<{$}}% math-mode version of "l" column 
-%%type
-%\newcolumntype{R}{>{$}r<{$}}% math-mode version of "r" column 
-%%type
-%\newcolumntype{C}{>{$}c<{$}}% math-mode version of "c" column 
-%%type
+% math-mode version of "l" column type
+\newcolumntype{L}{>{$}l<{$}}
+% math-mode version of "r" column type
+\newcolumntype{R}{>{$}r<{$}}
+% math-mode version of "c" column type
+\newcolumntype{C}{>{$}c<{$}}
+%align numbers by decimal points in table; 
+%need package {dcolumn} and {array}
+%see http://www.ctex.org/documents/packages/table/dcolumn.pdf 
+\newcolumntype{d}[1]{D{'}{.}{#1}}
+\newcolumntype{s}[1]{D{'}{~}{#1}}
+
+%x:l, y:c, z:r, with specified width
+%place text in a cell at top (b), middle (m), or bottom (p)
+\newcolumntype{x}[1]
+{>{\raggedright\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{y}[1]
+{>{\centering\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{z}[1]
+{>{\raggedleft\arraybackslash\hspace{0pt}}m{#1}}
+
+%math-mode version of "x,y,z" column type
+\newcolumntype{X}[1]
+{>{\raggedright\arraybackslash\hspace{0pt}}m{$#1$}}
+\newcolumntype{Y}[1]
+{>{\centering\arraybackslash\hspace{0pt}}m{$#1$}}
+\newcolumntype{Z}[1]
+{>{\raggedleft\arraybackslash\hspace{0pt}}m{$#1$}}
 
 \newcommand{\dtrm}[2][]{d_{\mathrm{#2}, 
 t\ifthenelse{\equal{#1}{}}{}{_#1}}}

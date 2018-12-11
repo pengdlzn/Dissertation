@@ -71,24 +71,24 @@ maps~\parencite{Reilly2004,
 
 
 \begin{figure}[tb]	
-	\centering
-	\includegraphics[page=1]{Admin_Introduction}
-	\caption{Framework of our method.
-		The circled numbers indicate the steps. 
-		(a)~The larger-scale administrative boundaries of a 
-		region. 
-		(d)~The smaller-scale administrative boundaries of the 
-		same region as in~(a). 
-		(b)~\&~(e) Constructing compatible triangulations for
-		thicker polygons in~(a) and~(d) in order to 
-		transform thinner boundaries in~(a) to~(e).
-		(f)~The thinner boundaries are simplified from the 
-		ones in~(e). 
-		(c)~The result of continuous generalization
-		by morphing when~$t=0.5$.
-		The thinner boundaries in~(c) are being faded out.
-		}
-	\label{fig:Admin_Introduction}
+\centering
+\includegraphics[page=1]{Admin_Introduction}
+\caption{Framework of our method.
+	The circled numbers indicate the steps. 
+	(a)~The larger-scale administrative boundaries of a 
+	region. 
+	(d)~The smaller-scale administrative boundaries of the 
+	same region as in~(a). 
+	(b)~\&~(e) Constructing compatible triangulations for
+	thicker polygons in~(a) and~(d) in order to 
+	transform thinner boundaries in~(a) to~(e).
+	(f)~The thinner boundaries are simplified from the 
+	ones in~(e). 
+	(c)~The result of continuous generalization
+	by morphing when~$t=0.5$.
+	The thinner boundaries in~(c) are being faded out.
+	}
+\label{fig:Admin_Introduction}
 \end{figure}
 
 Topological consistency is a property 
@@ -131,8 +131,8 @@ if they have a correspondence of their vertex sets as well as
 the two triangulations are topologically 
 equivalent~\parencite{Surazhsky2001}. 
 With CTs, 
-we can transform a thinner boundary in one triangulation (see 
-\fig\ref{fig:Admin_Introduction}b) 
+we can transform a thinner boundary in one triangulation 
+(see \fig\ref{fig:Admin_Introduction}b) 
 to a boundary in the other triangulation 
 by traversing the triangles correspondingly 
 (see \fig\ref{fig:Admin_Introduction}e). 
@@ -309,7 +309,8 @@ so that they will disappear when time~$t=1$.
 The administrative regions are represented as polygons. 
 An administrative region usually shares its boundary 
 with some other administrative regions. 
-These shared parts should be always shared even during the morphing.
+These shared parts should be 
+always shared even during the morphing.
 Furthermore, we want to avoid processing a shared boundary twice.
 For these reasons, we sometimes work on administrative boundaries
 as a set of consecutive polylines instead of polygons.
@@ -346,14 +347,17 @@ respectively from the boundaries of the
 merged polygons and the polygons on~\ms. 
 We define that a vertex is an \emph{intersection node} 
 if the vertex has degree at least 3. 
-As the merged polygons and the polygons on~\ms have corresponding intersection nodes, we utilize these 
+As the merged polygons and the polygons on~\ms 
+have corresponding intersection nodes, 
+we utilize these 
 nodes to find corresponding polylines. 
 We split the boundaries of the 
 polygons at every intersection node, 
 respectively for the merged polygons and the 
 polygons on~\ms. 
-(Note that two polygons on the same map may share some parts of 
-their boundaries, it is sufficient to take only one copy of the shared parts.) 
+(Note that two polygons on the same map may 
+share some parts of their boundaries, 
+it is sufficient to take only one copy of the shared parts.) 
 Then we match the split boundaries of~\ml and~\ms  to get 
 corresponding polylines. 
 We use \emph{thicker} marks to 
@@ -490,8 +494,11 @@ the thicker (matched) polylines on~\ms
 For a pair of corresponding polylines, 
 one being a thicker polyline on~\ml and 
 the other being a thicker polyline on~\ms, 
-we use a variant of the dynamic programming algorithm \textsc{Optcor} of \textcite{Noellenburg2008} to
-compute corresponding points (possibly injecting additional
+we use a variant of 
+the dynamic programming algorithm \textsc{Optcor} 
+of \textcite{Noellenburg2008} 
+to compute corresponding points 
+(possibly injecting additional
 vertices).
 %In stead of ultilizing the linear interpolation algorithm 
 %(citation) to the pair of polylines, \textsc{Optcor} apply it 
@@ -557,7 +564,8 @@ Let~$f=\overline{\alpha(0)\alpha(1)}$
 be a line segment on~$F$, and 
 let~$g=\overline{\beta(0)\beta(1)}$ 
 be a line segment on $G$ that corresponds to~$f$. 
-Let~$\alpha(0)=(x_1,y_1)$, $\alpha(1)=(x_2,y_2)$, $\beta(0)=(x_3,y_3)$, and~$\beta(1)=(x_4,y_4)$, 
+Let~$\alpha(0)=(x_1,y_1)$, $\alpha(1)=(x_2,y_2)$, 
+$\beta(0)=(x_3,y_3)$, and~$\beta(1)=(x_4,y_4)$, 
 which are already known. 
 The coordinates of a pair of 
 corresponding points~$\alpha(u) \in f$ 
@@ -590,7 +598,8 @@ and~$\beta(1)$, as follows.
 \end{align}
 Let~$X=au^2+bu+c$. 
 We have~$a\geq0$ and, 
-since~$X\geq0$ ($X$ is the square of a Euclidean distance), $\Delta=4ac-b^2\geq0$. 
+since~$X\geq0$ ($X$ is the square of a Euclidean distance), 
+$\Delta=4ac-b^2\geq0$. 
 Note that, if~$a=0$, then~$b=0$. Let
 \[
 \delta(f, g)=\int_{0}^{1}|\beta(u) - \alpha(u)|du=\int_{0}^{1}\sqrt{X}du.
@@ -610,11 +619,11 @@ integrals~241 and~245]{Bronstein2001}, as follows:
 \]
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=2]{Admin_MorphCorr}
-	\caption{Corresponding points of 
-	a pair of corresponding line segments.}
-	\label{fig:Admin_Integral_Correspondence}
+\centering
+\includegraphics[page=2]{Admin_MorphCorr}
+\caption{Corresponding points of 
+a pair of corresponding line segments.}
+\label{fig:Admin_Integral_Correspondence}
 \end{figure}
 
 Cost~$\delta$ can be regarded as the average distance of 
@@ -648,23 +657,23 @@ but we choose the one that minimizes cost~$\delta(F,G)$.
 
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=3]{Admin_MorphCorr}
-	\caption{Examples of computing $\delta(f,g)$. 
-	The values in the subfigures 
-	represent the lengths of the edges.}
-	\label{fig:Admin_IntegralComputation}
+\centering
+\includegraphics[page=3]{Admin_MorphCorr}
+\caption{Examples of computing $\delta(f,g)$. 
+The values in the subfigures 
+represent the lengths of the edges.}
+\label{fig:Admin_IntegralComputation}
 \end{figure}
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=4]{Admin_MorphCorr}
-	\caption{Three possible ways of defining corresponding points
-		between the two polylines.
-		Correspondence $\pi_2$ is the one 
-		that minimizes cost~$\delta(F,G)$.
-	}
-	\label{fig:Admin_ChooseCorrespondence}
+\centering
+\includegraphics[page=4]{Admin_MorphCorr}
+\caption{Three possible ways of defining corresponding points
+	between the two polylines.
+	Correspondence $\pi_2$ is the one 
+	that minimizes cost~$\delta(F,G)$.
+}
+\label{fig:Admin_ChooseCorrespondence}
 \end{figure}
 
 Recall that \textsc{Optcor} considers three cases of a 
@@ -700,12 +709,12 @@ straight-line trajectories.
 with~$0.25$, $0.5$, and~$0.75$ for~$t$.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=5]{Admin_MorphCorr}
-	\caption{Morphing polyline $F$ to its corresponding 
-	polyline $G$. 
-	The arrows show the moving trajectories of the vertices.}
-	\label{fig:Admin_MorphCorr}
+\centering
+\includegraphics[page=5]{Admin_MorphCorr}
+\caption{Morphing polyline $F$ to its corresponding 
+    polyline $G$. 
+    The arrows show the moving trajectories of the vertices.}
+\label{fig:Admin_MorphCorr}
 \end{figure}
 
 Some other algorithms for computing corresponding points 
@@ -792,10 +801,10 @@ CTs of the two original polygons
 and~\ref{fig:Admin_ConstructCTs}g).
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{Admin_MorphSingle}
-	\caption{Constructing compatible triangulations.}
-	\label{fig:Admin_ConstructCTs}
+\centering
+\includegraphics[page=1]{Admin_MorphSingle}
+\caption{Constructing compatible triangulations.}
+\label{fig:Admin_ConstructCTs}
 \end{figure}
 
 
@@ -903,10 +912,10 @@ of more	provinces are available at
 see \figs\ref{fig:Admin_Data}b and~\ref{fig:Admin_Data}d.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics{Admin_CaseStudy_Data}
-	\caption{Administrative boundaries of Mainland China.}
-	\label{fig:Admin_Data}
+\centering
+\includegraphics{Admin_CaseStudy_Data}
+\caption{Administrative boundaries of Mainland China.}
+\label{fig:Admin_Data}
 \end{figure}
 
 \fig\ref{fig:Admin_CaseStudy} shows our results of Tianjin.
@@ -923,18 +932,19 @@ and~\ref{fig:Admin_CaseStudy}c) and the unmatched polylines
 step~\circled{1}.
 
 \begin{figure}[tb] 
-	\centering
-	\includegraphics[page=1]{Admin_CaseStudy_Results}
-	\caption{Case study on administrative boundaries of Tianjin province.
-		The circled numbers indicate the step orders, 
-		analogous to \fig\ref{fig:Admin_Introduction}. 
-		For the sake of legibility, we did not display 
-		the CTs. 
-		Continuous generalization is achieved by 
-		morphing from~(a) to~(e).  
-		The thinner boundaries in~(b) are being faded out
-		during the morphing.}
-	\label{fig:Admin_CaseStudy}
+\centering
+\includegraphics[page=1]{Admin_CaseStudy_Results}
+\caption{Case study on administrative boundaries
+    of Tianjin province.
+	The circled numbers indicate the step orders, 
+	analogous to \fig\ref{fig:Admin_Introduction}.     
+	For the sake of legibility, 
+    we did not display the CTs. 
+	Continuous generalization is achieved by 
+	morphing from~(a) to~(e).  
+	The thinner boundaries in~(b) are being faded out
+	during the morphing.}
+\label{fig:Admin_CaseStudy}
 \end{figure}
 
 In step~\circled{2}, we transform the thinner boundaries in 
@@ -945,7 +955,8 @@ Recall that we compute corresponding points between
 corresponding thicker polylines using \textsc{Optcor-s}
 and then transform thinner polylines based on CTs.
 When computing corresponding points, 
-we used the fact that the~$90$ thicker polylines (with~$55{,}533$ vertices) on~\ml and 
+we used the fact that the~$90$ thicker polylines 
+(with~$55{,}533$ vertices) on~\ml and 
 the~$90$ thicker polylines (with~$7{,}527$ vertices) on~\ms 
 shared many vertices (\ms may be generalized from~\ml).
 We split the thicker polylines, on~\ml and~\ms, 
@@ -1077,19 +1088,19 @@ generalize two-level hierarchical subdivisions
 in a continuous and topologically consistent way.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=3]{Admin_CaseStudy_Results}
-	\caption{A comparison of the method based on CTs and 
-		the rubber-sheeting method 
-		for	transforming the thinner polylines on~\ml, 
-		using the data of Shanghai as instance. 
-		(a)~\ml and the CTs. 
-		(b)~\ms and the CTs, where the thinner polylines 
-		were transformed from (a) based on CTs.
-		(c)~\ms, where the thinner were transformed from (a) 
-		by the rubber-sheeting method
-		of \textcite{Doytsher2001}.} 
-	\label{fig:Admin_CT-RS-Comarison-shanghai}
+\centering
+\includegraphics[page=3]{Admin_CaseStudy_Results}
+\caption{A comparison of the method based on CTs and 
+	the rubber-sheeting method 
+	for	transforming the thinner polylines on~\ml, 
+	using the data of Shanghai as instance. 
+	(a)~\ml and the CTs. 
+	(b)~\ms and the CTs, where the thinner polylines 
+	were transformed from (a) based on CTs.
+	(c)~\ms, where the thinner were transformed from (a) 
+	by the rubber-sheeting method
+	of \textcite{Doytsher2001}.} 
+\label{fig:Admin_CT-RS-Comarison-shanghai}
 \end{figure}
 
 

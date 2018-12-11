@@ -509,7 +509,6 @@ we set side length~$\sigma=\varepsilon_{0}\sqrt{N/n}$.
 \end{figure}
 
 \subsubsection{Time consumption}
-
 In the experiment with~$\varepsilon =\varepsilon_{0}$ 
 (see \fig\ref{fig:DataStr_RandomTimeEpsilonFix}), 
 the quadratic size of the output dominates the 
@@ -590,12 +589,12 @@ about~$10\%$ less than the C5 TreeSet implementation.
 \centering
 \includegraphics[page=2]{DataStr_Plot_Random}
 \vspace{-3mm}
-\caption{Time consumption of the algorithms for 
-	$\varepsilon=\varepsilon_{0}$. 
-	The DT-based algorithm took 
-	$109\,$s with radius $r_1$ (``DT $r_1$'') and  
-	$217\,$s with radius $r_2$ (``DT $r_2$'') 
-	for $n=200,000$.}
+\caption{Time consumption of the algorithms 
+	when~$\varepsilon=\varepsilon_{0}$. 
+	The DT-based algorithm took~
+	$109\,$s with radius~$r_1$ (``DT~$r_1$'') and~  
+	$217\,$s with radius~$r_2$ (``DT~$r_2$'') for~ 
+    $n=200,000$.}
 \label{fig:DataStr_RandomTimeEpsilonFix}
 %
 \vspace{8mm}
@@ -603,11 +602,11 @@ about~$10\%$ less than the C5 TreeSet implementation.
 \centering
 \includegraphics[page=3]{DataStr_Plot_Random}
 \vspace{-3mm}
-\caption{Time consumption of the algorithms for
-	$\varepsilon=\varepsilon_{0} \sqrt{N/n}$. 
-	The DT-based algorithm took 
-	$106\,$s with radius $r_1$ (``DT $r_1$'') and  
-	$216\,$s with radius $r_2$ (``DT $r_2$'') for 
+\caption{Time consumption of the algorithms
+	when~$\varepsilon=\varepsilon_{0} \sqrt{N/n}$. 
+	The DT-based algorithm took~ 
+	$106\,$s with radius~$r_1$ (``DT~$r_1$'') and~  
+	$216\,$s with radius~$r_2$ (``DT~$r_2$'') for~ 
 	$n=200{,}000$.}
 \label{fig:DataStr_RandomTimeEpsilonDecrease}
 %	
@@ -620,6 +619,7 @@ about~$10\%$ less than the C5 TreeSet implementation.
 	of the 	algorithms for the random data.}
 \label{fig:DataStr_RandomMemory}	
 \end{figure}
+
 
 %\begin{figure}[tb]	
 %	\centering
@@ -725,6 +725,7 @@ roughly the same as the number of points.
 
 
 \subsubsection{Time consumption}
+
 We got similar results as in
 \sect\ref{sec:DataStr_CaseStudy_RandomData}. 
 An interesting difference is that 
@@ -757,51 +758,7 @@ and~\ref{fig:DataStr_BavariaTimeEpsilonDecrease}a).
 
 
 
-\begin{figure}[h]	
-\centering
-\includegraphics[page=2]{DataStr_Plot_Bavaria}
-\vspace{-3mm}
-\caption{Time consumption of the algorithms for 
-	$\varepsilon=\delta$. 
-	The DT-based algorithm took  
-	$262\,$s with radius $r_1$ (``DT $r_1$'') and  
-	$784\,$s with radius $r_2$ (``DT $r_2$'') for 
-	$n=553{,}984$. 
-	The axes and the notations are as in 
-	\fig\ref{fig:DataStr_RandomTimeEpsilonFix}.}
-\label{fig:DataStr_BavariaTimeEpsilonFix}
-%	
-\vspace{8mm}
-%
-\centering
-\includegraphics[page=3]{DataStr_Plot_Bavaria}
-\vspace{-3mm}
-\caption{Time consumption of the algorithms for 
-	$\varepsilon=\delta\sqrt{N/n}$. 
-	The DT-based algorithm took 
-	$267\,$s with radius $r_1$ (``DT $r_1$'') and  
-	$810\,$s with radius $r_2$ (``DT $r_2$'') for 
-	$n=553{,}984$.}
-\label{fig:DataStr_BavariaTimeEpsilonDecrease}
-%	
-\vspace{8mm}
-%
-\centering
-\includegraphics[page=4]{DataStr_Plot_Bavaria}
-\vspace{-6mm}
-\caption{Output size and memory consumption 
-	of the algorithms for the real-world data.}
-\label{fig:DataStr_BavariaMemory}
-\end{figure}
 
-%\begin{figure}[tb]	
-%\centering
-%\includegraphics[page=4]{DataStr_Plot_Bavaria}
-%\vspace{-6mm}
-%\caption{Output size and memory consumption 
-%	of the algorithms for the real-world data.}
-%\label{fig:DataStr_BavariaMemory}
-%\end{figure}
 
 \subsubsection{Output size and memory consumption}
 Also, the curves of the output size perform as expected
@@ -816,6 +773,17 @@ than the DT-based algorithm by a factor of~$1.1$,
 and it still uses less memory than the SL 
 implementations by a factor of~$1.6$;
 see \fig\ref{fig:DataStr_BavariaMemory}b.
+
+
+
+%\begin{figure}[tb]	
+%\centering
+%\includegraphics[page=4]{DataStr_Plot_Bavaria}
+%\vspace{-6mm}
+%\caption{Output size and memory consumption 
+%	of the algorithms for the real-world data.}
+%\label{fig:DataStr_BavariaMemory}
+%\end{figure}
 
 
 \section{Concluding Remarks}\label{sec:DataStr_Conclusion}
@@ -860,4 +828,39 @@ in the DT-based algorithm,
 radius~$(1+\sqrt{2})\varepsilon /2$ is sufficient 
 for finding all the pairs of close points.
 
-
+\begin{figure}[h]	
+\centering
+\includegraphics[page=2]{DataStr_Plot_Bavaria}
+\vspace{-3mm}
+\caption{Time consumption of the algorithms 
+	when~$\varepsilon=\delta$. 
+	The DT-based algorithm took~  
+	$262\,$s with radius~$r_1$ (``DT~$r_1$'') and~  
+	$784\,$s with radius~$r_2$ (``DT~$r_2$'') for~
+    $n=553{,}984$. 
+	The axes and the notations are as in 
+	\fig\ref{fig:DataStr_RandomTimeEpsilonFix}.}
+\label{fig:DataStr_BavariaTimeEpsilonFix}
+%	
+\vspace{8mm}
+%
+\centering
+\includegraphics[page=3]{DataStr_Plot_Bavaria}
+\vspace{-3mm}
+\caption{Time consumption of the algorithms 
+	when~$\varepsilon=\delta\sqrt{N/n}$. 
+	The DT-based algorithm took~ 
+	$267\,$s with radius~$r_1$ (``DT~$r_1$'') and~  
+	$810\,$s with radius~$r_2$ (``DT~$r_2$'') for~ 
+	$n=553{,}984$.}
+\label{fig:DataStr_BavariaTimeEpsilonDecrease}
+%	
+\vspace{8mm}
+%
+\centering
+\includegraphics[page=4]{DataStr_Plot_Bavaria}
+\vspace{-6mm}
+\caption{Output size and memory consumption 
+	of the algorithms for the real-world data.}
+\label{fig:DataStr_BavariaMemory}
+\end{figure}

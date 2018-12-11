@@ -17,8 +17,8 @@
 \FreeTextImprint{
 \\
 \setlength{\tabcolsep}{0em}	
-\begin{tabular}{ll}
-Supervisors:		& ~Prof. Dr. Alexander Wolff\\
+\begin{tabular}{x{2.5cm}l}
+Supervisors:	    & ~Prof. Dr. Alexander Wolff\\
 					& ~Prof. Dr. Jan-Henrik Haunert
 					\vspace{4pt}\\ 
 Reviewers:			& ~Prof. Dr. Alexander Wolff\\
@@ -28,7 +28,7 @@ Defense Examiners:	& ~Prof. Dr. Andreas N\"uchter\\
 					& ~Prof. Dr. Jan-Henrik Haunert\\
 					& ~Prof. Dr. Alexander Wolff
 					\vspace{4pt}\\
-Defended on December 21, 2017					
+\multicolumn{2}{l}{Defended on December 21, 2017}					
 \end{tabular}
 }
 
@@ -42,45 +42,62 @@ Defended on December 21, 2017
 \URN{urn:nbn:de:bvb:20-opus-XXXXXX}
 
 \Acknowledgments{%
-I would like to thank my first supervisor, Prof. Dr. Alexander Wolff,
+I would like to thank my supervisor, 
+Prof. Dr. Alexander Wolff,
 who we often call Sascha.
-He is like a father and a friend to me.
 Sascha is very patient to me.
 When I first came to Germany, I could barely speak English.
 Sascha had to spend a lot of effort to understand me
 when we were doing research work together.
 Sascha negotiated with my landlords to fight for my money.
+encourage me to ask questions.
+I am so lucky to have Sascha as my supervisor.
 
 the research work was challenging and exciting,
 i enjoyed doing research work here in 
 
 
-I would like to thank my second supervisor, Prof. Dr. Jan-Henrik Haunert.
+I would like to thank my second supervisor, 
+Prof. Dr. Jan-Henrik Haunert.
 
 I would like to thank Prof. Dr. Min Deng
 for helping me get the chance of
 pursuing my PhD in University of W\"urzburg.
 
-I would like to thank Dr. Krzysztof Fleszar,
-who helped me a lot during my study.
+I am grateful to Dr. Krzysztof Fleszar for that
+he helped me a lot during my PhD study.
 Having known that I had problems to understand a paper,
-he even read that paper and then explained it to me.
-%On the day of my defense, he sent his last set of comments about my slides at about 3:00 am.
+he read that paper and then explained it to me.
+%On the day of my defense, he sent his last set of comments 
+%about my slides at about 3:00 am.
 He helped me move twice.
+On the day before my defense, he worked as hard as me
+to read my slides and to give me feedback.
 He has always invited me to join his parties, 
-which reduced my homesickness. 
+I am grateful to him for his invitations. 
 
-grateful to the university
-
-freely take all kinds of courses
-
-theoretical computer science and algorithms for data structures,
-which are fundamental for computer science.
-
-took English languages courses as well as a German language course.
+I like the university very much 
+because I can freely take a lot of courses.
+In order to gain sufficient credits for 
+obtaining a PhD degree of Computer Science,
+I took some courses
+(e.g., \emph{Theoretical Computer Science}
+and \emph{Algorithms for Data Structures})
+from our own faculty, 
+Faculty of Mathematics and Computer Science.
+%
+In order to improve my language skills,
+I took many courses
+offered by the Language Center
+(e.g., \emph{English for the Natural Sciences} 
+and \emph{General Language Exercise of German})
+and by Faculty of arts 
+(e.g., \emph{Introduction to English Linguistics}).
 
 I like that our group always had lunch together
 so that we had plenty of chances to learn from each other.
+Indeed, I sometimes use the chances 
+to ask suggestions about my research work.
 
 thanks to my girlfriend.
 
@@ -127,7 +144,67 @@ thanks to my girlfriend.
 	
 	\lipsum[1-8]
 }
-\Abstract{%
-	
-	\lipsum[1-3]
+\Abstract{	
+Maps are the main tool to represent geographical information. 
+As geographical information is usually scale-dependent, 
+users need to have access to maps at different scales.
+In our digital age, people often zoom in or out 
+to read maps at different levels.
+As discrete changes tend to distract users,
+smooth changes are preferred.
+This is why some digital maps such as Google Maps 
+are trying to make zooming as continuous as they can.
+The process of producing maps at different scales
+with smooth changes 
+is called \emph{continuous map generalization}.
+Ideally, there
+should be no discrete change in 
+continuous map generalization. 
+However, the term is also used
+when the discrete changes are small enough not to be noticed.
+
+In order to produce maps with high quality,
+cartographers often take into account requirements.
+These requirements are transferred to models 
+in map generalization.
+Optimization for map generalization is important 
+not only because it finds optimal solutions in the sense of the 
+models,
+but also because it evaluates the quality of the models.
+Optimization becomes more delicate
+when we deal with \emph{continuous} map generalization.
+In this area, there are requirements 
+not only for a specific map, 
+but also for relations between maps. 
+%
+My PhD thesis is about continuous map generalization
+based on optimization. 
+First, we find optimal sequences for aggregating land-cover 
+areas (see Figure 1).
+We compare the \Astar algorithm and integer linear programming
+in completing this task.
+%
+Second, we generalize county boundaries to
+provincial boundaries.
+We morph between the two sets of boundaries, 
+where dynamic programming is used to 
+compute corresponding points between boundaries.
+%
+Third, we generalize buildings to built-up areas 
+by aggregating and growing (see Figure 2).
+In this work, we group buildings based on
+minimum spanning tree. 
+%
+Fourth, we define moving trajectories
+for morphing between polylines.
+We require that both the lengths of edges and the angles 
+between edges should change linearly.
+As it is impossible to fulfill all the requirements,
+we make a compromise between them 
+using least-squares adjustment.
+%
+Fifth, we discuss the performance 
+of some data structures 
+(e.g., SortedDictionary and SortedSet) 
+for a specific spatial problem.
 }

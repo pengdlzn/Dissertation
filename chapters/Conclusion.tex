@@ -7,7 +7,8 @@ These topics include area aggregation,
 morphing between administrative boundaries,
 building generalization, and
 defining trajectories for morphing polylines.
-The intermediate-scale results of all the four methods
+Although we focus on providing smooth transitions,
+the intermediate-scale results of the four methods
 may be used as valid maps.
 Also, we have presented some lessons that 
 we learned from implementing our algorithms.
@@ -17,7 +18,7 @@ we have integrated optimization into our methods.
 
 A number of methods have been developed for
 continuous map generalization.
-As maps are complicated,
+However, as maps are complicated,
 we need to develop more methods 
 in order to fully automate continuous map generalization.
 Besides, an urgent issue is to unify the methods.
@@ -33,6 +34,8 @@ we may use streets to confine the growing of
 buildings to built-up areas, 
 or we may cover the streets with built-up areas 
 because we want to aggregate several blocks into one.
+Furthermore, we should make rules for producing source maps
+to allow these maps to be generalized more easily.
 
 The main goal of continuous map generalization is to provide 
 users with better zoom experience.
@@ -143,7 +146,7 @@ that is not at the same time a provincial boundary,
 we generate the corresponding boundary based on
 compatible triangulations.
 We observed that some of the boundaries 
-that we generated using are heavily distorted.  
+that we generated are heavily distorted.  
 These distortions lead us to the following open problems.
 
 \begin{open}
@@ -201,10 +204,10 @@ Therefore, the following questions remain open.
 \end{open}
 
 In \chap\ref{chap:Morph}, 
-we have introduced a morphing method for polylines 
+we have introduced a method for morphing polylines 
 that tries to change angles and edge lengths linearly over time. 
-Our approach is based on least-squares adjustment;
-it allows us to handle both hard and soft constraints. 
+Our approach is based on least-squares adjustment.
+The approach can handle both hard and soft constraints. 
 Our first results are promising. 
 Still, there are open problems. 
 
