@@ -29,6 +29,7 @@ justification=justified %make sure caption for table is both
 \usepackage{bm} %make a variable bold in math mode 
 \usepackage{booktabs} %for using \toprule, \midrule, and 
 %\bottomrule in a table
+\usepackage{dcolumn} %for \newcolumntype{d}[1]{D{'}{.}{#1}}
 \usepackage{float} %option "H" for placing a figure
 \usepackage[bottom]{footmisc}% places footnotes at page bottom
 \usepackage{gensymb}  % for degree sign
@@ -43,8 +44,9 @@ justification=justified %make sure caption for table is both
 \hypersetup{pdftitle = {An Optimization-Based Approach for 
 		Continuous Map Generalization}}
 \hypersetup{pdfauthor = {Dongliang Peng}}
-\hypersetup{pdfsubject = {DISSERTATION}}
-\hypersetup{pdfkeywords = {KEYWORDS}}
+\hypersetup{pdfsubject = {Dissertation}}
+\hypersetup{pdfkeywords = {Land-cover area, Administraive boundary, 
+Building, Morphing, Data structure, Zooming}}
 \hypersetup{pdfdisplaydoctitle = true}
 \newcommand{\dlpLinkColor}{darkgray}
 \hypersetup{
@@ -214,7 +216,7 @@ natbib=true]{biblatex}
 inproceedings,patent,thesis,unpublished]{citetitle}{#1}
 \DeclareFieldFormat[article,inbook,incollection,
 inproceedings,patent,thesis,unpublished]{title}{#1}
-%\DeclareNameAlias{author}{last-first}%lastname before firstname
+\DeclareNameAlias{author}{last-first}%lastname before firstname
 \renewcommand*{\revsdnamepunct}{} %remove commas between last 
 %and first names
 
@@ -255,5 +257,3 @@ inproceedings,patent,thesis,unpublished]{title}{#1}
 \makeatletter
 \AtBeginDocument{\toggletrue{blx@useprefix}}
 \makeatother
-
-%\setlength{\parskip}{0.5cm plus2mm minus2mm}

@@ -2,10 +2,10 @@
 \label{chap:introduction}
 
 
-Maps are the main tool to represent geographical information.
+Maps are the main tool to represent geographical information. 
 As geographical information is usually scale-dependent
-\parencite{Weibel1997},
-users need to have access to maps of different scales.
+\parencite{Muller1995Generalization,Weibel1997}, 
+users need to have access to maps at different scales.
 Producing these maps independently is
 time-consuming and labor-intensive.
 A better strategy is 
@@ -37,26 +37,26 @@ a map must be changed to provide information
 appropriate to the corresponding zoom level.
 A naive solution is 
 to switch between maps at different scales.
-A more advanced strategy to support zooming is  
-on-the-fly generalization,
-which emphasizes on generalizing in real time
-\parencite{Weibel2017Fly}.
-These methods, however, can result in discrete changes, which
-tend to distract users.
+This method, however, can result in 
+large discrete changes, 
+which tend to distract users.
+A more advanced strategy is  
+\emph{on-the-fly generalization}~\parencite{Weibel2017Fly},
+which emphasizes on generalizing in real time.
+Still, large discrete changes can be introduced.
 To have a better zooming experience, 
-users expect the changes to be continuous.
+users prefer the changes to be continuous.
 This is why some digital maps such as Google Maps 
-are trying to make zooming as continuous as possible.
-The process of producing maps at different scales
+are trying to make zooming as continuous as they can,
+though Google Maps is still based on switching between 
+a certain number of maps at different scales.
+The process of producing maps at any different scales
 with smooth changes 
-is called \emph{continuous map generalization},
-or briefly continuous generalization
-\parencite{Sester2005_CG}.
-Ideally, there should be no discrete change 
-in continuous generalization.
-However, the term is used when 
-the discrete changes are small enough,
-e.g., \textcite{Suba2016Road}.
+is called \emph{continuous map generalization} (CMG).
+Ideally, there should be no discrete change in CMG.
+However, the term is also used when 
+the discrete changes are small enough not to be noticed as,
+e.g., \textcite{Suba2016Road} state.
 
 
 
@@ -64,50 +64,141 @@ e.g., \textcite{Suba2016Road}.
 \label{sec:Intro_State}
 
 
-Map generalization takes into account requirements
-in order to produce maps with high quality.
-We categorize these requirements as hard constraints 
-and soft constraints.
+CMG has received a lot of attention
+from cartographers and computer scientists.
+\Textcite{vanKreveld2001} proposed five gradual changes
+to support the continuous zooming of maps, 
+which are \emph{moving}, \emph{rotating}, \emph{morphing}, 
+\emph{fading}, and \emph{appearing}. 
+He suggested using these gradual changes 
+to adapt discrete generalization operators for CMG.
+\textcite{Sester2005_CG} suggested simplifying building
+footprints based on small incremental steps and 
+to animate each step smoothly.
+\textcite{Li2012Continuous} built hierarchies of road segments,
+which they then used to omit road segments 
+from lower levels of the hierarchy.
+Moreover, they evaluated similarities 
+between their results and existing maps.
+\textcite{Peng2017Building} gradually grew
+buildings to built-up areas by aggregating buildings 
+whenever they become too close.
+\textcite{Touya2017Progressive} progressively replaced
+buildings with blocks. 
+In addition, their method automatically inferred landmarks 
+and put the landmarks on top of the blocks.
+\textcite{Suba2016Road} continuously generalized road networks
+which are represented as a set of areas.
+Their method repeatedly finds the least-important area, 
+and then either merges it with an adjacent area 
+or collapses it to a line segment.
+\textcite{Danciger2009} investigated the growing of regions, 
+while preserving topology, area ratios, and
+relative positions.
+The strategy of using two maps at different scales
+to generate intermediate-scale maps has been studied in multiple
+representations, e.g., with respect to the selection of roads or
+rivers~\parencite{Peng2012River,Girres2014}. 
+Actually, this strategy is the key idea of the
+morphing-based methods for CMG.
+In order to morph from one polyline to another polyline,
+which respectively represent, say, roads on a larger-scale map 
+and a smaller-scale map, we first need to compute 
+corresponding points between them 
+\parencite[e.g.,][]{Cecconi2003,Noellenburg2008,Chazal2010BallMap,
+Deng2015,Li2017_Building,Li2017Annealing}.
+Then morphing can be realized by interpolating a set of 
+intermediate polylines.
+% Among the methods of computing corresponding points,
+\textcite{Noellenburg2008} presented a method for computing an optimum
+correspondence between two given polylines 
+according to some cost function.
+While straight-line trajectories 
+are often used for interpolation
+\parencite[e.g.,][]{Cecconi2003,Deng2015},
+\textcite{Whited2011BallMorph} considered four other alternatives, 
+i.e., \emph{hat}, \emph{tangent}, \emph{circular}, 
+and \emph{parabolic} paths
+based on so-called \emph{ball-map}
+\parencite{Chazal2010BallMap}.
+\textcite{Peng2013LSA} defined trajectories requiring that
+angles in vertices and edge lengths should change linearly.
+As these requirements may not agree with each other,
+their method mediates between them using 
+least-squares adjustments.
+\textcite{Peng2016Admin} morphed county boundaries
+to provincial boundaries.
+For county boundaries that do not have corresponding 
+provincial boundaries, they generated the correspondences based 
+on \emph{compatible triangulations}.
+\Textcite{vanOosterom2014tGAP} used
+a data structure called
+\emph{smooth topological generalized area partitioning}
+to support visualizing CMG.
+One of their contributions is that
+a polygon is merged into another polygon continuously
+by moving the boundary of the former.
+\textcite{Huang2017Matrix} proposed a matrix-based structure 
+to support CMG,
+using a river network as an example.
+For a given scale, 
+their structure yields the rivers that should be kept 
+as well as how much these rivers should be simplified.
+
+
+
+\mypar{Optimization in map generalization}
+Map generalization generally specifies 
+and takes into account requirements
+in order to produce maps of high quality
+\parencite{Stoter2009Requirements}.
+We categorize requirements as hard and soft constraints.
 For example, when users zoom out, 
 some land cover areas become too small to be seen.
 These areas have to be aggregated.
-When we aggregate an area into another area, the type of the 
-former area is changed to the type of the later one. 
-In this problem a hard constraint can be that we aggregate only 
-two polygons at each step in order to keep changes small
+When we aggregate one area into another, 
+the type of the former is changed to the type of the latter. 
+In this problem a hard constraint could be that 
+we aggregate only two polygons at each step 
+in order to keep changes small
 (see for example \fig\ref{fig:Intro_SubdivisionName}). 
-A soft constraint can be that we wish to minimize the changes of 
-types, e.g., we prefer aggregating a grass area into a farm 
-area rather than into a settlement area.
+A soft constraint could be that 
+we wish to minimize the changes of types, e.g., 
+we prefer aggregating a grass area into a farm area 
+rather than into a settlement area.
 This is a typical \emph{optimization} problem,
 where we stick to hard constraints and 
 try to fulfill soft ones as good as possible.
 Optimization for map generalization is important 
 not only because it finds optimal solutions,
-but also because it evaluates the quality of a model
-\parencite{Haunert2011Benchmark}.
+but also because it helps us to evaluate the quality of a model
+\parencite{Haunert2017Label,
+Haunert2008Assuring,Haunert2016Optimization}.
 Recall that we wish to minimize the changes of types
 when aggregating areas one by one.
-A model can be to minimize 
-the smallest change over all the steps.
-Instead, an other model can be to minimize 
-the average change over all the steps.
-Using optimization, we are able to find best solutions 
-from both the models.
-Then we can evaluate the models based on their best solutions.
+A model could be to minimize 
+the \emph{smallest} change over all the steps.
+Using optimization, we are able to find optimal solutions
+of this model at least for small instances.
+If even the optimal solutions are bad,
+then we can say that the model is not reasonable.
+In this case, we should try another model, say, 
+to minimize the \emph{average} change over all the steps.
 Moreover, optimization is useful for evaluating heuristics.
 We need heuristics because
 many optimization problems cannot be solved efficiently
-\parencite[e.g.,][]
-{HaunertWolff2010AreaAgg,Chimani2014Eat,Haunert2016Partition}.
+\parencite[e.g.,][]{HaunertWolff2010AreaAgg,Haunert2016Partition}.
 While heuristics can find some solutions in reasonable time,
 it is important to know the quality of 
 these solutions.
 Fortunately, we can often find an optimal solution when 
 the size of an instance is sufficiently small.
-Consequently, we can evaluate the quality of a heuristic by
-comparing its results with optimal solutions
+Consequently, we are able to evaluate 
+the quality of a heuristic 
+by comparing its results with optimal solutions
 on small instances.
+
+%\todo{may cite \textcite{Bader2001Dissertation}}
 
 \begin{figure}[tb]
 	\centering
@@ -118,66 +209,94 @@ on small instances.
 \end{figure}
 
 Optimization has been widely used in map generalization.
-For example, \textcite{Harrie1999} displaced objects based on 
-least-squares adjustment (LSA) to solve spatial conflicts
-(for a brief recap of LSA, see \sect\ref{sec:Intro_Tools}).
-In their problem, the soft constraints 
-of shapes and locations may contradict each other.
-The best solution is to find a compromise that satisfies the 
-constraints as much as possible. 
-Such a compromise can be found by LSA.
+For example, \textcite{Harrie1999} displaced objects 
+based on least-squares adjustments (LSA)
+to solve spatial conflicts.
+In his problem, the soft constraints 
+for shapes and locations may contradict each other.
+Therefore, it is necessary 
+to mediate between these constraints, 
+which is done by LSA.
 \textcite{Sester2005Optimization} used LSA not only for 
-displacing objects, but also for simplifying buildings, 
-where the boundaries of the simplified versions were required to 
+displacing objects, but also for simplifying buildings. 
+The output boundaries are required to 
 be as close as possible to the original buildings.
+\textcite{Tong2015AreaLSA} generalized land-cover areas,
+where LSA was used to preserve the sizes of 
+the land-cover areas.
 \textcite{Regnauld2001} grouped buildings based on 
-a minimum spanning tree in order to do a typification of 
-the buildings in the same group.
-\textcite{HaunertWolff2010AreaAgg} aggregated land cover areas
-based on mixed-integer linear programming,
-which we briefly introduce in \sect\ref{sec:Intro_Tools}.
-They wanted to minimize the changes of types and maximize the 
-compactnesses of shapes.
+minimum spanning trees in order to typify
+the buildings in a group.
+\textcite{Burghardt2005Snakes} smoothed lines based on 
+energy minimization. 
+According to his setting, a line contains less energy
+if it is smooth and close to the original line.
+He repeatedly displace the line 
+until finding a stable state 
+in terms of minimizing his energy function.
+\textcite{HaunertWolff2010AreaAgg} aggregated land-cover areas
+based on mixed-integer linear programming.
+This method is based on global optimization and minimizes 
+type changes as well as a cost for non-compact shapes 
+while satisfying constraints on the sizes of the output regions.
 \textcite{Haunertwolff2010Building} simplified building
-footprints by solving an integer linear program.
+footprints by solving an integer linear program (ILP).
 They aimed at minimizing the number of edges in the output under 
 the restriction that the simplified buildings must be 
 topologically safe,
 that is, the selected and extended edges must not intersect with 
 each other.
+\textcite{Oehrlein2017Aggregation} aggregated the departments 
+of France according to the unemployment rates based on integer 
+linear programming; they used a cutting-plane method to 
+speed up solving their ILP.
+\textcite{Funke2017Simplification} simplified 
+administrative boundaries based on an ILP.
+Their aim was to minimize the number of edges
+while keeping the result boundaries close to the original ones
+and avoiding any intersection. 
+At the same time, every city, which is represented by a point, 
+stays in the same face as before.
 
 
 
+\mypar{Optimization in \emph{continuous} map generalization}
 Optimization becomes more delicate
-when we deal with \emph{continuous} map generalization.
-In this area, we have requirements 
+when we deal with CMG.
+In this field, we have requirements 
 not only for a specific map, 
 but also for relations between maps. 
-For example, in \fig\ref{fig:Intro_SubdivisionName} two 
-aggregated polygons should not be separated at later steps. 
 %
-Some optimization techniques have been applied in 
-continuous map generalization. 
-\textcite{Noellenburg2008} used 
-dynamic programming (see \sect\ref{sec:Intro_Tools})
-to match points of two polylines to support morphing.
-Their objective was to minimize some cost of the matching.
-\textcite{sahw-oarps-ICAGW13} used mixted-integer linear 
-programming to select points of interest.
+Nevertheless, some optimization techniques 
+have been applied to CMG.
+In the aforementioned article,
+\textcite{Noellenburg2008} used dynamic programming
+to match points of two polylines to support morphing
+according to some matching cost.
+\textcite{sahw-oarps-ICAGW13} used 
+mixed-integer linear programming 
+to select points of interest.
 They required that 
-a disappeared point should not show up again during zooming out, 
-and any two points should be 
+a point, once disappeared, should not show up again 
+during zooming out, 
+and that any two points should be 
 sufficiently far away from each other.
-Based on these requirements, they wanted to show as many points 
-as possible when zooming out.
+Based on these requirements, 
+they wanted to show as many points as possible 
+for the given scale interval.
 \textcite{Chimani2014Eat} computed a deletion sequence
-for a road network by integer linear programming.
+for a road network by integer linear programming
+and efficient approximation algorithms.
 They wanted to delete a stroke, 
-which is a sequence of edges, at each step,
+which is a sequence of edges, at each step
 while keeping the remaining network connected.
 They assigned each edge a weight, 
-and their objective was to maximize the overall weights of all 
-the road networks.
+and their objective was to maximize the total weight 
+over all the road networks, at each step.
+\textcite{Peng2013LSA} defined trajectories 
+based on LSA for morphing between polylines, 
+where LSA is used to mediate between the requirements 
+for angles and edge lengths of the intermediate polylines.
 
 \section{Tools for Optimization}
 \label{sec:Intro_Tools}
@@ -325,29 +444,48 @@ we present our results in more detail.
 \subsubsection{Finding Optimal Sequences for Area Aggregation ---\\ 
 	\Astar vs. Integer Linear Programming}
 
-Given two land-cover maps of different scales, 
-we wish to find a sequence of small incremental
+To provide users with maps of different scales and 
+to allow them to zoom in and out without losing context,
+automatic methods for map generalization are needed.
+We approach this problem for land-cover maps.
+%Given two maps of the same region at two different scales,
+%a relevant problem is to compute maps for any intermediate scale.
+Given two land-cover maps at two different scales, 
+we want to find a sequence of small incremental
+% To help map users not to lose context during zooming,
+% we try to provide maps that change as continuous as possible.
+% Since maps at some different scales often exist, 
+% a relevant problem is to find maps at any intermediate scales.
+% Given two land-cover maps of different scales, 
+% we wish to find a sequence of small incremental
 changes that gradually transforms one map into the other.
-We assume that the two input maps consist of
-polygons that constitute a planar subdivision and belong to
-different land-cover classes. 
-Every polygon in the smaller-scale map
-is the union of a set of polygons in the larger-scale map. 
+We assume that the two input maps consist of polygons 
+each of which belongs to a given land-cover class. 
+Every polygon on the smaller-scale map
+is the union of a set of polygons on the larger-scale map. 
+
 In each step of the sequence that we compute, 
 the smallest area is merged with one of its neighbors. 
 We do not select that neighbor according to a prescribed rule 
-but define the whole sequence of pairwise merges at once, 
+but compute the whole sequence of pairwise merges at once, 
 based on global optimization.
-We formalize this problem as 
-finding a shortest path in a graph.
-We compare finding optimal solutions by the \Astar algorithm 
-and integer linear programming.
+We formalize this optimization problem as that of 
+finding a shortest path in a (very large) graph.
+%We compared the \Astar algorithm and 
+%integer linear programming in solving this problem.
+For solving such a problem, standard approaches
+are the \Astar algorithm or integer linear programming.
+%We compare how the two methods solve our problem.
+To avoid long computing times, we allow the two methods to 
+return non-optimal results.
 In addition, we present a greedy algorithm 
 as a benchmark.
 We tested the three methods with a
-dataset of the official German topographic database ATKIS.
-The main result is that 
-\Astar finds better solutions than the other two methods.
+data set of the official German topographic database ATKIS.
+Our main result is that
+\Astar finds optimal aggregation sequences for more instances 
+than the other two methods
+within a given time frame.
 \fig\ref{fig:Intro_AreaAgg_Case612} shows some intermediate 
 results obtained by \Astar for one of the regions.
 This is joint work with Alexander Wolff and Jan-Hendrik Haunert,

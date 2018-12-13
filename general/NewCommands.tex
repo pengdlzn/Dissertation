@@ -71,7 +71,6 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 \newcommand{\Tgoal}{\ensuremath{T_\mathrm{goal}}\xspace}
 
 
-
 \newcommand{\e}[1]{\times 10^{#1}}
 \newcommand{\fig}{Figure~}
 \newcommand{\eq}{Equation~}
@@ -85,3 +84,21 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 \newcommand{\sects}{Sections~}
 \newcommand{\tabs}{Tables~}
 \newcommand{\chaps}{Chapters~}
+\newcommand{\myquad}[1][1]{\hspace*{#1em}\ignorespaces}
+\newcommand{\eqquad}{\myquad[6]}
+\newcommand{\inquad}{\qquad}
+
+%M or N are default tags. 
+%The boxes using the same tag will have the same length. 
+%The length is the maximum length of all the equations 
+%in the boxes that use the same tag; see also 
+%https://tex.stackexchange.com/questions/381502/how-to-align-text-in-multiple-separate-align-environments
+\usepackage{eqparbox}
+\newcommand{\embl}[2][M]
+{\eqmakebox[#1][l]{$#2$}}
+\newcommand{\embr}[2][N]
+{\eqmakebox[#1][r]{$#2$}}
+\newcommand{\embld}[2][M]
+{\eqmakebox[#1][l]{$\displaystyle#2$}}
+\newcommand{\embrd}[2][N]
+{\eqmakebox[#1][r]{$\displaystyle#2$}}
