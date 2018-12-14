@@ -42,9 +42,11 @@ Defense Examiners:	& ~Prof. Dr. Andreas N\"uchter\\
 \URN{urn:nbn:de:bvb:20-opus-XXXXXX}
 
 \Acknowledgments{%
+  \textbf{AW: I would put the acks at the end of the into or just in
+    front of the bibliography.}
+
 I would like to thank my supervisor, 
-Prof. Dr. Alexander Wolff,
-who we often call Sascha.
+Prof.\ Dr.\ Alexander ``Sascha'' Wolff.
 Sascha has been very patient with me.
 When I first came to Germany, I could barely speak English.
 Sascha had to put a lot of effort into understanding me
@@ -55,18 +57,18 @@ but I enjoyed working in his group.
 I was lucky to have him as my supervisor.
 He even negotiated with my landlords.
 
-I also thank my second supervisor, Prof. Dr. Jan-Henrik Haunert.  In
+I also thank my second supervisor, Prof.\ Dr.\ Jan-Henrik Haunert.  In
 his lecture Algorithms for GIS, he taught my many fundamentals of
 GIScience.  Later he moved to other universities and invited me the
-visit him there.
+visit him there.  He taught me the ``optimization mantra'' (explain?).
 
-I would like to thank Prof. Dr. Min Deng
+I would like to thank Prof.\ Dr.\ Min Deng
 for helping me get the chance of
 pursuing my PhD in University of W\"urzburg.
 
 AW: Don't forget Guillaume Touya!
 
-I am grateful to Dr. Krzysztof Fleszar for 
+I am grateful to Dr.\ Krzysztof Fleszar for 
 helping me a lot during my PhD study.
 Whenever he found out that I had problems to understand a paper,
 he read that paper and then explained it to me.
@@ -77,6 +79,8 @@ On the day before my defense, he worked as hard as me
 to read my slides and to give me feedback.
 He has always invited me to join his parties, 
 I am grateful to him for his invitations. 
+
+AW: Thomas also did some proofreading for you, didn't he?
 
 I am very grateful to the University of W\"urzburg 
 because I had the possibility to freely take many courses.
@@ -143,8 +147,46 @@ thanks to my girlfriend.
 %is so appreciated. Thank you.
 }
 \Preface{%
+
+  In his thesis, Dongliang Peng investigates computational aspects of
+  a fundamental problem in cartography called \emph{generalization}.
+  Cartographic generalization is the problem that has to be solved
+  when producing a small-scale map (say, at scale 1:100,000) from data
+  collected at a larger scale (say, 1:10,000).  Traditionally, this
+  has been a labor-intensive task that required highly-skilled
+  cartographers with expertise in both geodesy and map-making.  How
+  should a row of ten houses be represented if the distances between
+  them are too small to be represented correctly at the desired scale?
+  By fewer, say, five houses?  Or rather by a block of houses?  
+
+  Dongliang attacks this and several other special cases of
+  cartographic generalization in a modern setting.  Think of online
+  maps that users can (and want to!) zoom and pan with their finger
+  tips.  Other than traditional paper maps that were produced and
+  printed for a fixed, small number of scales, online maps should
+  ideally be available at \emph{any} scale (within a reasonable
+  interval).  The problem of computing and displaying maps at
+  arbitrary scales is called \emph{continuous generalization}.  Some
+  aspects of continuous generalization (such as the example with the
+  houses above) are inherently discrete, others (such as a wiggly
+  river) can be treated more easily in a continuous fashion.
+  
+  In several chapters of this thesis, Dongliang approaches continuous
+  generalization problems in an innovative, yet formal way by using
+  powerful tools from mathematical optimization.  Advantages: ...
+
+  Chapter 2 to 6
+
+  In his thesis, Dongliang exemplifies the optimization-based approach
+  at various continuous generalization problems and demonstrates the
+  strength of this approach.  I see this as a very valuable
+  contribution to GIScience where very all too often, problems are not
+  modeled properly and then algorithms are devised that happen to
+  produce good-looking results on a small set of instances.  ...  I
+  wish that many readers of this thesis will follow Dongliang's
+  example of tackling spatial problems in a more formal and convincing
+  way.
 	
-	\lipsum[1-8]
 }
 \Abstract{	
 Maps are the main tool to represent geographical information. 
@@ -210,3 +252,9 @@ of some data structures
 (e.g., SortedDictionary and SortedSet) 
 for a specific spatial problem.
 }
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../dissertation"
+%%% End:
