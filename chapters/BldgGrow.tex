@@ -168,7 +168,7 @@ This simplification is carried out in two steps:
 the first one is to use dilating and eroding 
 to remove ``dents'' and ``bumps''; 
 the second step is to remove vertices 
-using Imai--Iri algorithm \citep{ImaiIri1988}.
+using the Imai--Iri algorithm \citep{ImaiIri1988}.
 To make sure that buildings never shrink 
 when~$t$ is increasing,
 we merge the shape of a building at time~$t$ 
@@ -483,13 +483,13 @@ we say that these buildings are in the same \emph{goal group}.
 	\label{fig:BridgeMoreBuilding}
 \end{figure}
 
-\subsection{Simplifying buildings using Imai--Iri algorithm}
+\subsection{Simplifying buildings using the Imai--Iri algorithm}
 \label{sec:ImaiIri}
 
 When the scale is decreasing ($M_t$ increasing), 
 we should remove more and more details. 
 So, we simplify the (aggregated) grown buildings
-using Imai--Iri algorithm \citep{ImaiIri1988}.
+using the Imai--Iri algorithm \citep{ImaiIri1988}.
 First, this algorithm finds 
 all the valid shortcuts of a polyline.
 A shortcut is valid for a segment 
@@ -730,9 +730,9 @@ In the worst case, we need to repeat $O(n)$ times,
 which increases our running time to $O(n^3)$.
 It is unlikely that we need to repeat the aggregation more than 
 twice, though.
-Simplifying polygons using Imai--Iri algorithm needs time
+Simplifying polygons using the Imai--Iri algorithm takes time
 $O(n^3)$.
-The improved version of Imai--Iri algorithm by 
+The improved version of the Imai--Iri algorithm by 
 \citet{Chan1996} does not help in our case
 because we have more constraints when simplifying
 (see \sect\ref{sec:ImaiIri}).
