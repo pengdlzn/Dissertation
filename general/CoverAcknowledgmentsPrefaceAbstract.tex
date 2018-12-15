@@ -273,6 +273,7 @@ to read maps at different levels.
 As discrete changes tend to distract users,
 smooth changes are preferred.
 This is why some digital maps such as Google Maps 
+\textbf{AW: I'd avoid Google in my abstract!} 
 are trying to make zooming as continuous as they can.
 The process of producing maps at different scales
 with smooth changes 
@@ -283,15 +284,15 @@ continuous map generalization.
 However, the term is also used
 when the discrete changes are small enough not to be noticed.
 
-In order to produce maps with high quality,
-cartographers often take into account requirements.
+In order to produce maps of high quality,
+cartographers often take into account \textbf{AW: additional?} requirements.
 These requirements are transferred to models 
 in map generalization.
 Optimization for map generalization is important 
 not only because it finds optimal solutions in the sense of the 
 models,
-but also because it evaluates the quality of the models.
-Optimization becomes more delicate
+but also because it helps us to evaluate the quality of the models.
+Optimization, however, becomes more delicate
 when we deal with \emph{continuous} map generalization.
 In this area, there are requirements 
 not only for a specific map, 
@@ -299,33 +300,36 @@ but also for relations between maps.
 %
 My PhD thesis is about continuous map generalization
 based on optimization. 
+
 First, we find optimal sequences for aggregating land-cover 
 areas (see Figure 1).
+\textbf{AW: I wouldn't refer to figures from the abstract.  
+  The abstract should be independent from the rest of the thesis.}
 We compare the \Astar algorithm and integer linear programming
 in completing this task.
 %
 Second, we generalize county boundaries to
 provincial boundaries.
 We morph between the two sets of boundaries, 
-where dynamic programming is used to 
-compute corresponding points between boundaries.
+using dynamic programming to 
+compute the correspondence.
 %
 Third, we generalize buildings to built-up areas 
 by aggregating and growing (see Figure 2).
-In this work, we group buildings based on
-minimum spanning tree. 
+In this work, we group buildings with the help of a
+minimum spanning tree.
 %
-Fourth, we define moving trajectories
-for morphing between polylines.
-We require that both the lengths of edges and the angles 
-between edges should change linearly.
-As it is impossible to fulfill all the requirements,
-we make a compromise between them 
-using least-squares adjustment.
+Fourth, we define vertex trajectories that allow us
+to morph between polylines.
+We require that both the lengths of the edges and the angles 
+between the edges change linearly over time.
+As it is impossible to fulfill all of these requirements
+simultaneously, we make compromises between them using least-squares
+adjustment.
 %
 Fifth, we discuss the performance 
-of some data structures 
-(e.g., SortedDictionary and SortedSet) 
+of some commonly used data structures 
+% (e.g., SortedDictionary and SortedSet) 
 for a specific spatial problem.
 }
 
