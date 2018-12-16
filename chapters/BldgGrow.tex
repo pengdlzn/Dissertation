@@ -168,7 +168,7 @@ This simplification is carried out in two steps:
 the first one is to use dilating and eroding 
 to remove ``dents'' and ``bumps''; 
 the second step is to remove vertices 
-using the Imai--Iri algorithm \citep{ImaiIri1988}.
+using the algorithm of Imai and Iri \citep{ImaiIri1988}.
 To make sure that buildings never shrink 
 when~$t$ is increasing,
 we merge the shape of a building at time~$t$ 
@@ -180,7 +180,10 @@ grow out of the intended built-up areas.
 the framework of our method;
 we explain the presented operators
 in the following subsections.
- 
+
+
+
+
 \begin{figure}[tb]
 	\centering
 	\includegraphics[page=1]{Bldg_Framework}
@@ -514,12 +517,12 @@ with error smaller than~$d_{l,t}$.
 	\centering
 	\includegraphics[page=1]{Bldg_Shrinking}
 	\caption{Valid and invalid shortcuts 
-		for Imai--Iri algorithm.
+		for the Imai--Iri algorithm.
 		Parameter~$l$ is the tolerance for errors.}
 	\label{fig:ImaiIri_Shortcut}
 \end{figure}
 
-In order to adapt Imai--Iri algorithm to our problem,
+In order to adapt the Imai--Iri algorithm to our problem,
 we add two more constraints for a shortcut to be valid. 
 One is that a shortcut must be 
 completely inside the grown building.
@@ -535,7 +538,7 @@ The classical way of simplifying
 a polyline or a polygon is using 
 the Douglas--Peucker algorithm \citep{Douglas1973}. 
 However, it cannot simplify the shapes enough in our case.
-This is why we choose Imai--Iri algorithm.
+This is why we choose the Imai--Iri algorithm.
 
 
 %
