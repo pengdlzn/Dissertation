@@ -42,113 +42,9 @@ Defense Examiners:	& ~Prof. Dr. Andreas N\"uchter\\
 \URN{urn:nbn:de:bvb:20-opus-XXXXXX}
 
 \Acknowledgments{%
-
-%\textbf{
-%AW: I would put the acks at the end of the into or 
-%just in front of the bibliography. 
-%DP: I don't know how to change the place for acks.}
-
-I would like to thank my supervisor, 
-Prof.\ Dr.\ Alexander ``Sascha'' Wolff.
-Sascha has been very patient with me.
-When I first came to Germany, I could barely speak English.
-Sascha had to put a lot of effort into understanding me
-when we were doing research.
-He always encouraged me to ask questions.
-The research work was challenging,
-but I enjoyed working in his group.
-I was lucky to have him as my supervisor.
-He even negotiated with my landlords.
-
-I also thank my second supervisor, Prof.\ Dr.\ Jan-Henrik Haunert.  In
-his lecture Algorithms for GIS, he taught my many fundamentals of
-GIScience.  Later he moved to other universities and invited me the
-visit him there.  He taught me the ``optimization mantra'' (explain?).
-
-I would like to thank Prof.\ Dr.\ Min Deng
-for helping me get the chance of
-pursuing my PhD in University of W\"urzburg.
-
-AW: Don't forget Guillaume Touya!
-
-I am grateful to Dr.\ Krzysztof Fleszar for 
-helping me a lot during my PhD study.
-Whenever he found out that I had problems to understand a paper,
-he read that paper and then explained it to me.
-%On the day of my defense, he sent his last set of comments 
-%about my slides at about 3:00 am.
-He helped me move twice.
-On the day before my defense, he worked as hard as me
-to read my slides and to give me feedback.
-He has always invited me to join his parties, 
-I am grateful to him for his invitations. 
-
-AW: Thomas also did some proofreading for you, didn't he?
-
-I am very grateful to the University of W\"urzburg 
-because I had the possibility to freely take many courses.
-In order to gain sufficient credits for 
-obtaining a PhD degree of Computer Science,
-I took some courses
-(e.g., \emph{Theoretical Computer Science}
-and \emph{Algorithms for Data Structures})
-from our own faculty, 
-Faculty of Mathematics and Computer Science.
-%
-In order to improve my language skills,
-I took many courses
-offered by the Language Center
-(e.g., \emph{English for the Natural Sciences} 
-and \emph{General Language Exercise of German})
-and by Faculty of Arts 
-(e.g., \emph{Introduction to English Linguistics}).
-
-It was nice that our group always had lunch together
-so that we had plenty of chances to learn from each other.
-Indeed, I sometimes took advantage of these lunches
-to get suggestions regarding my research work.
-
-thanks to my girlfriend.
-
-%My sincerest thank is meant to my enthusiastic supervisor, 
-%[Name]. My PhD has been an amazing experience and I thank 
-%[Name] wholeheartedly, not only for his tremendous academic 
-%support, but also for giving me so many wonderful 
-%opportunities. I am particularly indebted to [Name] for his 
-%constant faith in my lab work, all his contributions of 
-%time, ideas, and funding to make my Ph.D. experience 
-%productive and stimulating. 
-%I am also hugely appreciative of [Name], especially for 
-%sharing his (computing???) expertise so willingly, and for 
-%being so dedicated to his role as my secondary supervisor, 
-%and for his support when so generously hosting me in [City].
-%A special acknowledgement goes to YOUR Collaborative team 
-%[Name]. I praise the enormous amount of help and support by 
-%[Name] throughout my stay in Paris. 
-%Dozens of people have helped and taught me immensely at 
-%Wuerzburg University. Special mention goes to cristoph??, 
-%[Name], and [Name], for going far beyond the call of duty. 
-%To [Name], for encouraging me to embark on the computer 
-%science\Geography?? path, and for inspiring conversations. 
-%And to [your other members], for nurturing my enthusiasm for 
-%computer science. The group has been a source of friendships 
-%as well as good advice and collaboration. I have very fond 
-%memories of Squash time here. 
-%For this dissertation I would like to thank my reading 
-%committee members: [Name], [Name], and [Name] for their 
-%time, interest, and helpful comments. 
-%My time at Wuerzburg was made enjoyable and enriched in 
-%large part due to the many friends and groups that became a 
-%part of my life. I am grateful for time spent with flatmates 
-%and friends, for my Football Team, Hotpot group, and Skiing 
-%buddies. 
-%Lastly, I would like to thank my family for all their love 
-%and encouragement. For my parents who raised me with a love 
-%of science and supported me in all my pursuits. And most of 
-%all for my loving, supportive, and encouraging fiancée Fang 
-%whose faithful support during the final stage of this Ph.D. 
-%is so appreciated. Thank you.
 }
+
+
 \Preface{%
 
 In his thesis, Dongliang Peng investigates computational aspects of
@@ -160,8 +56,10 @@ has been a labor-intensive task that required highly-skilled
 cartographers with expertise in both geodesy and map-making.  How
 should a row of ten houses be represented if the distances between
 them are too small to be represented correctly at the desired scale?
-By fewer, say, five houses?  Or rather by a block of houses?  
-
+By fewer, say, five houses?  Or rather by a block of houses?
+%
+\newline\indent
+%
 Dongliang attacks this and several other special cases of
 cartographic generalization in a modern setting.  Think of online
 maps that users can (and want to!) zoom and pan with their finger
@@ -173,77 +71,94 @@ arbitrary scales is called \emph{continuous generalization}.  Some
 aspects of continuous generalization (such as the example with the
 houses above) are inherently discrete, others (such as a wiggly
 river) can be treated more easily in a continuous fashion.
-
+%
+\newline\indent
+%
 In several chapters of this thesis, Dongliang approaches continuous
 generalization problems in an innovative, yet formal way by using
 powerful tools from mathematical optimization such as integer linear
 programming.  The main advantage of such an approach is that it
 helps to get the \emph{model} right.  Many problems can be cast into
 integer linear programs, which allows us to solve at least small
-examples to optimality~--- according to our model.  If these
-solutions don't turn out as expected, we know that our problem
-formulation, our model is wrong~--- not the algorithm.  In contrast,
+examples to optimality---according to our model.  If these
+solutions don't turn out as expected, we know that 
+%our problem formulation, 
+our model is wrong---not the algorithm.  In contrast,
 when using only heuristics, solutions can come with errors of two
 types; those caused by the heuristic and those caused by the model.
-This makes it hard to understand and fix them.
-
+In this case, it is hard to understand and fix the errors.
+%
+\newline\indent
+%
 In Chapter~2, Dongliang compares two potentially exact methods for
 the well-known area-aggregation problem.  He asks for an optimal
 sequence of operations that aggregates, step-by-step, many
 ``patches'' of a detailed map into a single region of a coarser map.
 Dongliang uses a graph-based model in which he finds shortest paths
 (aka optimal aggregation sequences) using the \Astar algorithm
-and integer linear programming, which turns out to be much slower.
+and integer linear programming. The latter turns out to be much slower.
 He also compares the \Astar algorithm to an obvious greedy
 approach, which is surprisingly good given its simplicity.  He also
 identifies a problem with his model.
-
-Chapter~3 treats a related problem: how to best draw the boundaries
-of two levels of administrative boundaries when zooming out?  The
+%
+\newline\indent
+%
+Chapter~3 treats a related problem: how to best transit between
+two levels of administrative boundaries for zooming?  The
 input consists of the two drawings at start and target scale, and
-the task is to mediate between the two continuously in a
-topologically safe way, that is, without introducing
-self-intersections or other degeneracies.  Dongliang finds the first
-topologically safe way of solving this problem; he uses
+the task is to mediate between the two in a continuous and
+topologically safe way. 
+%that is, without introducing
+%self-intersections or other degeneracies.  
+Dongliang finds the first
+topologically safe method of solving this problem based on
 \emph{compatible triangulations} (a tool from computational
-geometry) to define a correspondence between the fine and the coarse
-drawing.  Unfortunately, the existing algorithm for compatible
+geometry).  Unfortunately, the existing algorithm for compatible
 triangulations sometimes introduces strong distortion locally.  A
 way out may consist in choosing the Steiner points for the
 compatible triangulations more carefully, but this is left as an
 open problem.
-
+%
+\newline\indent
+%
 In Chapter~4, Dongliang deals with the generalization of buildings.
 He shows how to generalize building footprints continuously such
 that well-defined blocks of buildings appear when the user of a
 digital map zooms out far enough.  Here, only the building
 footprints are given.  The approach animates a growing-process
-between the current scale and a target scale that can be set by the
-user.  The algorithm computes a drawing for the target scale by a
-wisely chosen sequence of dilations and erosions (which have been
-used for building simplification before).  In order to animate the
+between the start scale and a goal scale that can be set by the
+user.  The algorithm computes a drawing for the goal scale by a
+wisely chosen sequence of dilations and erosions.
+%(which have been used for building simplification before).  
+In order to animate the
 growing-process in a continuous fashion, the buildings are expanded
 in a simple way: by moving their boundaries at constant speed and by
-clipping any part that leaves the target footprint.  In order to
+clipping any part that leaves the goal footprint.  In order to
 guarantee a certain minimum distance between two buildings, the
-algorithm builds bridges between close-enough buildings.  The
-computation of the bridges is based on a minimum spanning tree of
-the buildings.  The resulting animations look very natural.
-
+algorithm builds bridges between close-enough buildings.  
+The computation of the bridges is based on 
+a minimum spanning tree of the buildings.  
+The resulting animations look very natural.
+%
+\newline\indent
+%
 In Chapter~5, Dongliang explores an important subproblem that often
 appears in continuous generalization: how to ``morph'' a polygonal
 chain from a start to a target scale.  He uses an existing algorithm
 to define a correspondence between the two chains and then computes
-trajectories for each pair of corresponding vertices.  The aim is to
-find trajectories such that the lengths of the segments and the
-angles between them change in a uniform and continuous fashion~--- if
-possible.  Dongliang applies least-squares adjustment in order to
+trajectories for each pair of corresponding vertices.  
+The aim is to find trajectories such that 
+the angles and the edge lengths change 
+in a uniform and continuous fashion---if possible.  
+Dongliang applies least-squares adjustment in order to
 gradually move the chain from its start configuration to the target
 chain.  While the results on real-world data look quite good,
 Dongliang also found artificial examples where self-intersection and
 numerical problems occur.  Hence, least squares is probably not the
 ideal method for this problem.
-
+%
+\newline\indent
+%
 Finally, in Chapter~6, Dongliang presents a case study to highlight
 the difficulties when working with geographic data naively.  As a
 concrete example, he considers the problem of finding, in a set of
@@ -253,20 +168,33 @@ approaches for this problem, the text-book approach based on the
 sweep-line paradigm, a Delaunay-triangulation-based approach, and a
 simple grid-based approach.  While the grid-based approach wins in
 terms of runtime, the different implementations of the sweep-line
-algorithms are what makes the comparison interesting~--- a lot
-depends on how the library methods are implemented, so the
-programmer should always read the fine print.
-
+algorithms are what makes the comparison interesting---a lot
+depends on how the library methods are implemented, 
+so the programmer should always read the fine print.
+%
+\newline\indent
+%
 In his thesis, Dongliang exemplifies the optimization-based approach
 at various continuous generalization problems and demonstrates the
 strength of this approach.  I~see this as a very valuable
 contribution to GIScience where very all too often, problems are not
-modeled properly and then algorithms are devised that happen to
+modeled properly, and then algorithms are devised that happen to
 produce good-looking results on a small set of benchmark instances.
 I~hope that many readers of this thesis will get inspired by
 Dongliang's way of tackling spatial problems!
-	
+%
+\newline
+\newline
+\newline
+%
+Alexander Wolff\\
+Chair of Algorithms, 
+Complexity and Knowledge-Based Systems\\
+Faculty of Mathematics and Computer Science\\
+University of W\"urzburg
 }
+
+
 \Abstract{	
 Maps are the main tool to represent geographical information. 
 As geographical information is usually scale-dependent, 
