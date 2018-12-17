@@ -257,3 +257,109 @@ inproceedings,patent,thesis,unpublished]{title}{#1}
 \makeatletter
 \AtBeginDocument{\toggletrue{blx@useprefix}}
 \makeatother
+
+
+%General
+
+
+\newcommand{\revise}[2]{#2}
+\newcommand{\mypar}[1]{\bigskip\noindent\textbf{#1.}~}
+
+%Preface: Adminstrative Boundaries
+\newcommand{\ml}{\ensuremath{M_+}\xspace}
+\newcommand{\ms}{\ensuremath{M_-}\xspace}
+%\newcommand*{\mine}[1]{{\color{red}#1}}
+\newcommand*{\mine}[1]{{#1}}
+
+\def\circled#1{%
+	~#1%
+	\pdfliteral{
+		q .5 w
+		10 0 0 10 -2.5 3.5 cm .05 w .5 0 m
+		.5 .276 .276 .5 0 .5 c -.276 .5 -.5 .276 -.5 0 c
+		-.5 -.276 -.276 -.5 0 -.5 c .276 -.5 .5 -.276 .5 0 c h
+		S Q
+	}~%
+}
+
+
+% math-mode version of "l" column type
+\newcolumntype{L}{>{$}l<{$}}
+% math-mode version of "r" column type
+\newcolumntype{R}{>{$}r<{$}}
+% math-mode version of "c" column type
+\newcolumntype{C}{>{$}c<{$}}
+%align numbers by decimal points in table; 
+%need package {dcolumn} and {array}
+%see http://www.ctex.org/documents/packages/table/dcolumn.pdf 
+\newcolumntype{d}[1]{D{'}{.}{#1}}
+\newcolumntype{s}[1]{D{'}{~}{#1}}
+
+%x:l, y:c, z:r, with specified width
+%place text in a cell at top (b), middle (m), or bottom (p)
+\newcolumntype{x}[1]
+{>{\raggedright\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{y}[1]
+{>{\centering\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{z}[1]
+{>{\raggedleft\arraybackslash\hspace{0pt}}m{#1}}
+
+%math-mode version of "x,y,z" column type
+\newcolumntype{X}[1]
+{>{\raggedright\arraybackslash\hspace{0pt}}m{$#1$}}
+\newcolumntype{Y}[1]
+{>{\centering\arraybackslash\hspace{0pt}}m{$#1$}}
+\newcolumntype{Z}[1]
+{>{\raggedleft\arraybackslash\hspace{0pt}}m{$#1$}}
+
+\newcommand{\dtrm}[2][]{d_{\mathrm{#2}, 
+t\ifthenelse{\equal{#1}{}}{}{_#1}}}
+
+%%Area Aggregation
+%%**************************************************************
+\newcommand{\Astar}{A$^{\!\star}$\xspace}
+\newcommand{\tstar}{\ensuremath{t\xspace}}
+\newcommand{\Pistar}{\ensuremath{\Pi}} % 
+%\newcommand{\Comp}[1]{c_#1} % 
+\newcommand{\comp}[1]{[#1]} % 
+\newcommand{\edgenum}[1]{\|#1\|}
+\newcommand{\area}[1]{\overline{#1}}
+%{\Pi_{\mathrm{start}}(\tstar)}
+\newcommand{\Pstart}{\ensuremath{P_\mathrm{start}}\xspace}
+\newcommand{\Pgoal}{\ensuremath{P_\mathrm{goal}}\xspace}
+\newcommand{\Pnode}{\ensuremath{P_{t,i}}\xspace}
+\newcommand{\Psnode}{\ensuremath{P_{s,i}}\xspace}
+\newcommand{\Tgoal}{\ensuremath{T_\mathrm{goal}}\xspace}
+
+
+\newcommand{\e}[1]{\times 10^{#1}}
+\newcommand{\fig}{Figure~}
+\newcommand{\eq}{Equation~}
+\newcommand{\fo}{Formula~}
+\newcommand{\sect}{Section~}
+\newcommand{\tab}{Table~}
+\newcommand{\chap}{Chapter~}
+\newcommand{\figs}{Figures~}
+\newcommand{\eqs}{Equations~}
+\newcommand{\fos}{Formulas~}
+\newcommand{\sects}{Sections~}
+\newcommand{\tabs}{Tables~}
+\newcommand{\chaps}{Chapters~}
+\newcommand{\myquad}[1][1]{\hspace*{#1em}\ignorespaces}
+\newcommand{\eqquad}{\myquad[6]}
+\newcommand{\inquad}{\qquad}
+
+%M or N are default tags. 
+%The boxes using the same tag will have the same length. 
+%The length is the maximum length of all the equations 
+%in the boxes that use the same tag; see also 
+%https://tex.stackexchange.com/questions/381502/how-to-align-text-in-multiple-separate-align-environments
+\usepackage{eqparbox}
+\newcommand{\embl}[2][M]
+{\eqmakebox[#1][l]{$#2$}}
+\newcommand{\embr}[2][N]
+{\eqmakebox[#1][r]{$#2$}}
+\newcommand{\embld}[2][M]
+{\eqmakebox[#1][l]{$\displaystyle#2$}}
+\newcommand{\embrd}[2][N]
+{\eqmakebox[#1][r]{$\displaystyle#2$}}
