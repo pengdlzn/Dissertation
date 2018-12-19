@@ -185,10 +185,10 @@ in the following subsections.
 
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{Bldg_Framework}
-	\caption{The framework of our method.}
-	\label{fig:Bldg_Framework}
+\centering
+\includegraphics[page=1]{Bldg_Framework}
+\caption{The framework of our method.}
+\label{fig:Bldg_Framework}
 \end{figure}
 
 
@@ -224,20 +224,20 @@ In this case, a square join will be applied
 when an angle is smaller (more acute) than $83.6 \degree$.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{Bldg_Buffering}
-	\caption{Three ways of buffering a polygon and 
-		their applications.}
-	\label{fig:Buffer_ThreeKinds}
+\centering
+\includegraphics[page=1]{Bldg_Buffering}
+\caption{Three ways of buffering a polygon and 
+	their applications.}
+\label{fig:Buffer_ThreeKinds}
 \end{figure}
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=2]{Bldg_Buffering}
-	\caption{Using square joins instead of miter joins to avoid 
-	long spikes.
-	}
-	\label{fig:Buffer_MiterLimits}
+\centering
+\includegraphics[page=2]{Bldg_Buffering}
+\caption{Using square joins instead of miter joins to avoid
+    long spikes.
+}
+\label{fig:Buffer_MiterLimits}
 \end{figure}
 
 
@@ -259,12 +259,12 @@ bumps that can occur when buildings grow
 (see \fig\ref{fig:RemoveDentAndBump}).
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{Bldg_DilationErosion}
-	\caption{Removing dents and bumps 
-		by dilating and eroding with distance~$d$.
-	}
-	\label{fig:RemoveDentAndBump}
+\centering
+\includegraphics[page=1]{Bldg_DilationErosion}
+\caption{Removing dents and bumps 
+	by dilating and eroding with distance~$d$.
+}
+\label{fig:RemoveDentAndBump}
 \end{figure}
 
 At time~$t$, we should grow buildings with distance~$\dtrm{G}$.
@@ -296,16 +296,16 @@ which means
 \end{equation}
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=2]{Bldg_DilationErosion}
-	\caption{Dilating and eroding a polygon 
-		with distances~$d_1$ and~$d_2$, where $d_1 < d_2$.
-		The result of using~$d_1$ 
-		is the same as the original polygon,
-		while the result of using~$d_2$
-		become two polygons.
-	}
-	\label{fig:ErosionBreak}
+\centering
+\includegraphics[page=2]{Bldg_DilationErosion}
+\caption{Dilating and eroding a polygon 
+	with distances~$d_1$ and~$d_2$, where $d_1 < d_2$.
+	The result of using~$d_1$ 
+	is the same as the original polygon,
+	while the result of using~$d_2$
+	become two polygons.
+}
+\label{fig:ErosionBreak}
 \end{figure}
 
 We would like to use $\dtrm{E}=\frac{l}{2} \cdot M_t$ so that
@@ -367,18 +367,18 @@ r_\mathrm{h} M_t) .
 
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=3]{Bldg_DilationErosion}
-	\caption{Removing a bay by dilating and eroding.
-		(a) An aggregate from adding bridges 
-		(see \sect\ref{sec:Aggregate}).
-		(b) Growing the aggregate with 
-		distance~$\dtrm{G}$,
-		where the region marked by the dashed circle is a bay.
-		(c) Dilating the grown building with~$\dtrm{D}$.
-		(d) Eroding the dilated building with~$\dtrm{D}$.
-	}
-	\label{fig:RemoveBay}
+\centering
+\includegraphics[page=3]{Bldg_DilationErosion}
+\caption{Removing a bay by dilating and eroding.
+	(a) An aggregate from adding bridges 
+	(see \sect\ref{sec:Aggregate}).
+	(b) Growing the aggregate with 
+	distance~$\dtrm{G}$,
+	where the region marked by the dashed circle is a bay.
+	(c) Dilating the grown building with~$\dtrm{D}$.
+	(d) Eroding the dilated building with~$\dtrm{D}$.
+}
+\label{fig:RemoveBay}
 \end{figure}
 
 
@@ -403,13 +403,13 @@ d_{\varepsilon, t} = \varepsilon \cdot M_t.
 \end{equation}
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{Bldg_Aggregating}
-	\caption{Aggregating original buildings 
-		that will become too close at a certain time 
-		by adding bridges;
-		then, growing the bridged buildings.}
-	\label{fig:GrowAndBridge}
+\centering
+\includegraphics[page=1]{Bldg_Aggregating}
+\caption{Aggregating original buildings 
+	that will become too close at a certain time 
+	by adding bridges;
+	then, growing the bridged buildings.}
+\label{fig:GrowAndBridge}
 \end{figure}
 
 Our way of detecting close buildings is simple.
@@ -478,12 +478,12 @@ will be aggregated at time~$t=1$,
 we say that these buildings are in the same \emph{goal group}. 
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=2]{Bldg_Aggregating}
-	\caption{Iteratively aggregating close buildings 
-		by adding bridges.
-	}
-	\label{fig:BridgeMoreBuilding}
+\centering
+\includegraphics[page=2]{Bldg_Aggregating}
+\caption{Iteratively aggregating close buildings 
+	by adding bridges.
+}
+\label{fig:BridgeMoreBuilding}
 \end{figure}
 
 \subsection{Simplifying buildings using the Imai--Iri algorithm}
@@ -514,12 +514,12 @@ and has the least number of line segments,
 with error smaller than~$d_{l,t}$.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{Bldg_Shrinking}
-	\caption{Valid and invalid shortcuts 
-		for the Imai--Iri algorithm.
-		Parameter~$l$ is the tolerance for errors.}
-	\label{fig:ImaiIri_Shortcut}
+\centering
+\includegraphics[page=1]{Bldg_Shrinking}
+\caption{Valid and invalid shortcuts 
+	for the Imai--Iri algorithm.
+	Parameter~$l$ is the tolerance for errors.}
+\label{fig:ImaiIri_Shortcut}
 \end{figure}
 
 In order to adapt the Imai--Iri algorithm to our problem,
@@ -591,87 +591,87 @@ This merge also avoids bridges' shrinking;
 \fig\ref{fig:BridgeDisappearing} shows such an example.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=2]{Bldg_Shrinking}
-	\caption{A building shrinks because of dilating and eroding, 
-		where~$t_1=0.6$ and~$t_2=0.7$.
-		The gray polygons in~(a) and~(d) 
-		represent the original building.
-		The transparent polygon in~(a) is from 
-		growing and dilating the original building with 
-		distances~$\dtrm[1]{G}$ and~$\dtrm[1]{D}$.
-		The transparent polygon in~(d) is obtained analogously
-		as in~(a).
-		The darker gray piece in~(f) shows 
-		the part which is included in the polygon of~(c) 
-		but not in the polygon of~(f).
-	}
-	\label{fig:Shrink_Erosion}
+\centering
+\includegraphics[page=2]{Bldg_Shrinking}
+\caption{A building shrinks because of dilating and eroding, 
+	where~$t_1=0.6$ and~$t_2=0.7$.
+	The gray polygons in~(a) and~(d) 
+	represent the original building.
+	The transparent polygon in~(a) is from 
+	growing and dilating the original building with 
+	distances~$\dtrm[1]{G}$ and~$\dtrm[1]{D}$.
+	The transparent polygon in~(d) is obtained analogously
+	as in~(a).
+	The darker gray piece in~(f) shows 
+	the part which is included in the polygon of~(c) 
+	but not in the polygon of~(f).
+}
+\label{fig:Shrink_Erosion}
 \end{figure}
 
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=3]{Bldg_Shrinking}
-	\caption{A building shrinks because of line simplification, 
-		where~$t_1=0.7$ and~$t_2=0.8$.
-		The gray polygons in~(a) and~(e) 
-		represent the original building.
-		The transparent polygon in~(a) is from 
-		growing and dilating the original building with 
-		distances~$\dtrm[1]{G}$ and~$\dtrm[1]{D}$.
-		The transparent polygon in~(e) is obtained analogously
-		as in~(a).
-		Note that distances~$d_{l,t_1}<d_{l,t_2}$ 
-		(see \eq\ref{eq:d_lt});
-		this is why the Imai--Iri algorithm does not 
-		remove any vertex of the polygon in~(c)
-		but removes two vertices of the polygon in~(g).
-		The darker gray pieces in~(h) are 
-		the parts which are included in the polygon of~(d) 
-		but not in the polygon of~(h).
-	}
-	\label{fig:Shrink_Simplification}
+\centering
+\includegraphics[page=3]{Bldg_Shrinking}
+\caption{A building shrinks because of line simplification, 
+	where~$t_1=0.7$ and~$t_2=0.8$.
+	The gray polygons in~(a) and~(e) 
+	represent the original building.
+	The transparent polygon in~(a) is from 
+	growing and dilating the original building with 
+	distances~$\dtrm[1]{G}$ and~$\dtrm[1]{D}$.
+	The transparent polygon in~(e) is obtained 
+    analogously as in~(a).
+	Note that distances~$d_{l,t_1}<d_{l,t_2}$ 
+	(see \eq\ref{eq:d_lt});
+	this is why the Imai--Iri algorithm does not 
+	remove any vertex of the polygon in~(c)
+	but removes two vertices of the polygon in~(g).
+	The darker gray pieces in~(h) are 
+	the parts which are included in the polygon of~(d) 
+	but not in the polygon of~(h).
+}
+\label{fig:Shrink_Simplification}
 \end{figure}
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=4]{Bldg_Shrinking}
-	\caption{Merging a polygon with the polygon 
-		at the preceding time.
-		(a) Merging the transparent polygons in 
-		\figs\ref{fig:Shrink_Erosion}c and~\ref{fig:Shrink_Erosion}f.
-		(b) Merging the transparent polygons in 
-		\figs\ref{fig:Shrink_Simplification}d and~\ref{fig:Shrink_Simplification}h.
-	}
-	\label{fig:Shrink_Uniting}
+\centering
+\includegraphics[page=4]{Bldg_Shrinking}
+\caption{Merging a polygon with the polygon 
+	at the preceding time.
+	(a) Merging the transparent polygons in 
+	\figs\ref{fig:Shrink_Erosion}c and~\ref{fig:Shrink_Erosion}f.
+	(b) Merging the transparent polygons in 
+	\figs\ref{fig:Shrink_Simplification}d 
+    and~\ref{fig:Shrink_Simplification}h.
+}
+\label{fig:Shrink_Uniting}
 \end{figure}
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=5]{Bldg_Shrinking}
-	\caption{Avoiding shrinking resulted by moved bridges,
-		where~$t_1=0.5$ and~$t_2=0.6$.
-		(a) Original buildings.
-		(b) Growing buildings with distance~$\dtrm[1]{G}$ and 
-		dilating with~$d_{\varepsilon,t_1}/2$;
-		buildings~$p$ and~$q$ are identified as in the same 
-		group.
-		(c) Aggregating~$p$ and~$q$	by adding a bridge.
-		(d) Growing the (bridged) buildings in (c)
-		with distance~$\dtrm[1]{G}$.
-		(e) Growing original buildings with 
-		distance~$\dtrm[2]{G}$ and 
-		dilating with~$d_{\varepsilon,t_2}/2$;
-		all the three buildings are in the same group.
-		(f) Aggregating	by adding bridges according to the MST.
-		(g) Growing the bridged building in~(f)
-		with distance~$\dtrm[2]{G}$. 
-		The bridge in~(d) shrinks comparing to~(g).
-		(h) Avoiding this shrinking at time~$t_2$ 
-		by merging buildings in~(d) and~(g).
-	}
-	\label{fig:BridgeDisappearing}
+\centering
+\includegraphics[page=5]{Bldg_Shrinking}
+\caption{Avoiding shrinking resulted by moved bridges,
+	where~$t_1=0.5$ and~$t_2=0.6$.
+	(a) Original buildings.
+	(b) Growing buildings with distance~$\dtrm[1]{G}$ and 
+	dilating with~$d_{\varepsilon,t_1}/2$;
+	buildings~$p$ and~$q$ are identified as in the same group.
+	(c) Aggregating~$p$ and~$q$	by adding a bridge.
+	(d) Growing the (bridged) buildings in (c)
+	with distance~$\dtrm[1]{G}$.
+	(e) Growing original buildings with 
+	distance~$\dtrm[2]{G}$ and 
+	dilating with~$d_{\varepsilon,t_2}/2$;
+	all the three buildings are in the same group.
+	(f) Aggregating	by adding bridges according to the MST.
+	(g) Growing the bridged building in~(f)
+	with distance~$\dtrm[2]{G}$. 
+	The bridge in~(d) shrinks comparing to~(g).
+	(h) Avoiding this shrinking at time~$t_2$ 
+	by merging buildings in~(d) and~(g).
+}
+\label{fig:BridgeDisappearing}
 \end{figure}
 
 %\begin{figure}[tb]
@@ -778,13 +778,13 @@ the longest edge in an MST of the buildings
 should be shorter than~$100\,\mathrm{m}$.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{Bldg_CaseStudy_DataAndResults}
-	\caption{Data for our case study, at scale~$1:15{,}000$.
-		There are $2{,}590$ buildings, 
-		which in total have $19{,}255$ edges and have area
-		$448{,}802.3\,\mathrm{m}^2$.}
-	\label{fig:Data}
+\centering
+\includegraphics[page=1]{Bldg_CaseStudy_DataAndResults}
+\caption{Data for our case study, at scale~$1:15{,}000$.
+	There are $2{,}590$ buildings, 
+	which in total have $19{,}255$ edges and have area
+	$448{,}802.3\,\mathrm{m}^2$.}
+\label{fig:Data}
 \end{figure}
 
 We set our goal scale to~$1:50{,}000$, 
@@ -856,47 +856,47 @@ Still, the radical law seems to agree with our results.
 
 
 \begin{figure*}[tb]
-	\centering
-	\includegraphics[page=2]{Bldg_CaseStudy_DataAndResults}
-	\caption{Bridged original buildings and
-		goal shapes (darker polygons),
-		without eliminating small buildings and holes, 
-		where the goal shapes are for scale~$1:50{,}000$.
-		There are~$56$ goal shapes, which have~$1{,}135$ 
-		edges in total.
-	}
-	\label{fig:Bldg_GoalShape}
+\centering
+\includegraphics[page=2]{Bldg_CaseStudy_DataAndResults}
+\caption{Bridged original buildings and
+	goal shapes (darker polygons),
+	without eliminating small buildings and holes, 
+	where the goal shapes are for scale~$1:50{,}000$.
+	There are~$56$ goal shapes, which have~$1{,}135$ 
+	edges in total.
+}
+\label{fig:Bldg_GoalShape}
 \end{figure*}
 
 
 
 \begin{figure*}[tb]
-	\centering
-	\includegraphics[page=4]{Bldg_CaseStudy_DataAndResults}
-	\caption{A sequence of maps 
-		at time~$t \in \{0, 0.1, 0.2, \dots, 1\}$ 
-		of marked region~$R_1$
-		in \fig\ref{fig:Bldg_GoalShape}.
-	}
-	\label{fig:ContinuousGeneralization}
+\centering
+\includegraphics[page=4]{Bldg_CaseStudy_DataAndResults}
+\caption{A sequence of maps 
+	at time~$t \in \{0, 0.1, 0.2, \dots, 1\}$ 
+	of marked region~$R_1$
+	in \fig\ref{fig:Bldg_GoalShape}.
+}
+\label{fig:ContinuousGeneralization}
 \end{figure*}
 
 \begin{figure*}[tb]
-	\centering
-	\includegraphics[page=5]{Bldg_CaseStudy_DataAndResults}
-	\caption{Some intermediate-scale results of  
-		 marked region~$R_2$ in \fig\ref{fig:Bldg_GoalShape}.
-		 When time~$t=0.3$, there are some lengthy aggregates.
-	}
-	\label{fig:Bldg_Lengthy}
+\centering
+\includegraphics[page=5]{Bldg_CaseStudy_DataAndResults}
+\caption{Some intermediate-scale results of  
+    marked region~$R_2$ in \fig\ref{fig:Bldg_GoalShape}.
+    When time~$t=0.3$, there are some lengthy aggregates.
+}
+\label{fig:Bldg_Lengthy}
 \end{figure*}
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{Bldg_CaseStudy_ResultsPlot}
-	\caption{A comparison of the numbers of buildings 
-		between our result and the radical law.}
-	\label{fig:NumberOfBuildings}
+\centering
+\includegraphics[page=1]{Bldg_CaseStudy_ResultsPlot}
+\caption{A comparison of the numbers of buildings 
+	between our result and the radical law.}
+\label{fig:NumberOfBuildings}
 \end{figure}
 
 We also compared the areas on map of our results 
@@ -920,11 +920,11 @@ we see a disagreement between
 the radical law and our results.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=2]{Bldg_CaseStudy_ResultsPlot}
-	\caption{A comparison of the total area on map of buildings 
-		between our result and the radical law.}
-	\label{fig:AreaOfBuildings}
+\centering
+\includegraphics[page=2]{Bldg_CaseStudy_ResultsPlot}
+\caption{A comparison of the total area on map of buildings 
+	between our result and the radical law.}
+\label{fig:AreaOfBuildings}
 \end{figure}
 
 In \fig\ref{fig:ExperimentalComparison},
@@ -943,15 +943,15 @@ A questionnaire, however, is needed to
 make a more convincing comparison.
 
 \begin{figure*}[tb]
-	\centering
-	\includegraphics[page=3]{Bldg_CaseStudy_DataAndResults}
-	\caption{A comparison of our built-up areas at time~$t=1$
-		and the data from IGN
-		at scale~$1:50{,}000$ (transparent polygons).
-		Some built-up areas from IGN are split 
-		because of streets' crossing.
-	}
-	\label{fig:ExperimentalComparison}
+\centering
+\includegraphics[page=3]{Bldg_CaseStudy_DataAndResults}
+\caption{A comparison of our built-up areas at time~$t=1$
+	and the data from IGN
+	at scale~$1:50{,}000$ (transparent polygons).
+	Some built-up areas from IGN are split 
+	because of streets' crossing.
+}
+\label{fig:ExperimentalComparison}
 \end{figure*}
 
 

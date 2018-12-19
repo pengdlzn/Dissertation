@@ -1180,7 +1180,7 @@ our rules for area aggregation.
 \end{figure*}
 We introduce the variable 
 \begin{flalign*}
-&\myquad[6]
+&\eqquadVariable
 \embrd[V]{x_{t,p,r}} \in
 \embld[U]{\{0,1\}} \qquad 
 \forall t\in T, \forall p,r \in P&
@@ -1195,7 +1195,7 @@ that is, $x_{t,r,r}=1$
 Our second set of variables is used to compute the
 cost of type change.  We introduce
 \begin{flalign*}
-&\myquad[6]
+&\eqquadVariable
 \embrd[V]{y_{t,p,o,r}} \in
 \embld[U]{\{0,1\}} \qquad 
 \forall t\in T\setminus \{1\}, \forall p,o,r \in P&
@@ -1212,7 +1212,7 @@ We need a third set of variables
 for computing the cost of length.
 We introduce
 \begin{flalign*}
-&\myquad[6]
+&\eqquadVariable
 \embrd[V]{z_{t,p,q,r}} \in
 \embld[U]{\{0,1\}} \qquad 
 \forall t\in T\setminus \{1,n\}, \forall p,q,r \in P&
@@ -1243,7 +1243,7 @@ In other words, we aggregate two patches
 only when they are neighbors (adjacent).
 We introduce
 \begin{flalign*}
-&\myquad[6]
+&\eqquadVariable
 \embrd[V]{c_{t,p,o,r}} \in
 \embld[U]{\{0,1\}} \qquad 
 \forall t\in T\setminus \{n-1,n\}, 
@@ -1264,7 +1264,7 @@ enforce that
 every aggregation step involves a smallest patch. 
 We define
 \begin{flalign*}
-&\myquad[6]
+&\eqquadVariable
 \embrd[V]{w_{t,o}} \in
 \embld[U]{\{0,1\}} \qquad 
 \forall t\in T\setminus\{n\}, \forall o \in P&
@@ -1315,7 +1315,7 @@ According to the objective we introduced in
 the total cost of type change is defined as
 \begin{flalign*}
 %\label{eq:F_type}
-&\myquad[4]
+&\eqquadCost
 \embrd[V]{F_\mathrm{type}} =
 \sum_{t=2}^{n} \sum_{p\in P} \sum_{o\in P} \sum_{r\in P}
 \left(\frac{a_p}{A_R} \cdot
@@ -1341,7 +1341,7 @@ the remaining interior boundaries at all times
 can be computed by
 \begin{flalign}
 \label{eq:F_length_raw}
-&\myquad[4]
+&\eqquadCost
 \embrd[V]{F_\mathrm{lgth}} =
 \frac{1}{n-2} \sum_{t=2}^{n-1} 
 \frac{\sum_{b\in B (\Pstart)} |b| - 
@@ -1361,7 +1361,7 @@ between the costs of type change and length.
 Integrating~$D(t)$ into \eq\ref{eq:F_length_raw}, we have
 \begin{flalign*}
 %\label{eq:F_length}
-&\myquad[4]
+&\eqquadCost
 \embrd[V]{F_\mathrm{lgth}} =
 \frac{n-1}{n-2} \sum_{t=2}^{n-1}
 \left(
@@ -1391,7 +1391,7 @@ exactly one center.
 To this end, we require that
 \begin{flalign}
 \label{eq:CstrOneCenter}
-&\eqquad
+&\eqquadConstraintsX
 \embrd{\sum_{r\in P} x_{t,p,r}} =\embld{1} 
 \inquad \forall t \in {T}, \forall p \in P. &
 \end{flalign}
@@ -1406,7 +1406,7 @@ If~$r$ is not a center, then $x_{t,r,r}=0$.
 In either case,
 \begin{flalign}
 \label{eq:CstrAssign}
-&\eqquad
+&\eqquadConstraintsX
 \embrd{x_{t,p,r}} \leq \embld{x_{t,r,r}}
 \inquad \forall t \in {T}, \forall  p, r \in P. &
 \end{flalign}
@@ -1420,7 +1420,7 @@ specifying the number of centers
 for each point in time, that is,
 \begin{flalign}
 %\label{eq:CstrCountCenter}
-&\eqquad
+&\eqquadConstraintsX
 \embrd{\sum_{r\in P} x_{t,r,r}} =
 \embld{n-t+1} \inquad
 \forall t \in {T}, &
@@ -1432,7 +1432,7 @@ A center can disappear, but will never reappear afterwards.
 Hence,
 \begin{flalign}
 \label{eq:CstrNoReappear}
-&\eqquad
+&\eqquadConstraintsX
 \embrd{x_{t,r,r}} \le 
 \embld{x_{t-1,r,r}} \inquad 
 \forall t \in {T}\setminus \{1\},
@@ -1469,7 +1469,7 @@ and assigned to center~$r$ at time $t$
 This is expressed by
 \begin{flalign}
 \label{eq:CstrY1}
-&\eqquad
+&\eqquadConstraintsYZ
 \embrd{y_{t,p,o,r}} \geq 
 \embld{x_{t-1,p,o}+x_{t,p,r}-1} \inquad
 \forall t \in {T} \setminus \{1\}, 
@@ -1482,19 +1482,19 @@ then $y_{t,p,o,r}=0$.
 This is expressed by
 \begin{flalign}
 \label{eq:CstrY2}
-&\eqquad
+&\eqquadConstraintsYZ
 \begin{array}{@{}l}
 \embrd{y_{t,p,o,r}} \le \\
 \embrd{y_{t,p,o,r}} \le 
 \end{array}
-\embld{\hspace{0.5pt}
+\embld{\embshift
 	\begin{array}{@{}l}
 	x_{t-1,p,o} \\
 	x_{t,p,r}
 	\end{array}
 	\bigg\} 
 }
-\inquad \hspace{0.5pt}
+\inquad \embshift
 \forall t\in T\setminus \{1\}, 
 \forall	p,o,r \in P.&	
 \end{flalign}
@@ -1522,7 +1522,7 @@ to center~$r$ at time~$t$ ($x_{t,p,r}=x_{t,q,r}=1$),
 then~$z_{t,p,q,r}=1$.  This is expressed by
 \begin{flalign}
 \label{eq:CstrZ1}
-&\eqquad
+&\eqquadConstraintsYZ
 \embrd{z_{t,p,q,r}} \geq 
 \embld{x_{t,p,r}+x_{t,q,r}-1} \inquad
 \forall t \in T \setminus \{1,n\}, 
@@ -1533,19 +1533,19 @@ Second, if not both~$p$ and~$q$ are assigned to~$r$,
 then $z_{t,p,q,r}=0$.  This is expressed by
 \begin{flalign}
 \label{eq:CstrZ2}
-&\eqquad
+&\eqquadConstraintsYZ
 \begin{array}{@{}l}
 \embrd{z_{t,p,q,r}} \le  \\
 \embrd{z_{t,p,q,r}} \le 
 \end{array} 
-\embld{\hspace{0.5pt}
+\embld{\embshift
 	\begin{array}{@{}l}
 	x_{t,p,r} \\
 	x_{t,q,r}
 	\end{array}
 	\bigg\} 
 }
-\inquad \hspace{0.5pt}
+\inquad \embshift
 \forall t \in T \setminus \{1,n\}, 
 \forall p, q, r \in P.&	
 \end{flalign}
@@ -1559,7 +1559,7 @@ express
 the last type of constraint involving variables~$z_{t,p,q,r}$:
 \begin{flalign}
 \label{eq:CstrZabbrv}
-&\eqquad
+&\eqquadConstraintsYZ
 \embrd{z_{t,p,q}} = 
 \embld{\sum_{r \in P}z_{t,p,q,r}}
 \inquad 
@@ -1589,7 +1589,7 @@ In other words, as a function of time~$t$,
 $z_{t,p,q}$ is monotonically increasing:
 \begin{flalign}
 \label{eq:CstrTogether}
-&\eqquad
+&\eqquadConstraintsYZ
 \embrd{z_{t,p,q}} \ge 
 \embld{z_{t-1,p,q}} \inquad
 \forall t \in \{3,4,\ldots,n-1\},  
@@ -1672,22 +1672,44 @@ First, at time~$t$, polygon~$p$ must actually be assigned
 to center~$o$,
 \begin{flalign}
 \label{eq:CstrC_Part}
-&\eqquad
-\embrd[C]{c_{t,p,o,r}} \le 
-\embld[D]{x_{t,p,o}} \inquad
-\forall t 	 \in T\setminus \{n-1,n\},  
-\forall p, o, r \in P \text{~with}~o\ne r.&
+&\eqquadConstraints
+\begin{array}{@{}l}
+\embrd[C]{c_{t,p,o,r}} \le  \\
+\embrd[C]{} %an empty place
+\end{array} 
+\embld[D]{\embshift
+	\begin{array}{@{}l}
+	x_{t,p,o} \\
+	~ %an empty place
+	\end{array}
+}
+\inquad \embshift
+\begin{array}{@{}l}
+\forall t 	 \in T\setminus \{n-1,n\},\\
+\forall p, o, r \in P \text{~with}~o\ne r.
+\end{array} &	
 \end{flalign}
 
 Second, at time~$t$, polygon~$p$ has at least 
 one neighbor that is assigned to center~$r$,
 \begin{flalign}
 \label{eq:CstrC_Neighbor}
-&\eqquad
-\embrd[C]{c_{t,p,o,r}} \le 
-\embld[D]{\sum_{q\in N_\mathrm{nbr}(p)} x_{t,q,r}} \inquad
-\forall t 	 \in T\setminus \{n-1,n\},  
-\forall p, o, r \in P \text{~with}~o\ne r,&
+&\eqquadConstraints
+\begin{array}{@{}l}
+\embrd[C]{c_{t,p,o,r}} \le  \\
+\embrd[C]{} %an empty place
+\end{array} 
+\embld[D]{\embshift
+	\begin{array}{@{}l}\displaystyle
+	\sum_{q\in N_\mathrm{nbr}(p)} x_{t,q,r} \\
+	~ %an empty place
+	\end{array}
+}
+\inquad \embshift
+\begin{array}{@{}l}
+\forall t 	 \in T\setminus \{n-1,n\},\\
+\forall p, o, r \in P \text{~with}~o\ne r,
+\end{array} &	
 \end{flalign}
 where~$N_\mathrm{nbr}(p)$ represents 
 the set of polygons adjacent to~$p$.
@@ -1697,18 +1719,18 @@ Third, if polygon~$p$ is in patch~$o$ and~$p$ has at least
 one neighbor in patch~$r$, then we must enforce~$c_{t,p,o,r}=1$,
 \begin{flalign}
 \label{eq:CstrC_Positive}
-&\eqquad
+&\eqquadConstraints
 \begin{array}{@{}l}
 \embrd[C]{c_{t,p,o,r}} \ge  \\
 \embrd[C]{} %an empty place
 \end{array} 
-\embld[D]{\hspace{0.5pt}
+\embld[D]{\embshift
 	\begin{array}{@{}l}
 	x_{t,p,o} + x_{t,q,r} -1 \\
 	~ %an empty place
 	\end{array}
 }
-\inquad \hspace{0.5pt}
+\inquad \embshift
 \begin{array}{@{}l}
 \forall t 	 \in T\setminus \{n-1,n\},\\
 \forall p, o, r \in P \text{~with}~o\ne r,
@@ -1724,7 +1746,7 @@ In this case, we must make sure that
 the two patches are actually neighbors,
 \begin{flalign}
 \label{eq:CstrC_Agg}
-&\eqquad
+&\eqquadConstraints
 \embrd[C]{y_{t,o,o,r}} \le 
 \embld[D]{\sum_{p\in P} c_{t-1,p,o,r}} \inquad
 \forall t 	 \in T\setminus \{1,n\},  
@@ -1760,7 +1782,7 @@ we do not care whether or not the neighbor is a smallest one.
 Therefore, we have
 \begin{flalign}
 \label{eq:CstrSOneSmallest}
-&\eqquad
+&\eqquadConstraintW
 \embrd[S]{\sum_{o\in P}w_{t,o}} =
 \embld[T]{1} \inquad 
 \forall t \in {T}\setminus \{n\}.&
@@ -1786,7 +1808,7 @@ Consequently, we use the constraint
 \label{eq:CstrSInvolveSmallest}
 %\displaystyle doesn't work for \setminus
 %if we do \embld{\sum_{r\in P \setminus \{o\}}
-&\eqquad
+&\eqquadConstraintW
 \embrd[S]{w_{t,o}} \le 
 \embld[T]{\displaystyle\sum_{r\in P \setminus \{o\}} 
 \left(y_{t+1,o,o,r} +y_{t+1,r,r,o}\right)} \inquad
@@ -1801,7 +1823,7 @@ We define variable~$A_{t,r}$ as the area of
 patch~$r$ at time~$t$, 
 that is,
 \begin{flalign*}
-&\eqquad
+&\eqquadConstraintW
 \embrd[S]{A_{t,r}} = 
 \embld[T]{\sum_{p\in P} a_p \cdot x_{t,p,r},} &
 \end{flalign*}
@@ -1818,25 +1840,44 @@ i.e., $M=A_R$ (see \eq\ref{eq:f_type}).
 We require that
 %\begin{flalign}
 %\label{eq:CstrSIndeedSmallest}
-%&\eqquad
+%&\eqquadConstraints
 %\embrd[S]{A_{t,o} - M(1-w_{t,o})} \le
 %\embld[T]{A_{t,r}+M(1-x_{t,r,r})} \inquad
 %\forall t 	 \in {T}\setminus \{n\}, 
 %\forall o, r \in P \text{~with}~o\ne r. &
 %\end{flalign}
-\begin{flalign}
-\label{eq:CstrSIndeedSmallest}
-&\eqquad
-\embrd[S]{A_{t,o}} -
-\embld[T]{M(1-w_{t,o}) \le A_{t,r}+M(1-x_{t,r,r})} \inquad
-\forall t 	 \in {T}\setminus \{n\}, 
-\forall o, r \in P \text{~with}~o\ne r. &
-\end{flalign}
+%\begin{flalign}
+%\label{eq:CstrSIndeedSmallest_Remove}
+%&\eqquadConstraintW
+%\embrd[S]{A_{t,o}} -
+%\embld[T]{M(1-w_{t,o}) \le A_{t,r}+M(1-x_{t,r,r})} \inquad
+%\forall t 	 \in {T}\setminus \{n\}, 
+%\forall o, r \in P \text{~with}~o\ne r. &
+%\end{flalign}
 %\begin{equation}
 %A_{t,o} - M(1-w_{t,o}) \le A_{t,r}+M(1-x_{t,r,r}) \inquad
 %\forall t 	 \in {T}\setminus \{n\}, 
 %\forall o, r \in P \text{~with}~o\ne r.
 %\end{equation}
+\begin{flalign}
+\label{eq:CstrSIndeedSmallest}
+&\eqquadConstraintW
+\begin{array}{@{}l}
+\embrd[S]{A_{t,o}} -  \\
+\embrd[S]{} %an empty place
+\end{array} 
+\embld[T]{\embshift
+	\begin{array}{@{}l}
+	M(1-w_{t,o}) \le A_{t,r}+M(1-x_{t,r,r}) \\
+	~ %an empty place
+	\end{array}
+}
+\inquad \embshift
+\begin{array}{@{}l}
+\forall t 	 \in T\setminus \{n\},\\
+\forall o, r \in P \text{~with}~o\ne r.
+\end{array} &	
+\end{flalign}
 This constraint takes effect only when~$w_{t,o}=1$ 
 and~$x_{t,r,r}=1$, which indicates that 
 patch~$o$ is smaller than or equal to 
@@ -1918,17 +1959,17 @@ the resulting cost function for type change is a metric.
 \begin{figure}[tb]
 \captionsetup[subfigure]{labelformat=empty}
 \begin{subfigure}[b]{.49\textwidth}
-	\centering
-	\includegraphics[page=1]{AreaAgg_Data}
-	\caption{Start map, $5{,}537$ polygons, \\
-		at scale $1:50{,}000$}
+\centering
+\includegraphics[page=1]{AreaAgg_Data}
+\caption{Start map, $5{,}537$ polygons, \\
+	at scale $1:50{,}000$}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{.49\textwidth}
-	\centering
-	\includegraphics[page=2]{AreaAgg_Data}
-	\caption{Goal map, $734$ polygons, \\
-		at scale $1:250{,}000$}
+\centering
+\includegraphics[page=2]{AreaAgg_Data}
+\caption{Goal map, $734$ polygons, \\
+	at scale $1:250{,}000$}
 \end{subfigure}
 %
 %It doesn't work to directly use 
@@ -1936,9 +1977,9 @@ the resulting cost function for type change is a metric.
 \par\vspace{\baselineskip} %Leave a gap	figures
 %
 \begin{subfigure}{\textwidth}
-	\centering
-	\includegraphics[page=3]{AreaAgg_Data}
-	\caption{The 20 land-cover types appearing in our data}
+\centering
+\includegraphics[page=3]{AreaAgg_Data}
+\caption{The 20 land-cover types appearing in our data}
 \end{subfigure}
 \caption{The data of our case study.}
 \label{fig:AreaAgg_Data}
@@ -1993,10 +2034,12 @@ When~$W=200{,}000$, we are sure that
 we have found optimal solutions 
 for~$702$ of the~$734$ regions ($95.6\%$),
 while the greedy algorithm solved 
-only~$407$ ($55.4\%$) to optimality.
+only~$408$ ($55.6\%$) to optimality;
+see column \#OS in 
+Table~\ref{tab:AreaAgg_CaseStudy1_Statistics}.
 For the other~$32$ regions, 
 both algorithms have found feasible solutions 
-(see column \#over in 
+(see column \#FS in 
 Table~\ref{tab:AreaAgg_CaseStudy1_Statistics}).
 Although some of the feasible solutions may also be optimal,
 we cannot verify only from the cost values.
@@ -2058,19 +2101,19 @@ we cannot verify only from the cost values.
 Greedy 	& 408 
 &326~(44.4\%) 
 &             &5.5\cdot 10^3   &4.8\cdot 10^3   
-&53.2         &188.2           &120.7           &1'2~(44.6\%)\\
+&53.2         &188.2           &120.7           &0'1~(74.6\%)\\
 %
 %
-\Astar$_{\!\!200{,}000}$	& 702 
+\AstarTwo	& 702 
 &  32~(\parbox{\widthof{$4$}}{$\,$}$4.4\%$) 
 & 102 &  3.6\cdot 10^6 &    5.7\cdot 10^6	
-& 51.4 & 183.2 & 117.3 & 55'5~(93.1\%)\\
+& 51.4 & 183.2 & 117.3 & 51'6~(93.2\%)\\
 %
 %
-\Astar$_{\!\!400{,}000}$	& 705 
-&  29~(\parbox{\widthof{$4$}}{$\,$}$4.0\%$)
+\AstarFour	& 704 
+&  30~(\parbox{\widthof{$4$}}{$\,$}$4.1\%$)
 &  89 &  6.5\cdot 10^6 &    9.8\cdot 10^6
-& 51.4 & 183.1 & 117.2 & 102'6~(95.5\%) 
+& 51.4 & 183.1 & 117.2 & 93'1~(95.5\%)
 \\ \bottomrule			
 \end{tabular}
 \end{table*}
@@ -2084,7 +2127,7 @@ as~$k_\mathrm{sum}=\sum_{i=1}^N k_i$;
 recall that~$N$ is the number of regions.
 After increasing~$W$ to~$400{,}000$, 
 \Astar found optimal aggregation sequences 
-for only three more regions, 
+for only two more regions, 
 but $k_\mathrm{sum}$ decreased quite a bit, 
 from~$102$ to~$89$. 
 The numbers of regions that needed certain
@@ -2096,8 +2139,8 @@ but got (slightly) less cost when increasing~$W$ to~$400{,}000$.
 Although the number of regions 
 that needed overestimation is relatively small, 
 \Astar spent most of the running time 
-on those few regions:~$4.4\%$ and~$4.0\%$ of the regions 
-caused~$93.1\%$ and~$95.5\%$ of the total running time, 
+on those few regions:~$4.4\%$ and~$4.1\%$ of the regions 
+caused~$93.2\%$ and~$95.5\%$ of the total running time, 
 respectively 
 (see Table~\ref{tab:AreaAgg_CaseStudy1_Statistics}).
 
@@ -2124,8 +2167,8 @@ which results in~$R_\mathrm{type}\ge 1$
 and~$R_\mathrm{comp}\ge 1$.
 Ratio~$R_\mathrm{type} = 1$ means that our estimation for the 
 cost of type change is the best.
-A larger~$R_\mathrm{comp}$ means that our estimation for the 
-cost of shape is poorer.
+A larger~$R_\mathrm{comp}$ means 
+a poorer estimation for the cost of shape.
 
 \begin{table*}[tb]
 \caption{The costs in detail of some regions, 
@@ -2152,18 +2195,20 @@ cost of shape is poorer.
 
 
 According to columns~$n$ and~$K$ of \tab\ref{tab:CostsInDetail},
-\Astar managed to find optimal solutions 
+\AstarTwo managed to find optimal solutions 
 for all the regions with fewer than~$15$ polygons,
 and only found feasible solutions 
 for any region with more than~$21$ polygons.
-Among the~$702$ regions that \Astar solved to optimality,
+Among the~$702$ regions that 
+\AstarTwo solved to optimality,
 the greedy algorithm failed to 
-find optimal solutions for~$295$ regions.
+find optimal solutions for~$294$ regions.
 Solutions of the greedy algorithm cost
-at most~$41.7\%$ more than solutions of \Astar;
+at most~$41.7\%$ more than 
+solutions of \AstarTwo;
 for region~$85$, the greedy algorithm yields 
 a solution of cost~$0.777$, 
-while the solution of \Astar has cost~$0.548$
+while the solution of \AstarTwo has cost~$0.548$
 (see \fig\ref{fig:AreaAgg_CaseStudy1_Rg85}).
 As the patches in the two sequences are the same,
 the two results have the same cost of compactness.
@@ -2184,42 +2229,47 @@ This choice is a big mistake
 because the type of the largest patch on the start map
 will have to be changed twice during the aggregation.
 These assignments cost more than the sequence obtained by 
-\Astar, where the largest patch on the start map is changed to 
+\AstarTwo, 
+where the largest patch on the start map is changed to 
 the target type directly.
 
 Among the $32$~regions that 
-\Astar failed to solve optimally,
-the greedy algorithm outperformed \Astar 
+\AstarTwo failed to solve optimally,
+the greedy algorithm outperformed \AstarTwo 
 for~$15$ regions ($46.9\%$).
 %
 Among these, solutions of the greedy algorithm 
-cost at most~$15.9\%$ less than solutions of \Astar;
+cost at most~$15.9\%$ less than solutions of \AstarTwo;
 for region~$543$, the greedy algorithm yields 
 a solution of cost~$0.112$, 
-while the solution of \Astar costs~$0.134$. 
-For this instance, \Astar used overestimation parameter~$K=7$
+while the solution of \AstarTwo costs~$0.134$. 
+For this instance, 
+\AstarTwo used overestimation parameter~$K=7$
 (marked in \tab\ref{tab:CostsInDetail}).
 \fig\ref{fig:AreaAgg_CaseStudy1_Rg543} shows 
 some intermediate results obtained by
-\Astar and the greedy algorithm.
+\AstarTwo and the greedy algorithm.
 Interestingly, the two methods produced the same sequence until 
 there were~$8$ patches left.
-Then due to the overestimation, \Astar did some bad moves
+Then due to the overestimation, 
+\AstarTwo did some bad moves
 because the bad aggregation sequence still seemed better 
 than other sequences.
 In contrast, the greedy algorithm was looking for locally good 
 aggregations.
 %
-Among the~$32$ regions that \Astar failed to solve optimally,  solutions of the greedy algorithm cost at most~$17.4\%$ 
-more than solutions of \Astar; 
+Among the~$32$ regions that 
+\AstarTwo failed to solve optimally,  
+solutions of the greedy algorithm cost at most~$17.4\%$ 
+more than solutions of \AstarTwo; 
 for region~$155$, the greedy algorithm yields 
 a solution of cost~$0.372$, while
-the solution of \Astar costs~$0.317$
+the solution of \AstarTwo costs~$0.317$
 (marked in \tab\ref{tab:CostsInDetail}).
 
 Finally, an optimal aggregation sequence of region~$53$
 (third-last row in \tab\ref{tab:CostsInDetail})
-obtained by \Astar
+obtained by \AstarTwo
 is shown in \fig\ref{fig:AreaAgg_CaseStudy1_Rg53}.
 
 \begin{figure}[tb]
@@ -2285,14 +2335,14 @@ a combination of the costs
 of type change and length (see \eq\ref{eq:g_2}).
 For \Astar, we overestimated 
 whenever we could not find a solution after 
-having visited~$W=200{,}000$ nodes (see 
-Sec.~\ref{sec:AreaAgg_AStar}).
+having visited~$W=200{,}000$ nodes 
+(see \sect\ref{sec:AreaAgg_AStar}).
 The most time-consuming instance for \Astar was region~$94$,
-for which \Astar took~$111.5\,$s (including repetitions)
+for which \Astar took~$104.1\,$s (including repetitions)
 to find a feasible solution 
 with overestimation factor~$K=31$.
 To avoid waiting too long,
-we set the time limit as~$112\,$s 
+we set the time limit as~$100\,$s 
 for our ILP to run on one region.
 Note that the time limit includes
 the time that our ILP uses 
@@ -2304,7 +2354,8 @@ a feasible solution (if found) will be returned.
 For some large instances, 
 the ILP cannot find any solution.
 
-Using a similar format as in \tab\ref{tab:AreaAgg_CaseStudy1_Statistics},
+Using a similar format as in 
+\tab\ref{tab:AreaAgg_CaseStudy1_Statistics},
 we present the statistics in 
 \tab\ref{tab:AreaAgg_CaseStudy2_Statistics}.
 \Astar found optimal solutions 
@@ -2312,7 +2363,7 @@ for~$695$ of the~$734$ regions ($94.7\%$).
 Again, it spent most of the running time 
 on the few regions that needed 
 overestimation:~$5.3\%$ of the regions 
-caused~$92.1\%$ of the total running time.
+caused~$92.3\%$ of the total running time.
 The solutions by \Astar cost~$438.2$ in total, 
 which is~$3.9\%$ less than~$455.8$, 
 the total cost of the solutions by the greedy algorithm.
@@ -2325,8 +2376,8 @@ the total cost of the solutions by the greedy algorithm.
 	The notations are the same as in
 	\tab\ref{tab:AreaAgg_CaseStudy1_Statistics}.
 	%
-	$\sum g_\mathrm{type}$, $\sum g_\mathrm{comp}$, 
-	and~$\sum g_1$
+	$\sum g_\mathrm{type}$, $\sum g_\mathrm{lgth}$, 
+	and~$\sum g_2$
 	respectively denotes the sums of~$g_\mathrm{type}(\Pgoal)$,
 	$g_\mathrm{lgth}(\Pgoal)$, and~$g_2(\Pgoal)$ 
 	over all the~$734$ instances 
@@ -2345,32 +2396,32 @@ the total cost of the solutions by the greedy algorithm.
 \multicolumn{1}{c}{\#nodes} & 
 \multicolumn{1}{c}{\#arcs} & 
 \multicolumn{1}{c}{$\sum g_\mathrm{type}$} & 
-\multicolumn{1}{c}{$\sum g_\mathrm{comp}$} & 
+\multicolumn{1}{c}{$\sum g_\mathrm{lgth}$} & 
 \multicolumn{1}{c}{$\sum g_1$} & 
 \multicolumn{1}{c}{Time (min)} \\ 
 \midrule
 Greedy 		 &430             
 &304~(41.4\%)    
 &            &5.5\cdot 10^3   &4.8\cdot 10^3   
-&53.0        &858.5           &455.8           &1'2~(41.5\%)\\
+&53.0        &858.5           &455.8           &0'1~(70.7\%)\\
 %
 %
-\Astar$_{\!\!200{,}000}$	& 695
+\AstarTwo	& 695
 & 39~(\parbox{\widthof{$4$}}{$\,$}$5.3\%$)	
 & 150 	& 3.7\cdot 10^6 & 7.3\cdot 10^6 
-& 52.0 	& 824.5 & 438.2 & 53'6~(91.8\%)	\\
+& 52.0 	& 824.5 & 438.2 &44'8~(92.3\%)	\\
 %
 %
-ILP$_{112\,\mathrm{s}}$		& 453
-& 66~(\parbox{\widthof{$4$}}{$\,$}$9.0\%$)  			 	
+\ILPOne		& 449
+& 69~(\parbox{\widthof{$4$}}{$\,$}$9.4\%$)  			 	
 &		&				&				
-&		&		&		& 470'4~(26.2\%)\\
+&		&		&		& 421'5~(27.3\%) \\
 %
 %
-ILP$_{300\,\mathrm{s}}$		& 496
-& 51~(\parbox{\widthof{$4$}}{$\,$}$6.9\%$)  			 	
+\ILPTwo		& 475
+& 57~(\parbox{\widthof{$4$}}{$\,$}$7.8\%$)  			 	
 &		&				&				
-&		&		&		& 795'4			\\ 
+&		&		&		& 719'2~(26.4\%) \\ 
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -2386,45 +2437,46 @@ with more than~$21$ polygons.
 In the~$39$ (out of~$734$) regions 
 that \Astar failed to solve optimally,
 the greedy algorithm outperformed \Astar 
-for~$25$ regions~($64.1\%$), 
-which is~$17.2\%$ more comparing to the first experiment.
+for~$8$ regions~($20.5\%$), 
+which is~$26.4\%$ less comparing to the first experiment ($46.9\%$).
 %
-The ILP managed to find optimal solutions 
+\ILPOne managed to find optimal solutions 
 for all the regions with fewer than~$8$ polygons,
 and failed to find optimal solutions
-for any region with more than~$9$ polygons.
+for any region with more than~$8$ polygons.
 In none of the~$39$ regions 
 that \Astar failed to solve optimally
-did the ILP find a feasible solution.
-Overall, the ILP found optimal solutions for~$455$ regions
-and found feasible solutions for~$70$ regions.
+did \ILPOne find a feasible solution.
+Overall, \ILPOne 
+found optimal solutions for~$449$ regions
+and found feasible solutions for~$69$ regions.
 The distributions of these regions are shown in
 \figs\ref{fig:AreaAgg_CaseStudy2_Percentage_Optimal}
 and~\fig\ref{fig:AreaAgg_CaseStudy2_Percentage_Feasible}
-There are~$208$ regions for which 
-our ILP failed to find any solution.
-For~$23$ of those regions, 
+There are~$216$ regions for which 
+our \ILPOne failed to find any solution.
+For~$22$ of those regions, 
 we did not have enough main memory 
 to set up the variables and constraints;
-each of these regions has~$20$ polygons at least.
-For~$64$ of those regions, 
-our ILP ran out of the main memory 
+each of these regions has~$21$ polygons at least.
+For~$67$ of those regions, 
+our \ILPOne ran out of the main memory 
 before finding any feasible solution;
 these regions have~$14$ to~$20$ polygons.
 Note that we allowed our program to use~$3\,$GB 
 of the main memory at most.
-For~$118$ of the $208$~regions, 
-our ILP failed to find any solution
-during the time limit ($112\,$s);
-these regions have~$9$ to~$14$ polygons.
-For the remaining~$3$ regions, 
+For~$123$ of the $216$~regions, 
+our \ILPOne failed to find any solution
+during the time limit;
+these regions have~$9$ to~$13$ polygons.
+For the remaining~$4$ regions, 
 the reason of our ILP's failing is unclear 
 due to the fact that 
 the solver CPLEX is like a black box for us.
-After we increased the time limit to~$300\,$s for each region, 
-the ILP solved~$496$ regions to optimality, which 
-is~$41$ regions more than using the time limit~$112\,$s.
-Every of the~$41$ regions has~$6$ to~$10$ polygons.
+After we increased the time limit to~$200\,$s for each region, 
+\ILPTwo solved~$475$ regions to optimality, which 
+is~$26$ regions more than using the time limit~$100\,$s.
+Every of the~$26$ regions has~$6$ to~$10$ polygons.
 \fig\ref{fig:AreaAgg_CaseStudy2_Percentage_Optimal}
 shows the percentages of the regions 
 that are solved optimally by the three algorithms.
@@ -2434,7 +2486,7 @@ that the three algorithms found feasible solutions.
 \fig\ref{fig:AreaAgg_CaseStudy2_ILP} shows 
 the number of regions for which 
 the ILP found optimal, feasible, or no solutions 
-when using the two time limits, i.e., $112\,$s and~$300\,$s.
+when using the two time limits, i.e., $100\,$s and~$200\,$s.
 
 
 \begin{figure}[tb]
@@ -2464,7 +2516,7 @@ when using the two time limits, i.e., $112\,$s and~$300\,$s.
 \includegraphics[page=3]{AreaAgg_CaseStudy2_Plot}
 \caption{The number of regions for which
 	our ILP found optimal, feasible, or no solutions 
-	when using time limits~$112\,$s and~$300\,$s.
+	when using time limits~$100\,$s and~$200\,$s.
 	Using more time, our ILP was able to 
 	solve more instances to optimality.}
 \label{fig:AreaAgg_CaseStudy2_ILP}

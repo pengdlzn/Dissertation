@@ -318,6 +318,11 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 %%Area Aggregation
 %%**************************************************************
 \newcommand{\Astar}{A$^{\!\star}$\xspace}
+\newcommand{\AstarTwo}{A$^{\!\star}_{\,200{,}000}$\xspace}
+\newcommand{\AstarFour}{A$^{\!\star}_{\,400{,}000}$\xspace}
+\newcommand{\ILPOne}{ILP$_{100\,\mathrm{s}}$\xspace}
+\newcommand{\ILPTwo}{ILP$_{200\,\mathrm{s}}$\xspace}
+
 \newcommand{\tstar}{\ensuremath{t\xspace}}
 \newcommand{\Pistar}{\ensuremath{\Pi}} % 
 %\newcommand{\Comp}[1]{c_#1} % 
@@ -346,8 +351,16 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 \newcommand{\tabs}{Tables~}
 \newcommand{\chaps}{Chapters~}
 \newcommand{\myquad}[1][1]{\hspace*{#1em}\ignorespaces}
-\newcommand{\eqquad}{\myquad[6]}
+\newcommand{\eqquadVariable}{\myquad[6]}
+\newcommand{\eqquadCost}{\myquad[2]}
+\newcommand{\eqquadConstraintsX}{\myquad[4]}
+\newcommand{\eqquadConstraintsYZ}{\myquad[4]}
+\newcommand{\eqquadConstraints}{\myquad[4]}
+\newcommand{\eqquadConstraintW}{\myquad[3]}
 \newcommand{\inquad}{\qquad}
+\newcommand{\inquadC}{\qquad}
+%\newcommand{\embshift}{\hspace{0.5pt}}%for tsas, because of \begin{array}
+\newcommand{\embshift}{\hspace{-3pt}}%for my thesis, because of \begin{array}
 
 %M or N are default tags. 
 %The boxes using the same tag will have the same length. 
