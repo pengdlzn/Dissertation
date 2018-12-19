@@ -241,7 +241,7 @@
 
 % Graphic package
 \if@graphicx
-	\RequirePackage[final]{graphicx}
+%	\RequirePackage[final]{graphicx} %Dongliang's change, we have \RequirePackage{tikz} at the very beginning
 	\graphicspath{{images/}}
 	
 \newcommand{\printLogo}{\includegraphics[height=1cm]{WUPlogo_titlepage}}
