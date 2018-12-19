@@ -1,3 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%FINAL VERSION:
+%look for numbered but unlabelled equations
+%\usepackage{refcheck}%compile twice in order to see the effects
+
+
+
 \usepackage[utf8]{inputenc}
 \graphicspath{{images/}}
 
@@ -376,3 +384,18 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 {\eqmakebox[#1][l]{$\displaystyle#2$}}
 \newcommand{\embrd}[2][N]
 {\eqmakebox[#1][r]{$\displaystyle#2$}}
+
+%make package refcheck compatible with package hyperref 
+\makeatletter
+\AtBeginDocument{%
+	\@ifpackageloaded{refcheck}{%
+		\@ifundefined{hyperref}{}{%
+			\let\T@ref@orig\T@ref
+			\def\T@ref#1{\T@ref@orig{#1}\wrtusdrf{#1}}%
+			\let\@refstar@orig\@refstar
+			\def\@refstar#1{\@refstar@orig{#1}\wrtusdrf{#1}}%
+			\DeclareRobustCommand\ref{\@ifstar\@refstar\T@ref}%
+		}%
+	}{}%
+}
+\makeatother

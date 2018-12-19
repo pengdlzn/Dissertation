@@ -397,10 +397,10 @@ we define that two buildings are too close if their distance is
 less than
 $\varepsilon= 0.2\,\mathrm{mm}$ on map.
 The real separation threshold at time $t$ is
-\begin{equation}
+\begin{equation*}
 \label{eq:d_epsilont}
 d_{\varepsilon, t} = \varepsilon \cdot M_t.
-\end{equation}
+\end{equation*}
 
 \begin{figure}[tb]
 \centering
@@ -472,7 +472,9 @@ bridges have been added.
 These bridges have a width of~$2\dtrm{G}$ at time~$t$.
 This setting guarantees that no bridge is thin when~$t=1$.
 As we aggregated all the buildings that will become too close, 
-all the separation distances between each pair of buildings (or aggregates) are larger than distance~$d_{\varepsilon, t}$.
+all the separation distances 
+between each pair of buildings (or aggregates) 
+are larger than distance~$d_{\varepsilon, t}$.
 Specifically, if a group of buildings 
 will be aggregated at time~$t=1$, 
 we say that these buildings are in the same \emph{goal group}. 
