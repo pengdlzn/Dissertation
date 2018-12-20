@@ -14,32 +14,18 @@ for Area Aggregation---\hspace{0.95mm}~\\
 
 The land-cover area is of significant importance on maps.
 When users zoom out, some land-cover areas become
-tiny polygons, which result in visual clutter.
+too tiny to be seen, which result in visual clutter.
 In order to provide users 
 with good visual experience during zooming operations,
-we want to remove these tiny polygons.
-\textcite{Smith2007MasterMap,Thiemann2018LandCover} 
-proposed to split these tiny parcels 
-and then to merge the split parts into the neighboring polygons.
-\textcite{Meijers2016Split} developed an algorithm 
-to split a polygon (the splittee) 
-based on constrained Delaunay triangulation.
-During splitting, their algorithm is capable of
-taking into account
-the attractivenesses between the splittee and its neighbors.
-When merging, a more attractive neighbor 
-will get a larger portion from the splittee.
-However, our method does not consider splitting.
-We focus on aggregating areas.
-A \emph{land-cover map} is a planar subdivision in which each 
-area belongs to a
-land-cover class or \emph{type}.
-Suppose that there are two land-cover maps of 
-different scales 
+we want to remove these tiny areas.
+We plan to achieve this goal by 
+aggregating them into neighboring land-cover areas.
+A \emph{land-cover map} is a planar subdivision in which 
+each area belongs to a land-cover class or \emph{type}.
+Suppose that there are two land-cover maps of different scales 
 that cover the same spatial region.
 We consider the problem of finding a sequence 
-of small incremental changes 
-that gradually transforms 
+of small incremental changes that gradually transforms 
 the larger-scale map (the \emph{start map}) to 
 the smaller-scale map (the \emph{goal map}).
 We use this sequence to generate and show land-cover maps at 
@@ -47,30 +33,28 @@ intermediate scales (see \fig\ref{fig:AreaAgg_example}).
 In this way, we try to avoid large and discrete changes
 during zooming.
 
-With the same motivation, a strategy of hierarchical schemes 
-has been proposed.
+With the same motivation, 
+a strategy of hierarchical schemes has been proposed.
 This strategy generalizes a more-detailed representation 
 to obtain a less-detailed representation 
 based on small incremental changes, 
-e.g., the Generalized Area Partitioning tree 
-(GAP-tree),
+e.g., the Generalized Area Partitioning tree (GAP-tree),
 which can be constructed if only the larger-scale map is given
 \citep{vanOosterom1995Development} 
 or if both the larger-scale map and the smaller-scale map 
 are given \citep{HaunertDilo2009}.
 Typically, the next change in such a sequence 
-is determined locally, 
-in a greedy fashion.  
+is determined locally, in a greedy fashion.  
 If we insist on finding a sequence that is, 
 according to some global measure, optimal, 
 the problem becomes complicated.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics{AreaAgg_example}
-	\caption{The input and a possible output for an instance of 
-	our problem}
-	\label{fig:AreaAgg_example}
+\centering
+\includegraphics{AreaAgg_example}
+\caption{The input and a possible output for an instance of 
+our problem}
+\label{fig:AreaAgg_example}
 \end{figure}
 
 We assume that there exist many-to-one relationships between the 
@@ -138,7 +122,7 @@ based on the \Astar algorithm
 (\sect\ref{sec:AreaAgg_AStar}).
 Third, we model our pathfinding problem as
 an integer linear program, 
-and then solve this program, minimizing our cost function.
+and then solve this program with minimizing our cost function.
 Our linear program uses binary (0--1) variables. 
 These variables help us to model our problem, 
 but in general, it is NP-hard to solve an ILP optimally.
@@ -148,7 +132,7 @@ we are able to see whether it is worth
 to use \Astar or the ILP-based algorithm, 
 which are more complex and slower.  
 Our case study 
-uses a data set of the German topographic database ATKIS 
+uses a dataset of the German topographic database ATKIS 
 (see \sect\ref{sec:AreaAgg_CaseStudy}).
 In the conclusions, we show possible ways to improve our 
 methods in \sect\ref{sec:AreaAgg_Conclusions}. 
@@ -163,6 +147,22 @@ the binary line generalized (BLG) tree
 \citep{vanOosterom1995Development},
 which is a hierarchical data structure that 
 defines a gradual line simplification process.
+%
+Although splitting polygons is also a good strategy,
+we do not integrate it into our method at this moment.
+\textcite{Smith2007MasterMap,Thiemann2018LandCover} 
+proposed to split these tiny polygons 
+and then to merge the split parts into the neighboring polygons.
+\textcite{Meijers2016Split} developed an algorithm 
+to split a polygon (the splittee) 
+based on constrained Delaunay triangulation.
+During splitting, their algorithm is capable of
+taking into account
+the attractivenesses between the splittee and its neighbors.
+When merging, a more attractive neighbor 
+will get a larger portion from the splittee.
+However, our method does not consider splitting.
+We focus on aggregating areas.
 
 \section{Preliminaries}
 \label{sec:AreaAgg_Preliminaries}
@@ -1922,9 +1922,9 @@ both primal and dual presolve reductions\footnote{
 	\url{http://www-01.ibm.com/support/docview.wss?uid=swg1RS02094},
 	Accessed: Nov 12, 2017.}.
 
-We tested our method on a data set 
+We tested our method on a dataset 
 from the German topographic database ATKIS DLM~50. 
-The data set represents the place 
+The dataset represents the place 
 ``Buchholz in der Nordheide'' at scale~$1:50{,}000$. 
 Our start map is the result of collapsing areas 
 by \citet[\chap~6]{haunert2008f}.
@@ -1990,7 +1990,7 @@ the resulting cost function for type change is a metric.
 \includegraphics[page=4]{AreaAgg_Data}
 \caption{Distribution of region sizes:
 	the $y$-axis shows how many regions 
-	of a given size range are contained in our data set.}
+	of a given size range are contained in our dataset.}
 \label{fig:AreaAgg_NumRegion}
 \end{figure}
 
@@ -2371,14 +2371,15 @@ the total cost of the solutions by the greedy algorithm.
 \begin{table*}[tb]
 \small	
 \centering
-\caption{A comparison of the greedy algorithm and \Astar		
+\caption{A comparison of the greedy algorithm, 
+    the \Astar algorithm, and the ILP-based algorithm		
 	when using cost function~$g_2$ (see \eq\ref{eq:g_2}).
 	The notations are the same as in
 	\tab\ref{tab:AreaAgg_CaseStudy1_Statistics}.
 	%
-	$\sum g_\mathrm{type}$, $\sum g_\mathrm{lgth}$, 
+	Denotations~$\sum g_\mathrm{type}$, $\sum g_\mathrm{lgth}$, 
 	and~$\sum g_2$
-	respectively denotes the sums of~$g_\mathrm{type}(\Pgoal)$,
+	respectively represent the sums of~$g_\mathrm{type}(\Pgoal)$,
 	$g_\mathrm{lgth}(\Pgoal)$, and~$g_2(\Pgoal)$ 
 	over all the~$734$ instances 
 	(see \eqs\ref{eq:g_type}, \ref{eq:g_length}, 
@@ -2397,7 +2398,7 @@ the total cost of the solutions by the greedy algorithm.
 \multicolumn{1}{c}{\#arcs} & 
 \multicolumn{1}{c}{$\sum g_\mathrm{type}$} & 
 \multicolumn{1}{c}{$\sum g_\mathrm{lgth}$} & 
-\multicolumn{1}{c}{$\sum g_1$} & 
+\multicolumn{1}{c}{$\sum g_2$} & 
 \multicolumn{1}{c}{Time (min)} \\ 
 \midrule
 Greedy 		 &430             
