@@ -111,7 +111,7 @@ by integrating our results into the \emph{space-scale cube}
 We formally define our problem, 
 introduce the basic concepts of our method, 
 and analyze the size of our model in a worst-case scenario
-(see \sect\ref{sec:AreaAgg_Preliminaries}).
+(\sect\ref{sec:AreaAgg_Preliminaries}).
 We define our cost functions in 
 \sect\ref{sec:AreaAgg_CostFunctions}.
 Then, we compare three methods for finding aggregation sequences.
@@ -133,7 +133,7 @@ to use \Astar or the ILP-based algorithm,
 which are more complex and slower.  
 Our case study 
 uses a dataset of the German topographic database ATKIS 
-(see \sect\ref{sec:AreaAgg_CaseStudy}).
+(\sect\ref{sec:AreaAgg_CaseStudy}).
 In the conclusions, we show possible ways to improve our 
 methods in \sect\ref{sec:AreaAgg_Conclusions}. 
 
@@ -141,14 +141,17 @@ We do not deal with the simplification of lines in this paper,
 since this can be handled separately from the
 aggregation of areas, for example, 
 by using one method of 
-\textcite{Douglas1973,Saalfeld1999,Wu2004DP}.
+\textcite{Douglas1973},
+\textcite{Saalfeld1999},
+or \textcite{Wu2004DP}.
 Those methods can be used to set up 
 the binary line generalized (BLG) tree
 \citep{vanOosterom1995Development},
 which is a hierarchical data structure that 
 defines a gradual line simplification process.
 %
-Although splitting polygons is also a good strategy,
+Although splitting polygons is a good step
+of generalizing land-cover areas,
 we do not integrate it into our method at this moment.
 \textcite{Smith2007MasterMap,Thiemann2018LandCover} 
 proposed to split these tiny polygons 
@@ -161,8 +164,7 @@ taking into account
 the attractivenesses between the splittee and its neighbors.
 When merging, a more attractive neighbor 
 will get a larger portion from the splittee.
-However, our method does not consider splitting.
-We focus on aggregating areas.
+
 
 \section{Preliminaries}
 \label{sec:AreaAgg_Preliminaries}

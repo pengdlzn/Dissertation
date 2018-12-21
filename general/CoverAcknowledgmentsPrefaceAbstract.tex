@@ -50,8 +50,8 @@ Defense Examiners:	& ~Prof.\ Dr.\ Andreas N\"uchter\\
 In his thesis, Dongliang Peng investigates computational aspects of
 a fundamental problem in cartography called \emph{generalization}.
 Cartographic generalization is the problem that has to be solved
-when producing a small-scale map (say, at scale 1:100,000) from data
-collected at a larger scale (say, 1:10,000).  Traditionally, this
+when producing a small-scale map (say, at scale $1:15{,}000$) from data
+collected at a larger scale (say, $1:15{,}000$).  Traditionally, this
 has been a labor-intensive task that required highly-skilled
 cartographers with expertise in both geodesy and map-making.  How
 should a row of ten houses be represented if the distances between
@@ -126,14 +126,14 @@ He shows how to generalize building footprints continuously such
 that well-defined blocks of buildings appear when the user of a
 digital map zooms out far enough.  Here, only the building
 footprints are given.  The approach animates a growing-process
-between the start scale and a goal scale that can be set by the
-user.  The algorithm computes a drawing for the goal scale by a
-wisely chosen sequence of dilations and erosions.
-%(which have been used for building simplification before).  
+between the start scale and a target scale that can be set by the
+user.  The algorithm computes a drawing for the target scale by a
+wisely chosen sequence of dilations and erosions
+(which have been used for building simplification before).  
 In order to animate the
 growing-process in a continuous fashion, the buildings are expanded
 in a simple way: by moving their boundaries at constant speed and by
-clipping any part that leaves the goal footprint.  In order to
+clipping any part that leaves the target footprint.  In order to
 guarantee a certain minimum distance between two buildings, the
 algorithm builds bridges between close-enough buildings.  
 The computation of the bridges is based on 
@@ -206,8 +206,7 @@ This is why some digital maps
 are trying to make the zooming as continuous as they can.
 The process of producing maps at different scales
 with smooth changes 
-is called \emph{continuous map generalization}.
-
+is called \emph{continuous map generalization}.\newline\indent
 In order to produce maps of high quality,
 cartographers often take into account additional requirements.
 These requirements are transferred to models 
@@ -222,29 +221,23 @@ when we deal with \emph{continuous} map generalization.
 In this area, there are requirements 
 not only for a specific map
 but also for relations between maps at difference scales. 
-%
 This thesis is about continuous map generalization
-based on optimization. 
-
+based on optimization.\newline\indent
 First, we show the background of our research topics.
-%
 Second, we find optimal sequences 
 for aggregating land-cover areas.
 We compare the \Astar algorithm and integer linear programming
 in completing this task.
-%
 Third, we continuously generalize 
 county boundaries to provincial boundaries
 based on compatible triangulations.
 We morph between the two sets of boundaries, 
 using dynamic programming to 
 compute the correspondence.
-%
 Fourth, we continuously generalize buildings to built-up areas 
 by aggregating and growing.
 In this work, we group buildings with the help of a
 minimum spanning tree.
-%
 Fifth, we define vertex trajectories that allow us
 to morph between polylines.
 We require that both the angles and the edge lengths 
@@ -252,12 +245,9 @@ change linearly over time.
 As it is impossible to fulfill all of these requirements
 simultaneously, 
 we mediate between them using least-squares adjustment.
-%
 Sixth, we discuss the performance 
 of some commonly used data structures 
-% (e.g., SortedDictionary and SortedSet) 
 for a specific spatial problem.
-%
 Seventh, we conclude this thesis 
 and present open problems.
 }

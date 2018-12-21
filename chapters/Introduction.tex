@@ -251,7 +251,7 @@ administrative boundaries based on an ILP.
 Their aim was to minimize the number of edges
 while keeping the result boundaries close to the original ones
 and avoiding any intersection. 
-At the same time, the required that every city, 
+At the same time, they required that every city, 
 represented by a point, 
 stays in the same face as before the generalization.
 
@@ -261,11 +261,10 @@ stays in the same face as before the generalization.
 Optimization becomes more delicate
 when we deal with CMG.
 In this field, we have requirements 
-not only for a specific map, 
-but also for relations between maps. 
+not only for a specific map
+but also for relations between maps at difference scales. 
 %
-Nevertheless, some optimization techniques 
-have been applied to CMG.
+Some optimization techniques have been applied to CMG.
 In the aforementioned article,
 \textcite{Noellenburg2008} used dynamic programming
 to match points of two polylines to support morphing
@@ -273,9 +272,8 @@ according to some matching cost.
 \textcite{sahw-oarps-ICAGW13} used 
 mixed-integer linear programming 
 to select points of interest.
-They required that 
-a point, once disappeared, should not show up again 
-during zooming out. 
+They required that a point, once disappeared, 
+should not show up again during zooming out. 
 They also required that any two points should be 
 sufficiently far away from each other.
 Based on these requirements, 
@@ -702,52 +700,52 @@ Alexander Wolff~\parencite[see][]{Peng2014DataStr}.
 \end{figure}
 
 
-{\setlength{\parskip}{0ex}
+{%\setlength{\parskip}{0ex}
 
 \section{Acknowledgments}
 
 Obtaining a PhD in Germany was 
-one of the best things I could dream of.
-When I finally got the chance to study in Germany,
-I was thrilled and I wanted to do my best.
-Now I feel so proud of myself because I have come this far.
+one of the best things I~could dream of.
+When I~finally got the chance to study in Germany,
+I~was thrilled and I~wanted to do my best.
+Now I~feel so proud of myself because I~have come this far.
 Of course, this thesis would not have been possible
 if it was not for the help of many people.
 
-First of all, I would like to thank my supervisor, 
+First of all, I~would like to thank my supervisor, 
 Prof.\ Dr.\ Alexander ``Sascha'' Wolff.
 I~am grateful to him for giving me 
 the opportunity to pursue my PhD in his group.
 The research work was challenging,
-but I enjoyed working with him.
+but I~enjoyed working with him.
 Sascha has been very patient with me.
-When I first came to Germany, I could barely speak English.
+When I~first came to Germany, I~could barely speak English.
 He had to put a lot of effort into understanding me
 when we were doing research.
 Sascha advised me to take lectures and sent me to conferences
-so that I could learn as much as possible.
+so that I~could learn as much as possible.
 Sascha always encouraged me to ask questions
-because I can benefit from the answers.
+because I~can benefit from the answers.
 He told me not to be shy even when 
-I fear that the questions are stupid;
+I~fear that the questions are stupid;
 other people in the audience may appreciate my asking
 because they may have the same questions,
 but don't dare to ask.
 %% Here, the point is not so clear (and not so exciting); I'd drop it.
 % Sascha always responded my requests promptly.
-% Once, I noticed that I was missing a letter from him 
+% Once, I~noticed that I~was missing a letter from him 
 % for some business on the next day
 % while he was attending a conference in Italy.
-% Nevertheless, after I had written him an email,
+% Nevertheless, after I~had written him an email,
 % he sent me the letter before 20:00.
 At some point,
 Sascha even negotiated with my landlords 
-when I moved from an apartment into another.
+when I~moved from an apartment into another.
 Moreover, Sascha has a good sense of humor, 
 and we often cracked jokes together.
-I was lucky to have him as my supervisor.
+I~was lucky to have him as my supervisor.
 
-I also thank my second supervisor, 
+I~also thank my second supervisor, 
 Prof.\ Dr.\ Jan-Henrik Haunert.  
 In his lecture \emph{Algorithms for GIS}, 
 he taught me many fundamentals of GIScience.  
@@ -759,16 +757,16 @@ using the \Astar algorithm
 for finding optimal sequences for area aggregation,
 which led to the most important chapter of my thesis.
 Furthermore, he recommended many suitable conferences to me
-when I wanted to publish my papers.
+when I~wanted to publish my papers.
 % He taught me the ``optimization mantra'' (explain?).
-% DP: I do not understand ``optimization mantra''
+% DP: I~do not understand ``optimization mantra''
 % AW: A "mantra" is a sequence of words that are repeated over and
 % over because they are so important:
 % https://en.wikipedia.org/wiki/Mantra
 % Mantras [....] helps to induce an altered state of consciousness.
 % :-)
 
-I am grateful to all the colleagues in our group:
+I~am grateful to all the colleagues in our group:
 Moritz Beck, Johannes Blum, Benedikt Budig, 
 Steven Chaplick, Thomas van Dijk, 
 Martin Fink, Oksana Firman, Krzysztof Fleszar, 
@@ -781,82 +779,95 @@ We often had coffees together,
 and it was a lot of fun to play squash and to go out for our excursions.
 It was nice that our group always had lunch together
 so that we had plenty of chances to learn from each other.
-Indeed, I sometimes took advantage of these lunches
+Indeed, I~sometimes took advantage of these lunches
 to get suggestions regarding my research work.
+%
+I~am also grateful to Sigrid Keller.
+She found an apartment for me 
+before I~arrived Germany.
+Then, she picked me up at the train station of W\"urzburg
+and brought me to that apartment.
+She was very kind to me 
+and helped me to fill many forms related to my PhD study.
 
-I am indebted to Dr.\ Krzysztof Fleszar for 
+I~am indebted to Dr.\ Krzysztof Fleszar for 
 helping me a lot during my PhD study.
 He is very warm-hearted.
-Whenever he found that I had problems to understand a paper,
+Whenever he found that I~had problems to understand a paper,
 he read that paper and then explained it to me.
-He always helped when I needed a German--English translator.
+He always helped when I~needed a German--English translator.
 He helped me move twice using the van of his family.
 On the day before my defense, he worked as hard as me
 to read my slides and to give me feedback.
 He has always invited me to join his parties, 
-and I am grateful to him for his invitations.
+and I~am grateful for his invitations.
 
-I thank Dr.\ Guillaume Touya for inviting me to visit
+I~thank Dr.\ Guillaume Touya for inviting me to visit
 the French National Mapping Agency (IGN).
 The visit was a great chance and gave me insight into
 practical requirements regarding maps.
 Our collaboration resulted in a paper on continuously
 generalizing buildings into built-up areas.
 %
-I also thank Dr.\ Thomas van Dijk.
+I~also thank Dr.\ Thomas van Dijk.
 He helped me speed up my 
 least-squares adjustment using a C++ library.
 He has proofread some of my papers
 and has given me helpful suggestions 
 concerning many aspects of my research.
 
-I am grateful to Prof.\ Dr.\ Min Deng.
+I~am grateful to Prof.\ Dr.\ Min Deng,
+the supervisor of my master's study.
 He introduced me into the research area of 
 continuous map generalization 
 and helped me to get the chance of
 pursuing my PhD at the University of W\"urzburg.
+Under his supervision,
+we coauthored some nice papers.
 
-I thank Prof.\ Dr.\ Dirk Burghardt 
+I~thank Prof.\ Dr.\ Dirk Burghardt 
 for quickly reviewing my thesis
 when my working contract in W\"urzburg was about to end.
-I also thank him for introducing my research work to
+I~also thank him for introducing my research work to
 Prof.\ Dr.\ Peter van Oosterom, 
 which certainly helped me to get a postdoc position
 in Peter's group.
 Before submitting the final version of my PhD thesis,
-I have been working in Peter's group.
-I would like to thank 
+I~have been working in Peter's group.
+I~would like to thank 
 Prof.\ Dr.\ Peter van Oosterom and Dr.\ Martijn Meijers 
 for allowing me to finish my paper about area aggregation,
 which is part of this thesis. 
-I thank Prof.\ Dr.\ Andreas N\"uchter for chairing my defense.
+I~thank Prof.\ Dr.\ Andreas N\"uchter for chairing my defense.
 
-I would like to thank my parents
+I~would like to thank my parents
 for all their love and encouragement.
-I thank them for their suggestions 
-when I was making decisions.
+I~thank them for their suggestions 
+when I~was making decisions.
 My special thanks go to Fang Wu.
 She has been very supportive of me.
 We enjoyed many activities together, 
 including hiking, skating, skiing, shopping, and so on.
 She made my life much more colorful.
 
-I thank all my friends in W\"urzburg
+I~thank all my friends in W\"urzburg
 for their company.
+Because of them, I~could better explore the city 
+and even the whole country.
 
 Last but not least, 
-I am very grateful to the University of W\"urzburg 
-because I had the possibility take many courses.
+I~am very grateful to the University of W\"urzburg 
+because I~had the possibility take many courses.
 In order to gain sufficient credits for 
 obtaining my Ph.D.\ degree in Computer Science,
-I took some courses
+I~took some courses
 (e.g., \emph{Theoretical Computer Science}
 and \emph{Algorithms and Data Structures})
 in my own faculty, 
 the Faculty of Mathematics and Computer Science.
 %
 In order to improve my language skills,
-I took many courses
+I~took many courses
 offered by the Language Center
 (e.g., \emph{English for the Natural Sciences} 
 and \emph{General Language Exercise of German})
