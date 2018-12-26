@@ -2,7 +2,7 @@
 %% File: wup.cls
 %% An open source Univerity Press LaTeX class by Herbert Baier and Kristina Hanig
 %%
-%% Version: 0.1b (January 28, 2017)
+%% Version: 1.1 (August 23, 2017)
 %% 
 %% Copyright by Herbert Baier (baier@itbaier.de)
 %%              Kristina Hanig (kristina.hanig@gmx.de)
@@ -12,7 +12,7 @@
 %% For other purposes, please contact the authors.
 
 \NeedsTeXFormat{LaTeX2e}[1994/12/01]% LaTeX date must be December 1994 or later
-\ProvidesClass{wup}[2017/01/28 v0.1a WUP class]
+\ProvidesClass{wup}[2017/08/23 v1.1 WUP class]
 
 %--------------------------------------------------
 % Required packages:
@@ -44,6 +44,7 @@
 \newif\if@halfTitlePage         % Prints the half-title page
 \newif\if@titlePage             % Prints the title page
 \newif\if@imprintPage           % Prints the imprint page
+\newif\if@dedicationPage        % Prints the dedication page
 \newif\if@acknowledgmentsPage   % Prints the acknowledgments page
 \newif\if@prefacePage           % Prints the preface page
 \newif\if@abstractPage          % Prints the abstract page
@@ -87,6 +88,8 @@
 %		prints the title page
 %	[no]imprint (default imprint)
 %		prints the imprint page
+%	[no]dedication (default nodedication)
+%		prints the dedication page
 %	[no]acknowledgments (default noacknowledgments)
 %		prints the acknowledgments page
 %	[no]preface (default preface)
@@ -146,11 +149,13 @@
 \DeclareOption{nodissertation}{\@dissertationfalse}
 
 \DeclareOption{english}{%
+	\def\the@dedicationLabel{Dedication}
 	\def\the@acknowledgmentsLabel{Acknowledgments}
 	\def\the@prefaceLabel{Preface}
 	\def\the@abstractLabel{Abstract}
 }
 \DeclareOption{german}{%
+	\def\the@dedicationLabel{Widmung}
 	\def\the@acknowledgmentsLabel{Danksagung}
 	\def\the@prefaceLabel{Vorwort}
 	\def\the@abstractLabel{Zusammenfassung}
@@ -160,6 +165,7 @@
 	\@halfTitlePagetrue
 	\@titlePagetrue
 	\@imprintPagetrue
+	\@dedicationPagetrue
 	\@acknowledgmentsPagetrue
 	\@prefacePagetrue
 	\@abstractPagetrue
@@ -169,6 +175,7 @@
 	\@halfTitlePagefalse
 	\@titlePagefalse
 	\@imprintPagefalse
+	\@dedicationPagefalse
 	\@acknowledgmentsPagefalse
 	\@prefacePagefalse
 	\@abstractPagefalse
@@ -180,6 +187,8 @@
 \DeclareOption{notitle}{\@titlePagefalse}
 \DeclareOption{imprint}{\@imprintPagetrue}
 \DeclareOption{noimprint}{\@imprintPagefalse}
+\DeclareOption{dedication}{\@dedicationPagetrue}
+\DeclareOption{nodedication}{\@dedicationPagefalse}
 \DeclareOption{acknowledgments}{\@acknowledgmentsPagetrue}
 \DeclareOption{noacknowledgments}{\@acknowledgmentsPagefalse}
 \DeclareOption{preface}{\@prefacePagetrue}
@@ -203,7 +212,7 @@
 }
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
-\ExecuteOptions{twoside,pagesize170x240,wupfont,noheadline,dissertation,english,halftitle,title,imprint,noacknowledgments,preface,noabstract,tableofcontents,graphicx}
+\ExecuteOptions{twoside,pagesize170x240,wupfont,noheadline,dissertation,english,halftitle,title,imprint,nodedication,noacknowledgments,preface,noabstract,tableofcontents,graphicx}
 \ProcessOptions
 
 %----------------------
@@ -238,24 +247,19 @@
 
 \RequirePackage[final]{microtype}
 
-
 % Graphic package
 \if@graphicx
 %	\RequirePackage[final]{graphicx} %Dongliang's change, we have \RequirePackage{tikz} at the very beginning
 	\graphicspath{{images/}}
-	
-\newcommand{\printLogo}{\includegraphics[height=1cm]{WUPlogo_titlepage}}
-	
-\newcommand{\printByNcNd}{\includegraphics[height=5mm]{by-nc-nd_eu}}
+	\newcommand{\printLogo}{\includegraphics[height=1cm]{WUPlogo_titlepage}}
+	\newcommand{\printByNcNd}{\includegraphics[height=5mm]{by-nc-nd_eu}}
 	\newcommand{\printBySa}{\includegraphics[height=5mm]{by-sa}}
 \else
 	\if@epsfig
 		\RequirePackage{epsfig}
 		\graphicspath{{images/}}
-		
-\newcommand{\printLogo}{\epsfig{file=WUPlogo_titlepage,height=1cm}}
-		
-\newcommand{\printByNcNd}{\epsfig{file=by-nc-nd_eu,height=5mm}}
+		\newcommand{\printLogo}{\epsfig{file=WUPlogo_titlepage,height=1cm}}
+		\newcommand{\printByNcNd}{\epsfig{file=by-nc-nd_eu,height=5mm}}
 		\newcommand{\printBySa}{\epsfig{file=by-sa,height=5mm}}
 	\else
 		\newcommand{\printLogo}{}
@@ -283,20 +287,52 @@
 	\renewcommand{\headrulewidth}{0pt} 
 \fi
 
+% Remove headers and footers for pages between chapters
+\renewcommand*{\cleardoublepage}{\clearpage\if@twoside \ifodd\c@page\else\hbox{}%
+	\thispagestyle{empty}%
+	\newpage%
+	\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+
 % Style of Chapters and Sections
 \renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
                     \if@headLine\thispagestyle{empty}\fi%
                     \global\@topnum\z@
                     \@afterindentfalse
                     \secdef\@chapter\@schapter}
-
+                    
 \RequirePackage{titlesec}
 
-\titleformat{\chapter}[display]{\normalfont\sffamily\huge\bfseries}{%   %dongliang's change \huge -> \LARGE; changed back
+\titleformat{\chapter}[display]{\normalfont\sffamily\huge\bfseries}{%
 	\chaptertitlename\ \thechapter}{8pt}{}
 \titlespacing*{\chapter}{0pt}{*2}{*3}
+
 \titleformat{\section}{\normalfont\sffamily\Large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\normalfont\sffamily\large\bfseries}{\thesubsection}{1em}{}
+
+% Updated the bibliography environment to use appropriated marks and add entry
+% in the table of contents
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\bibname}%
+      \addcontentsline{toc}{chapter}{\bibname}%
+%     \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \addMarkChapterStar{\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+       \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist
+      }
 
 % Style of Captions
 \RequirePackage[labelfont={bf,sf},textfont={sf},font=footnotesize,justification=raggedright,singlelinecheck=false]{caption}
@@ -353,6 +389,8 @@
 \newif\if@urn \@urnfalse
 \newcommand{\URN}[1]{\@urntrue\def\command@urn{#1}}
 
+\newif\if@dedication \@dedicationfalse
+\newcommand{\Dedication}[1]{\@dedicationtrue\def\command@dedication{#1}}
 \newif\if@acknowledgments \@acknowledgmentsfalse
 \newcommand{\Acknowledgments}[1]{\@acknowledgmentstrue\def\command@acknowledgments{#1}}
 \newif\if@preface \@prefacefalse
@@ -366,6 +404,12 @@
 
 \newcommand{\springEvenPage}{\ifodd\count0\else\mbox{}\clearpage\fi}
 \newcommand{\springEvenPageNoNumber}{\ifodd\count0\else\mbox{}\thispagestyle{empty}\clearpage\fi}
+
+%-----------------------------------------------------------------
+% \chapter* does not update table of contents and marks.
+% This commmand adds the required marks preserving the page style.
+%-----------------------------------------------------------------
+\newcommand{\addMarkChapterStar}[1]{\markboth{#1}{}\markright{#1}}
 
 %----------------
 % Half title page
@@ -449,13 +493,14 @@
 					\else
 						SUBMISSION YEAR
 					\fi
-					%\\ Supervisors: %dongliang's change: Gutachter --> Supervisors
+					%Dongliang's commented following seven lines
+					%\\ Gutachter:
 					%\if@advisor
 					%	\command@advisor
 					%\else
 					%	ADVISOR NAMES
 					%\fi
-					\\					
+					\\
 				\fi
 				\if@freeTextImprint
 					\command@freeTextImprint
@@ -557,6 +602,18 @@
 \fi
 
 %---------------------
+% Dedication page
+%---------------------
+\if@dedicationPage
+	\newcommand{\makeDedicationPage}{%
+		%\chapter{\the@dedicationLabel}
+		%\thispagestyle{empty}
+		\if@dedication\command@dedication\fi
+		\clearpage\springEvenPageNoNumber
+	}
+\fi
+
+%---------------------
 % Acknowledgments page
 %---------------------
 \if@acknowledgmentsPage
@@ -605,7 +662,11 @@
 %-------------
 % Front matter
 %-------------
-\AtBeginDocument{%
+% The command \AtBeginDocument for typesetting is not allowed, from
+% LaTeX Companion, 2nd ed, p. 884. Workaround: use AfterEndPreamble from package
+% etoolbox
+\RequirePackage{etoolbox}
+\AfterEndPreamble{%
 	\frontmatter
 	\pagenumbering{roman}
 	\pagestyle{empty}
@@ -616,8 +677,10 @@
 
 	\if@imprintPage\makeImprintPage\fi
 	
-	\pagestyle{fancy}
+	\if@dedicationPage\makeDedicationPage\fi
 	
+	\pagestyle{fancy}
+
 	\if@acknowledgmentsPage\makeAcknowledgmentsPage\fi
 
 	\if@prefacePage\makePrefacePage\fi
@@ -631,6 +694,7 @@
 	 
 	\pagestyle{fancy}
 	 
-	\renewcommand{\chaptermark}[1]{\markboth{\thechapter\ #1}{}}
-	\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}{}}
+%	\renewcommand{\chaptermark}[1]{\markboth{\thechapter\ #1}{}}
+	\renewcommand{\chaptermark}[1]{\addMarkChapterStar{\thechapter\ #1}}
+	\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 }
