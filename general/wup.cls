@@ -493,7 +493,7 @@
 					\else
 						SUBMISSION YEAR
 					\fi
-					%Dongliang's commented following seven lines
+					%Dongliang's change: commented following seven lines
 					%\\ Gutachter:
 					%\if@advisor
 					%	\command@advisor

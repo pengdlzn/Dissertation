@@ -37,9 +37,9 @@ Defense Examiners:	& ~Prof.\ Dr.\ Andreas N\"uchter\\
 \CoverDesign{Max Mustermann}
 \FreeTextDesign{a free text for design}
 
-\ISBNprint{978-3-95826-XXX-X}
-\ISBNonline{978-3-95826-XXX-X}
-\URN{urn:nbn:de:bvb:20-opus-XXXXXX}
+\ISBNprint{978-3-95826-104-4}
+\ISBNonline{978-3-95826-105-1}
+\URN{urn:nbn:de:bvb:20-opus-174427}
 
 \Dedication{%
 the dedication
@@ -60,9 +60,7 @@ cartographers with expertise in both geodesy and map-making.  How
 should a row of ten houses be represented if the distances between
 them are too small to be represented correctly at the desired scale?
 By fewer, say, five houses?  Or rather by a block of houses?
-%
-\newline\indent
-%
+
 Dongliang attacks this and several other special cases of
 cartographic generalization in a modern setting.  Think of online
 maps that users can (and want to!) zoom and pan with their finger
@@ -74,9 +72,7 @@ arbitrary scales is called \emph{continuous generalization}.  Some
 aspects of continuous generalization (such as the example with the
 houses above) are inherently discrete, others (such as a wiggly
 river) can be treated more easily in a continuous fashion.
-%
-\newline\indent
-%
+
 In several chapters of this thesis, Dongliang approaches continuous
 generalization problems in an innovative, yet formal way by using
 powerful tools from mathematical optimization such as integer linear
@@ -90,9 +86,7 @@ our model is wrong---not the algorithm.  In contrast,
 when using only heuristics, solutions can come with errors of two
 types; those caused by the heuristic and those caused by the model.
 In this case, it is hard to understand and fix the errors.
-%
-\newline\indent
-%
+
 In Chapter~2, Dongliang compares two potentially exact methods for
 the well-known area-aggregation problem.  He asks for an optimal
 sequence of operations that aggregates, step-by-step, many
@@ -103,9 +97,7 @@ and integer linear programming. The latter turns out to be much slower.
 He also compares the \Astar algorithm to an obvious greedy
 approach, which is surprisingly good given its simplicity.  He also
 identifies a problem with his model.
-%
-\newline\indent
-%
+
 Chapter~3 treats a related problem: how to best transit between
 two levels of administrative boundaries for zooming?  The
 input consists of the two drawings at start and target scale, and
@@ -121,9 +113,7 @@ triangulations sometimes introduces strong distortion locally.  A
 way out may consist in choosing the Steiner points for the
 compatible triangulations more carefully, but this is left as an
 open problem.
-%
-\newline\indent
-%
+
 In Chapter~4, Dongliang deals with the generalization of buildings.
 He shows how to generalize building footprints continuously such
 that well-defined blocks of buildings appear when the user of a
@@ -142,9 +132,7 @@ algorithm builds bridges between close-enough buildings.
 The computation of the bridges is based on 
 a minimum spanning tree of the buildings.  
 The resulting animations look very natural.
-%
-\newline\indent
-%
+
 In Chapter~5, Dongliang explores an important subproblem that often
 appears in continuous generalization: how to ``morph'' a polygonal
 chain from a start to a target scale.  He uses an existing algorithm
@@ -159,9 +147,7 @@ chain.  While the results on real-world data look quite good,
 Dongliang also found artificial examples where self-intersection and
 numerical problems occur.  Hence, least squares is probably not the
 ideal method for this problem.
-%
-\newline\indent
-%
+
 Finally, in Chapter~6, Dongliang presents a case study to highlight
 the difficulties when working with geographic data naively.  As a
 concrete example, he considers the problem of finding, in a set of
@@ -174,9 +160,7 @@ terms of runtime, the different implementations of the sweep-line
 algorithms are what makes the comparison interesting---a lot
 depends on how the library methods are implemented, 
 so the programmer should always read the fine print.
-%
-\newline\indent
-%
+
 In his thesis, Dongliang exemplifies the optimization-based approach
 at various continuous generalization problems and demonstrates the
 strength of this approach.  I~see this as a very valuable
@@ -185,11 +169,13 @@ modeled properly, and then algorithms are devised that happen to
 produce good-looking results on a small set of benchmark instances.
 I~hope that many readers of this thesis will get inspired by
 Dongliang's way of tackling spatial problems!
-%
-\newline
-\newline
-\newline
-%
+
+\bigskip
+\bigskip
+%\lineskip
+
+
+\noindent
 Alexander Wolff\\
 Chair of Algorithms, 
 Complexity and Knowledge-Based Systems\\

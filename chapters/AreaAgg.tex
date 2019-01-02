@@ -1,16 +1,17 @@
 \chapter %\chapter[<ToC-title>]{<Title>}
 %we add "\hspace{0.95mm}~" 
 %to make the headline align on the top of the pages 
-[Finding Optimal Sequences for Area Aggregation---\hspace{0.95mm}~\\ 
-\Astar vs.\ ILP]
+[Finding Optimal Sequences for Area Aggregation---\\%\hspace{0.95mm}~\\ 
+\Astar vs.\ Integer Linear Programming]
 %\Astar vs.\ Integer Linear Programming]
 {Finding Optimal Sequences\\ 
 	for Area Aggregation---\\
 	\Astar vs.\ Integer Linear Programming}
 \label{chap:AreaAgg}
-
-
-
+%appear at the top of the pages
+\chaptermark{Finding Optimal Sequences for 
+Area Aggregation%---\Astar vs.\ Integer Linear Programming
+}
 
 The land-cover area is of significant importance on maps.
 When users zoom out, some land-cover areas become
@@ -125,7 +126,8 @@ an integer linear program,
 and then solve this program with minimizing our cost function.
 Our linear program uses binary (0--1) variables. 
 These variables help us to model our problem, 
-but in general, it is NP-hard to solve an ILP optimally.
+but in general, it is NP-hard 
+to solve an \emph{integer linear program} (ILP) optimally.
 By comparing with the greedy algorithm, 
 which is used as a benchmark,
 we are able to see whether it is worth 
@@ -1674,7 +1676,7 @@ First, at time~$t$, polygon~$p$ must actually be assigned
 to center~$o$,
 \begin{flalign}
 \label{eq:CstrC_Part}
-&\eqquadConstraints
+&\eqquadConstraintsC
 \begin{array}{@{}l}
 \embrd[C]{c_{t,p,o,r}} \le  \\
 \embrd[C]{} %an empty place
@@ -1685,7 +1687,7 @@ to center~$o$,
 	~ %an empty place
 	\end{array}
 }
-\inquad \embshift
+\inquadC \embshift
 \begin{array}{@{}l}
 \forall t 	 \in T\setminus \{n-1,n\},\\
 \forall p, o, r \in P \text{~with}~o\ne r.
@@ -1696,7 +1698,7 @@ Second, at time~$t$, polygon~$p$ has at least
 one neighbor that is assigned to center~$r$,
 \begin{flalign}
 \label{eq:CstrC_Neighbor}
-&\eqquadConstraints
+&\eqquadConstraintsC
 \begin{array}{@{}l}
 \embrd[C]{c_{t,p,o,r}} \le  \\
 \embrd[C]{} %an empty place
@@ -1707,7 +1709,7 @@ one neighbor that is assigned to center~$r$,
 	~ %an empty place
 	\end{array}
 }
-\inquad \embshift
+\inquadC \embshift
 \begin{array}{@{}l}
 \forall t 	 \in T\setminus \{n-1,n\},\\
 \forall p, o, r \in P \text{~with}~o\ne r,
@@ -1721,7 +1723,7 @@ Third, if polygon~$p$ is in patch~$o$ and~$p$ has at least
 one neighbor in patch~$r$, then we must enforce~$c_{t,p,o,r}=1$,
 \begin{flalign}
 \label{eq:CstrC_Positive}
-&\eqquadConstraints
+&\eqquadConstraintsC
 \begin{array}{@{}l}
 \embrd[C]{c_{t,p,o,r}} \ge  \\
 \embrd[C]{} %an empty place
@@ -1732,7 +1734,7 @@ one neighbor in patch~$r$, then we must enforce~$c_{t,p,o,r}=1$,
 	~ %an empty place
 	\end{array}
 }
-\inquad \embshift
+\inquadC \embshift
 \begin{array}{@{}l}
 \forall t 	 \in T\setminus \{n-1,n\},\\
 \forall p, o, r \in P \text{~with}~o\ne r,
@@ -1748,9 +1750,9 @@ In this case, we must make sure that
 the two patches are actually neighbors,
 \begin{flalign}
 \label{eq:CstrC_Agg}
-&\eqquadConstraints
+&\eqquadConstraintsC
 \embrd[C]{y_{t,o,o,r}} \le 
-\embld[D]{\sum_{p\in P} c_{t-1,p,o,r}} \inquad
+\embld[D]{\sum_{p\in P} c_{t-1,p,o,r}} \inquadC
 \forall t 	 \in T\setminus \{1,n\},  
 \forall o, r \in P \text{~with}~o\ne r.&
 \end{flalign}
@@ -1865,12 +1867,12 @@ We require that
 \label{eq:CstrSIndeedSmallest}
 &\eqquadConstraintW
 \begin{array}{@{}l}
-\embrd[S]{A_{t,o}} -  \\
+\embrd[S]{A_{t,o}- M(1} -\\
 \embrd[S]{} %an empty place
 \end{array} 
 \embld[T]{\embshift
 	\begin{array}{@{}l}
-	M(1-w_{t,o}) \le A_{t,r}+M(1-x_{t,r,r}) \\
+	w_{t,o}) \le A_{t,r}+M(1-x_{t,r,r}) \\
 	~ %an empty place
 	\end{array}
 }
@@ -1959,7 +1961,7 @@ the resulting cost function for type change is a metric.
 
 
 \begin{figure}[tb]
-\captionsetup[subfigure]{labelformat=empty}
+%\captionsetup[subfigure]{labelformat=empty}
 \begin{subfigure}[b]{.49\textwidth}
 \centering
 \includegraphics[page=1]{AreaAgg_Data}
@@ -2048,8 +2050,6 @@ we cannot verify only from the cost values.
 
 
 \begin{table*}[tb]
-\small	
-\centering
 \caption{A comparison of the greedy algorithm and \Astar		
 	when using cost function~$g_1$ (see \eq\ref{eq:g_1}).
 	For \Astar, we used two settings, 
@@ -2086,6 +2086,8 @@ we cannot verify only from the cost values.
     is included.
 }
 \label{tab:AreaAgg_CaseStudy1_Statistics}
+\centering
+\fontsize{9}{11}\selectfont %for my thesis; should before \setlength{\tabcolsep}{0.7ex}
 \setlength{\tabcolsep}{0.7ex}
 \begin{tabular}{lRRRCCCCCd{3.7}}
 \toprule
@@ -2119,6 +2121,7 @@ Greedy 	& 408
 \\ \bottomrule			
 \end{tabular}
 \end{table*}
+
 
 In accordance with \sect\ref{sec:AreaAgg_AStar}, 
 for region with ID~$i$ 
@@ -2371,8 +2374,6 @@ which is~$3.9\%$ less than~$455.8$,
 the total cost of the solutions by the greedy algorithm.
 
 \begin{table*}[tb]
-\small	
-\centering
 \caption{A comparison of the greedy algorithm, 
     the \Astar algorithm, and the ILP-based algorithm		
 	when using cost function~$g_2$ (see \eq\ref{eq:g_2}).
@@ -2389,6 +2390,8 @@ the total cost of the solutions by the greedy algorithm.
 }
 \label{tab:AreaAgg_CaseStudy2_Statistics}
 %	\includegraphics[page=1]{AreaAgg_CaseStudy2_Plot}
+\centering
+\fontsize{9}{11}\selectfont %for my thesis; should before \setlength{\tabcolsep}{0.7ex}
 \setlength{\tabcolsep}{0.7ex}
 \begin{tabular}{lRRRCCCCCd{3.7}}
 \toprule

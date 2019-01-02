@@ -6,21 +6,38 @@
 
 
 
+%change the font sizes
+\makeatletter
+\renewcommand\normalsize{\@setfontsize\normalsize{10.5}{12.5}} %original: 10, 12
+\renewcommand\small{\@setfontsize\small{9.5}{11.5}} %original: 9, 11
+\renewcommand\footnotesize{\@setfontsize\footnotesize{8.5}{10}} %original: 8, 9.5
+\renewcommand\scriptsize{\@setfontsize\scriptsize{7.5}{8.5}} %original: 7, 8
+%As tiny is not used, I use it for the fontsize that I used inside figures.
+%I use tiny for \captionsetup.
+%I can't find a better way.
+\renewcommand\tiny{\@setfontsize\tiny{10}{12}}
+\makeatother
+\footnotesize
+\small
+\normalsize
+\tiny
+%\usepackage{caption} %was defined in wup.cls
+\captionsetup{labelfont=bf,
+    justification=justified %Distribute text evenly between margins
+}
+\captionsetup[subfigure]{
+	justification=centering,
+	font=tiny, %I used 10pt when I drew figures
+	labelformat=empty,
+}
+
+
 \usepackage[utf8]{inputenc}
 \graphicspath{{images/}}
 
 %\usepackage[ngerman]{babel}
 \usepackage[english]{babel} % to write documents in languages
-%\usepackage{caption} %was defined in wup.cls
-\captionsetup{labelfont=bf,
-justification=justified %make sure caption for table is both 
-%raggedright and raggedleft
-}
-\captionsetup[subfigure]{
-	justification=centering,
-	font=normalsize,
-	labelformat=empty,
-}
+
 
 \usepackage{lipsum}  % Loading lipsum to write blind text
 
@@ -49,8 +66,8 @@ justification=justified %make sure caption for table is both
 \hypersetup{linktocpage=true}
 \hypersetup{colorlinks=true}
 \hypersetup{hidelinks}
-\hypersetup{pdftitle = {An Optimization-Based Approach for 
-		Continuous Map Generalization}}
+%\hypersetup{pdftitle = {An Optimization-Based Approach for 
+%		Continuous Map Generalization}}
 \hypersetup{pdfauthor = {Dongliang Peng}}
 \hypersetup{pdfsubject = {Dissertation}}
 \hypersetup{pdfkeywords = {Land-cover area, Administrative boundary, 
@@ -362,13 +379,17 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 \newcommand{\eqquadVariable}{\myquad[6]}
 \newcommand{\eqquadCost}{\myquad[2]}
 \newcommand{\eqquadConstraintsX}{\myquad[4]}
-\newcommand{\eqquadConstraintsYZ}{\myquad[4]}
-\newcommand{\eqquadConstraints}{\myquad[4]}
+\newcommand{\eqquadConstraintsYZ}{\myquad[3]}
+\newcommand{\eqquadConstraintsC}{\myquad[3]}
+\newcommand{\eqquadConstraints}{\myquad[3]}
 \newcommand{\eqquadConstraintW}{\myquad[3]}
 \newcommand{\inquad}{\qquad}
-\newcommand{\inquadC}{\qquad}
-%\newcommand{\embshift}{\hspace{0.5pt}}%for tsas, because of \begin{array}
-\newcommand{\embshift}{\hspace{-3pt}}%for my thesis, because of \begin{array}
+\newcommand{\inquadC}{\myquad[1]}
+
+%because of \begin{array}
+%\newcommand{\embshift}{\hspace{0.5pt}}%for tsas 
+%\newcommand{\embshift}{\hspace{-3pt}}%for my thesis(10pt)
+\newcommand{\embshift}{\hspace{-2.7pt}}%for my thesis(10.5pt)
 
 %M or N are default tags. 
 %The boxes using the same tag will have the same length. 
