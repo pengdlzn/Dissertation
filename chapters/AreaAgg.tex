@@ -52,7 +52,7 @@ the problem becomes complicated.
 
 \begin{figure}[tb]
 \centering
-\includegraphics{AreaAgg_example}
+\includegraphics[page=1]{AreaAgg_Preliminaries}
 \caption{The input and a possible output for an instance of 
 our problem}
 \label{fig:AreaAgg_example}
@@ -188,7 +188,7 @@ In other words, the union of the~$n$ land-cover areas
 is the only region on the goal map.
 \begin{figure*}[tb]
 \centering
-\includegraphics[page=1]{AreaAgg_Preliminaries}
+\includegraphics[page=2]{AreaAgg_Preliminaries}
 \caption{Integrating two aggregation sequences 
 	of different regions: 
 	the resulting sequence contains the given sequences 
@@ -263,7 +263,7 @@ We generate a subdivision (node) only when we want to visit it.
 
 \begin{figure}[tb]
 \centering
-\includegraphics[page=2]{AreaAgg_Preliminaries}
+\includegraphics[page=3]{AreaAgg_Preliminaries}
 \caption{The subdivision graph~$G$. 
 	The nodes of the graph are the subdivisions. 
 	There is an arc	from subdivision~\Pnode 
@@ -297,7 +297,7 @@ contains every possible subdivision~\Pnode\ with~$n-t+1$ patches (see \fig\ref{f
 
 \begin{figure}[tb]
 \centering
-\includegraphics[page=3]{AreaAgg_Preliminaries}
+\includegraphics[page=4]{AreaAgg_Preliminaries}
 \caption{An example to show that the size of our problem 
 	has an exponential lower bound.}
 \label{fig:AreaAgg_ExponentialSize}
@@ -407,7 +407,7 @@ longer lines generally yield lower map readability.
 
 \begin{figure}[tb]
 \centering
-\includegraphics[page=1]{AreaAgg_CostFunctions}
+\includegraphics[page=1]{AreaAgg_CostsAndEstimations}
 \caption{Aggregating land-cover areas 
 	according to different preferences.
 	Aggregating a small land-cover area into one 
@@ -469,7 +469,7 @@ g_\mathrm{type}(\Pistar)=
 
 \begin{figure}[tb]
 \centering
-\includegraphics[page=2]{AreaAgg_CostFunctions}
+\includegraphics[page=2]{AreaAgg_CostsAndEstimations}
 \caption{An aggregation step, 
 	where patch~$u$, the dark patch at the top,
 	is aggregated into patch~$v$.
@@ -716,9 +716,10 @@ and~\ref{sec:AreaAgg_h_length}).
 We may need to increase~$K$ and retry several times 
 until we find a feasible solution.
 We define~$K$ by
-\[
+\begin{equation}
+\label{eq:OverestimateK}
 K= 2^k -1,
-\]
+\end{equation}
 where~$k\ge 0$ is the number of retryings.
 As~$K\le n-1$, it holds that~$k \le \log_2 n +1$, 
 which means  that we will 
@@ -726,9 +727,10 @@ retry~$\lceil \log_2 n\rceil$ times at most.
 When we are at time $t$, there are at most $n-t$ steps 
 to arrive at the goal map.
 We define the number of practical overestimation steps as
-\[
+\begin{equation}
+\label{eq:OverestimateKPrime}
 K'= \min \{K, n-t\}.
-\]
+\end{equation}
 Whenever overestimating ($k\geq1$), 
 \Astar cannot guarantee optimality anymore.
 
@@ -743,49 +745,50 @@ As long as the cost of type change is a metric, this aggregation
 strategy indeed yields a lower bound.
 %
 For subdivision~\Pnode, let
-$(\Pnode=P_{t,i_t}, P_{t+1,i_{\tstar+1}} \dots,P_{n,i_n}=\Pgoal)$,
+$(\Pnode=P_{t,i'_t}, P_{t+1,i'_{\tstar+1}} \dots,P_{n,i'_n}=\Pgoal)$,
 be the path that always changes the type of a smallest patch 
 to~\Tgoal.
 Then the estimated cost of type change is
 \begin{equation}
 \label{eq:h_type}
 h_\mathrm{type}(\Pnode)=
-\sum_{s=t}^{n-1}f_\mathrm{type}(P_{s,i_s},P_{s+1,i_{s+1}}).
+\sum_{s=t}^{n-1}f_\mathrm{type}(P_{s,i'_s},P_{s+1,i'_{s+1}}).
 \end{equation}
 
 As an example, for \fig\ref{fig:AreaAgg_FirstStep}b, we compute 
 $h_\mathrm{type}$ 
-according to the aggregation sequence of 
+according to the ``aggregation sequence'' of 
 \fig\ref{fig:AreaAgg_h_type}.
-Note that the step from $P_{2,i_2}$ to 
-$P_{3,i_3}$ 
-in 
-\fig\ref{fig:AreaAgg_h_type} is impossible in reality 
+Note that the step from
+subdivision~$P_{2,i'_2}$ to subdivision~$P_{3,i'_3}$ 
+in \fig\ref{fig:AreaAgg_h_type} is impossible in reality 
 because the dark patch cannot be aggregated into patch~$v$
 as they are not neighbors. 
 However, this aggregation is allowed for estimation 
 because we may find a shortest path as long as 
 the estimated cost is no more than 
 the exact cost of a shortest path.
-In order to overestimate, we multiply the estimated cost of the 
-first $K'$ steps by $K$.
-\fo\ref{eq:h_type} is revised to
+When we need to overestimate, we multiply the estimated cost of the 
+first~$K'$ steps (see \eq\ref{eq:OverestimateKPrime}) 
+by~$K$ (see \eq\ref{eq:OverestimateK}).
+As a result, \fo\ref{eq:h_type} is revised to
 \begin{equation}
 \label{eq:o_type}
 h_\mathrm{type}(\Pnode)=
-K\sum_{s=t}^{t+K'-1}f_\mathrm{type}(P_{s,i_s},P_{s+1,i_{s+1}})+
-\sum_{s=t+K'}^{n-1}f_\mathrm{type}(P_{s,i_s},P_{s+1,i_{s+1}}).
+K\sum_{s=t}^{t+K'-1}f_\mathrm{type}(P_{s,i'_s},P_{s+1,i'_{s+1}})+
+\sum_{s=t+K'}^{n-1}f_\mathrm{type}(P_{s,i'_s},P_{s+1,i'_{s+1}}).
 \nonumber
 \end{equation}
 
 
 \begin{figure*}[tb]
 \centering
-\includegraphics[page=1]{AreaAgg_Estimation}
-\caption{An ``aggregation sequence'' for computing 
-	$h_{\mathrm{type}}$, 
+\includegraphics[page=3]{AreaAgg_CostsAndEstimations}
+\caption{An ``aggregation sequence'' for computing
+    the estimated cost of type change~$h_{\mathrm{type}}$
+    (see \eq\ref{eq:h_type}),
 	based on the aggregation result of 
-	\fig\ref{fig:AreaAgg_FirstStep}b}
+	\fig\ref{fig:AreaAgg_FirstStep}b.}
 \label{fig:AreaAgg_h_type}
 \end{figure*}
 
@@ -828,18 +831,15 @@ where $\|b\|$ is the number of edges of boundary~$b$.
 
 \begin{figure*}[tb]
 \centering
-\includegraphics[page=2]{AreaAgg_Estimation}
-\captionof{figure}{An "aggregation" sequence for 
-	computing 
-	$h_\mathrm{comp}$ (see 
-	\eq\ref{eq:o_comp}) based on the 
-	number of edges. 
-	At each step we remove the boundary with the fewest 
-	edges. 		
+\includegraphics[page=4]{AreaAgg_CostsAndEstimations}
+\captionof{figure}{An "aggregation sequence" for 
+	computing the estimated cost of compactness~$h_\mathrm{comp}$ 
+    (see \eq\ref{eq:h_comp}), based on the number of edges. 
+	At each step we remove the boundary with the fewest edges. 		
 	The numbers represent the 
 	numbers of the interior boundaries' edges.
 	This example corresponds to the aggregation step in 
-	\fig\ref{fig:AreaAgg_FirstStep}.
+	\fig\ref{fig:AreaAgg_FirstStep}b.
 }
 \label{fig:AreaAgg_h_comp}
 \end{figure*}
@@ -890,15 +890,15 @@ Finally, we compute the estimated cost of compactness
 for subdivision~$P_{s+1,j}$ by \eq\ref{eq:f_comp}.
 
 For subdivision~\Pnode, let
-$(\Pnode=P_{t,i'_t}, P_{t+1,i'_{\tstar+1}}, 
-\dots,P_{n,i'_n}=\Pgoal)$
+$(\Pnode=P_{t,i''_t}, P_{t+1,i''_{\tstar+1}}, 
+\dots,P_{n,i''_n}=\Pgoal)$
 be the path that always removes the two smallest compactnesses
 and gains a compactness of the constructed regular polygon.
 The estimated cost of compactness is
 \begin{equation}
 \label{eq:h_comp}
 h_\mathrm{comp}(\Pnode)=
-\sum_{s=t}^{n-1}f_\mathrm{comp}(P_{s,i'_s}). \nonumber
+\sum_{s=t}^{n-1}f_\mathrm{comp}(P_{s,i''_s}).
 \end{equation}
 When overestimating, we assume that 
 each patch in the subdivision is extremely noncompact,
@@ -907,17 +907,18 @@ One may ask if this assumption is too much.
 It is indeed too much for one subdivision, 
 but it is just fine for the whole sequence
 as we overestimate for only a certain number of subdivisions.
-Based on this assumption,
+Based on the assumption,
 the cost of compactness is $f_\mathrm{comp}(P_{s,i_s})=1/(n-2)$,
 according to \eq\ref{eq:f_comp}.
-If we overestimate $K'$ steps, 
+When we need to overestimate $K'$ steps
+(see \eq\ref{eq:OverestimateKPrime}), 
 we revise the estimated cost of compactness to
-\begin{equation}
+\begin{equation*}
 \label{eq:o_comp}
 h_\mathrm{comp}(\Pnode)=
 \sum_{s=t}^{t+K'-1}\frac{1}{n-2}+
-\sum_{s=t+K'}^{n-1}f_\mathrm{comp}(P_{s,i'_s}).
-\end{equation}
+\sum_{s=t+K'}^{n-1}f_\mathrm{comp}(P_{s,i''_s}).
+\end{equation*}
 
 
 
@@ -930,47 +931,49 @@ In order to find a lower bound for the cost of length,
 we keep only the necessary number, $n-s$, 
 of shortest boundaries at each step
 (see \fig\ref{fig:AreaAgg_h_length}).
-Then we compute the estimated cost of length according to 
+Then, we compute the estimated cost of length according to 
 \eq\ref{eq:f_length}.
 
 For subdivision~\Pnode, let
-$(\Pnode=P_{t,i''_t}, P_{t+1,i''_{\tstar+1}}, \dots,P_{n,i''_n}=\Pgoal)$
+$(\Pnode=P_{t,i'''_t}, P_{t+1,i'''_{\tstar+1}}, 
+\dots,P_{n,i'''_n}=\Pgoal)$
 be the path that always keeps 
 the necessary number of shortest interior boundaries.
 The estimated cost of length is
 \begin{equation}
 \label{eq:h_length}
 h_\mathrm{lgth}(\Pnode)=
-\sum_{s=t}^{n-1}f_\mathrm{lgth}(P_{s,i''_s}).
+\sum_{s=t}^{n-1}f_\mathrm{lgth}(P_{s,i'''_s}).
 \end{equation}
 When overestimating,
 we use the interior length of the current map as the cost of 
-length for $K'$ steps even though we are removing 
-interior boundaries.
+length for the first $K'$ steps 
+(see \eq\ref{eq:OverestimateKPrime}),
+even though we are removing interior boundaries.
 As a result, we revise \fo\ref{eq:h_length} to
 \begin{equation}
 \label{eq:o_length}
 h_\mathrm{lgth}(\Pnode)=
 \sum_{s=t}^{t+K'-1}f_\mathrm{lgth}(P_{t,i})+
-\sum_{s=t+K'}^{n-1}f_\mathrm{lgth}(P_{s,i''_s}). \nonumber
+\sum_{s=t+K'}^{n-1}f_\mathrm{lgth}(P_{s,i'''_s}). \nonumber
 \end{equation}
 
 
 \begin{figure*}[htb]
 \centering
-\includegraphics[page=3]{AreaAgg_Estimation}
-\caption{An "aggregation" sequence for computing 
-	$h_\mathrm{lgth}$ 
-	(see Equation~\ref{eq:h_length}) 
+\includegraphics[page=5]{AreaAgg_CostsAndEstimations}
+\caption{An "aggregation sequence" for computing 
+	the estimated cost of length~$h_\mathrm{lgth}$ 
+	(see Equation~\ref{eq:h_length}),
 	based on the lengths of boundaries. 
-	At each step we keep the necessary number 
+	At each step, we keep the necessary number 
 	of boundaries with least lengths in order to find a 
-	lower bound of edge length of the interior boundaries 
-	$l_\mathrm{int}(t)$. 
+	lower bound of edge length of the interior boundaries, 
+	i.e., $l_\mathrm{int}(t)$. 
 	The numbers represent the 
 	lengths of the interior boundaries.
 	This example corresponds to the aggregation step in 
-	\fig\ref{fig:AreaAgg_FirstStep}
+	\fig\ref{fig:AreaAgg_FirstStep}b.
 }
 \label{fig:AreaAgg_h_length}
 \end{figure*}
@@ -2000,7 +2003,7 @@ the resulting cost function for type change is a metric.
 
 \begin{figure}[tb]
 \centering
-\includegraphics{AreaAgg_TypeDistances}
+\includegraphics[page=5]{AreaAgg_Data}
 \caption{The tree of type hierarchy used in our case study.
 	For example, the distance between 
 	types \emph{village} and \emph{farm land} is~$6$.}
