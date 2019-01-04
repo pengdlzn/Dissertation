@@ -11,8 +11,6 @@ cite (2016)Representation of continuously changing data over time and space
 
 
 
-new from Nov 13, 2018
-immediately previous -> preceding
 
 new from Jan 03, 2019
 using delaunay triangulations when we triangulate the convex faces
