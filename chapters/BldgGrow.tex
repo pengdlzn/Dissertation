@@ -34,8 +34,8 @@ between two maps need to be defined.
 For example, corresponding points 
 between a pair of polylines have been investigated based on 
 dynamic programming \citep{Noellenburg2008}, 
-Delaunay triangulations and binary line generalized tree 
-(BLG-tree) \citep{Deng2015},
+Delaunay triangulations and 
+binary line generalisation tree \citep{Deng2015},
 and simulated annealing \citep{Li2017Annealing}.
 From a point to its corresponding point,
 a straight-line trajectory is often used to interpolate.
@@ -69,7 +69,8 @@ Many methods have been proposed to generalize them
 but not necessarily in a continuous way.
 For example, \citet{Haunertwolff2010Building} simplified a set 
 of buildings based an integer program.
-Their simplification minimizes the number of total edges and guarantees that the errors are smaller than 
+Their simplification minimizes the number of total edges and 
+guarantees that the errors are smaller than 
 a user-defined tolerance.
 At the same time, their method does not introduce any topological conflict.
 \citet{Buchin2011_Simp} simplified buildings based on 
@@ -80,11 +81,11 @@ When users zoom out on digital maps,
 buildings become smaller and 
 the distances between them decrease. 
 In addition to simplifying the buildings,
-we also need to aggregate them when they become close  \cite{Weibel1997}. 
+we also need to aggregate them when they become close \cite{Weibel1997}. 
 Several methods were proposed 
 to aggregate buildings while preserving their shape 
-(e.g., right angles) 
-\citep{Regnauld2001,RegnauldRevell07,Damen2008}. 
+(e.g., right angles);
+see \citet{Regnauld2001,RegnauldRevell07,Damen2008}. 
 These algorithms can be used as inspirations 
 to define a continuous transformation of buildings.
 
@@ -171,7 +172,7 @@ This simplification is carried out in two steps:
 the first one is to use dilating and eroding 
 to remove ``dents'' and ``bumps''; 
 the second step is to remove vertices 
-using the algorithm of Imai and Iri \citep{ImaiIri1988}.
+using the algorithm of \citet{ImaiIri1988}.
 To make sure that buildings never shrink 
 when~$t$ is increasing,
 we merge the shape of a building at time~$t$ 
@@ -356,7 +357,7 @@ Variable~$r_\mathrm{h}= 2\sqrt
 { a_\mathrm{h}/ \pi }$
 is the radius of a hole 
 which is just large enough to be presented on map.
-Following \citep{Chaudhry2008}, 
+Following \citet{Chaudhry2008}, 
 we set area~$a_\mathrm{h} = 8\,\mathrm{mm}^2$ on map.
 Sometimes, our~$\dtrm{D}$ is not large enough to remove a bay 
 with width~$r_\mathrm{h}$
@@ -434,7 +435,7 @@ we select only some of the line segments as \emph{bridges}.
 If we consider each building as a node and 
 each line segment as an edge, 
 then we have a graph.
-Using Prim's algorithm \citep{Prim1957}, 
+Using the algorithm of \citet{Prim1957}, 
 we find a minimum spanning tree (MST) in the graph,
 using the lengths of the line segments as the weights.
 As a result, we use the line segments 
@@ -732,32 +733,32 @@ a_{\mathrm{h},t}=a_\mathrm{h}\cdot M_t^2.
 Suppose that our input has $n$ edges in total.
 Operations like growing, dilating, 
 eroding, merging, and clipping 
-cost time $O(n^2)$ \citep{Greiner1998Clipping,Palfrader2015}.
+cost time~$O(n^2)$; see \citet{Greiner1998Clipping,Palfrader2015}.
 We iteratively aggregate in \sect\ref{sec:Aggregate}.
 In the worst case, we need to repeat $O(n)$ times,
 which increases our running time to $O(n^3)$.
-It is unlikely that we need to repeat the aggregation more than 
-twice, though.
-Simplifying polygons using the Imai--Iri algorithm takes time
-$O(n^3)$.
+It is unlikely that 
+we need to repeat the aggregation more than twice, though.
+Simplifying polygons using the Imai--Iri algorithm 
+takes time~$O(n^3)$.
 The improved version of the Imai--Iri algorithm by 
 \citet{Chan1996} does not help in our case
 because we have more constraints when simplifying
 (see \sect\ref{sec:ImaiIri}).
-As a result, the running time of our method is in $O(n^3)$.
+As a result, the running time of our method is in~$O(n^3)$.
 
 
 \section{Case Study}
 \label{sec:CaseStudy}
 We have implemented our method based on
 C\# (Microsoft Visual Studio 2015) and ArcObjects SDK 10.4.1. 
-The code is available in open source on 
-Github\footnote{\url{
-https://github.com/IGNF/ContinuousGeneralisation}}.
+The code is available in open source on Github\footnote{\url
+{https://github.com/IGNF/ContinuousGeneralisation}}.
 The offsetting function and clipping function 
-are available from library \textsc{Clipper} of 
-\citet{Johnson2014}, which is based on the clipping algorithm of
-\citet{Vatti1992Clip}.
+are available from library \textsc{Clipper} 
+of \citet{Johnson2014}, 
+which is based on the clipping algorithm 
+of \citet{Vatti1992Clip}.
 The offsetting function is used for the buffering, dilating, 
 eroding, and merging operations.
 We ran our case study under~64-bit 

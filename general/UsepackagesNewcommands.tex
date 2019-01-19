@@ -33,6 +33,21 @@
 
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% running footnotes in whole document 
+\usepackage{chngcntr} 
+\counterwithout{footnote}{chapter} 
+% style of footnotes left-justified in justification 
+\usepackage[bottom,hang,marginal]{footmisc} 
+\setlength{\footnotemargin}{1.3em}
+%extra penalty for breaking after first line of a paragraph: 
+\clubpenalty = 10000 
+%extra penalty for breaking before last line of a paragraph:
+\widowpenalty = 10000
+%extra penalty for breaking before last line before a display math:
+\displaywidowpenalty = 10000
+
 \graphicspath{{images/}}
 
 %\usepackage[ngerman]{babel}
@@ -152,7 +167,7 @@ backrefstyle=three, %Compress three or more consecutive pages
 maxbibnames=9, %the author names appearing in bibliography
 maxcitenames=2, %the author names appearing in text
 giveninits=true,
-terseinits=true,%remove periods after initials of first names
+%terseinits=true,%remove periods after initials of first names
 %doi=true,
 %isbn=false,url=false,
 eprint=false,
@@ -242,7 +257,7 @@ inproceedings,patent,thesis,unpublished]{citetitle}{#1}
 \DeclareFieldFormat[article,inbook,incollection,
 inproceedings,patent,thesis,unpublished]{title}{#1}
 \DeclareNameAlias{author}{last-first}%lastname before firstname
-\renewcommand*{\revsdnamepunct}{} %remove commas between last 
+%\renewcommand*{\revsdnamepunct}{} %remove commas between last 
 %and first names
 
 

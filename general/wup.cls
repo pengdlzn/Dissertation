@@ -494,12 +494,12 @@
 						SUBMISSION YEAR
 					\fi
 					%Dongliang's change: commented following seven lines
-					%\\ Gutachter:
-					%\if@advisor
-					%	\command@advisor
-					%\else
-					%	ADVISOR NAMES
-					%\fi
+					\\ Gutachter:
+					\if@advisor
+						\command@advisor
+					\else
+						ADVISOR NAMES
+					\fi
 					\\
 				\fi
 				\if@freeTextImprint

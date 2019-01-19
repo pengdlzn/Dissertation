@@ -29,7 +29,7 @@ Since these changes distract users,
 hierarchical schemes have been proposed
 that generalize a more-detailed representation to obtain a
 less-detailed one based on small incremental changes, 
-e.g., the binary line generalization tree (BLG-tree)
+e.g., the binary line generalisation tree (BLG-tree)
 \parencite{vanOosterom2005} 
 for line simplification or
 the generalized area partitioning tree (GAP-tree)
@@ -325,7 +325,7 @@ as a set of consecutive polylines instead of polygons.
 We match to find corresponding polylines 
 from map~\ml and map~\ms.
 The basic idea of our matching is the same as the polygon-based 
-approach of \parencite{Fan2016Matching}, where they matched road 
+approach of \textcite{Fan2016Matching}, where they matched road 
 networks based on urban blocks.
 Given polygons on map~\ml and map~\ms, 
 we find corresponding polylines using three steps. 
@@ -360,15 +360,15 @@ polygons on~\ms.
 (Note that two polygons on the same map may 
 share some parts of their boundaries, 
 it is sufficient to take only one copy of the shared parts.) 
-Then we match the split boundaries of~\ml and~\ms  to get 
+Then we match the split boundaries of~\ml and~\ms to get 
 corresponding polylines. 
 We use \emph{thicker} marks to 
 present these corresponding polylines 
 (see \figs\ref{fig:Admin_Introduction}a
 and~\ref{fig:Admin_Introduction}d). 
 Although there is a data-matching 
-system~\parencite{Mustiere2008} 
-available, we use a simple method to attain the matching. 
+system available~\parencite[see][]{Mustiere2008}, 
+we use a simple method to attain the matching. 
 We match the split boundaries 
 according to their intersection areas. 
 The buffer-based method works well in our case study as 
@@ -552,12 +552,12 @@ The cost for a pair of corresponding line segments
 is computed as follows.
 
 \begin{figure}[tb]
-	\centering
-	\includegraphics[page=1]{Admin_MorphCorr}
-	\caption{Corresponding polylines:~$F$ and~$G$,
-		corresponding subpolylines:~$v$ and~$w$,
-		and corresponding line segments:~$f$ and~$g$.}
-	\label{fig:Admin_BasicConcepts}
+\centering
+\includegraphics[page=1]{Admin_MorphCorr}
+\caption{Corresponding polylines:~$F$ and~$G$,
+	corresponding subpolylines:~$v$ and~$w$,
+	and corresponding line segments:~$f$ and~$g$.}
+\label{fig:Admin_BasicConcepts}
 \end{figure}
 
 Let polyline~$F$ on~\ml and polyline~$G$ on~\ms 
@@ -735,7 +735,9 @@ or a method based on
 least squares adjustment~\parencite{Peng2013LSA}. 
 Specifically, it is possible to use CTs
 not only for the transformation step (as in our method) 
-but also to ensure the topological consistency in the morphing step~\parencite{GotsmanS2001,Surazhsky2003Intrinsic,Surazhsky2004HighQuality}.
+but also to ensure the topological consistency 
+in the morphing step~\parencite[see][]
+{GotsmanS2001,Surazhsky2003Intrinsic,Surazhsky2004HighQuality}.
 
 %title displays in contents
 \subsection[Morphing a polyline to 
@@ -747,7 +749,8 @@ its generated corresponding polyline \\ during fade-out}
 For the thinner polylines on~\ml, 
 morphing them must be consistent with 
 what we do to the thicker corresponding polylines. 
-To achieve this, we generate their corresponding polylines, that is, thinner polylines on~\ms. 
+To achieve this, we generate their corresponding polylines, 
+that is, thinner polylines on~\ms. 
 We transform the thinner polylines on~\ml based on CTs
 to get a set of new polylines.
 Then, we simplify these new polylines 
@@ -907,8 +910,8 @@ Since we can hardly see the details
 if we present the whole map, 
 we focus on a small portion, say, 
 Tianjin province\footnote{Interactive animations 
-of more	provinces are available at
-\url{http://www1.pub.informatik.uni-wuerzburg.de/pub/data/agile2016/}.
+of more	provinces are available at \url
+{http://www1.pub.informatik.uni-wuerzburg.de/pub/data/agile2016/}.
 (We recommend opening the website with Google Chrome.)}
 (also known as Tianjin municipality);
 see \figs\ref{fig:Admin_Data}b and~\ref{fig:Admin_Data}d.
@@ -1043,7 +1046,7 @@ a popular method for transforming polylines,
 can yield topological conflicts.
 We turned to transforming based on CTs,
 which apparently have not been used 
-in GIScience before (except by hand~\parencite{Fuse2004}).
+in GIScience before, except by hand~\parencite[e.g.,][]{Fuse2004}.
 We have used CTs to 
 transform unmatched polylines and 
 managed to achieve topological consistency. 

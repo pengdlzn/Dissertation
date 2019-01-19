@@ -7,9 +7,6 @@ data set(s) or dataset(s)
 corresponding points or corresponding vertices
 Dirk Burghardt
 
-cite (2016)Representation of continuously changing data over time and space
-
-
 
 
 new from Jan 03, 2019
