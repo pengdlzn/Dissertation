@@ -119,12 +119,12 @@
 	
 	\setlength{\length@titles}{105mm}
 }
-\DeclareOption{pagesize170x240}{%
+\DeclareOption{pagesize170x240}{%Dongliang's dissertation: 6.69x9.45 inch
 	\@pageSizeSmallfalse%
 	\@pageSizeMediumtrue%
 	\@pageSizeLargefalse%
-	\PassOptionsToClass{10pt}{book}
-	
+	\PassOptionsToClass{10pt}{book} %Dongliang
+
 	\setlength{\length@titles}{120mm}
 }
 \DeclareOption{pagesizeA4}{%
