@@ -184,6 +184,21 @@ useprefix=false,%sort bibliography not using prefix like "van"
 natbib=true]{biblatex}
 \addbibresource{general/Reference/BibReference.bib}
 
+%change "cited on page(s)" to "see page(s)" in Bibliography
+\DefineBibliographyStrings{english}{
+  backrefpage  = {see page},
+  backrefpages = {see pages},
+}
+%change parentheses to brackets in Bibliography
+\renewbibmacro*{pageref}{%
+  \iflistundef{pageref}
+    {}
+    {\printtext[brackets]{%\printtext[parens]
+       \ifnumgreater{\value{pageref}}{1}
+         {\bibstring{backrefpages}\ppspace}
+         {\bibstring{backrefpage}\ppspace}%
+       \printlist[pageref][-\value{listtotal}]{pageref}}}}
+
 %suppress "In:" for journal names
 %https://tex.stackexchange.com/questions/10682/suppress-in-biblatex
 %\renewbibmacro{in:}{}
@@ -361,16 +376,8 @@ inproceedings,patent,thesis,unpublished]{title}{#1}
 %\newcommand*{\mine}[1]{{\color{red}#1}}
 \newcommand*{\mine}[1]{{#1}}
 
-\def\circled#1{%
-	~#1%
-	\pdfliteral{
-		q .5 w
-		10 0 0 10 -2.5 3.5 cm .05 w .5 0 m
-		.5 .276 .276 .5 0 .5 c -.276 .5 -.5 .276 -.5 0 c
-		-.5 -.276 -.276 -.5 0 -.5 c .276 -.5 .5 -.276 .5 0 c h
-		S Q
-	}~%
-}
+%see https://tex.stackexchange.com/questions/7032/good-way-to-make-textcircled-numbers
+\newcommand{\circled}[1]{\textcircled{#1}}
 
 
 % math-mode version of "l" column type
@@ -394,13 +401,13 @@ inproceedings,patent,thesis,unpublished]{title}{#1}
 \newcolumntype{z}[1]
 {>{\raggedleft\arraybackslash\hspace{0pt}}m{#1}}
 
-%math-mode version of "x,y,z" column type
-\newcolumntype{X}[1]
-{>{\raggedright\arraybackslash\hspace{0pt}}m{$#1$}}
-\newcolumntype{Y}[1]
-{>{\centering\arraybackslash\hspace{0pt}}m{$#1$}}
-\newcolumntype{Z}[1]
-{>{\raggedleft\arraybackslash\hspace{0pt}}m{$#1$}}
+%%math-mode version of "x,y,z" column type
+%\newcolumntype{X}[1]
+%{>{\raggedright\arraybackslash\hspace{0pt}}m{$#1$}}
+%\newcolumntype{Y}[1]
+%{>{\centering\arraybackslash\hspace{0pt}}m{$#1$}}
+%\newcolumntype{Z}[1]
+%{>{\raggedleft\arraybackslash\hspace{0pt}}m{$#1$}}
 
 \newcommand{\dtrm}[2][]{d_{\mathrm{#2}, 
 t\ifthenelse{\equal{#1}{}}{}{_#1}}}
