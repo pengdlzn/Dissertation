@@ -4,12 +4,7 @@
 %look for numbered but unlabelled equations
 %\usepackage{refcheck}%compile twice in order to see the effects
 
-%\setlength{\headheight}{13.6pt}
 
-%To avoid warnings
-%e.g., Font shape `OT1/cmr/bx/n' in size <10.5> not available(Font) size <10.95> substituted
-%https://tex.stackexchange.com/questions/58087/how-to-remove-the-warnings-font-shape-ot1-cmss-m-n-in-size-4-not-available
-\usepackage{anyfontsize}
 
 %change the font sizes
 \makeatletter
@@ -26,9 +21,8 @@
 \small
 \normalsize
 \tiny
-
 %\usepackage{caption} %was defined in wup.cls
-\captionsetup{
+\captionsetup{labelfont=bf,
     justification=justified %Distribute text evenly between margins
 }
 \captionsetup[subfigure]{
@@ -36,7 +30,6 @@
 	font=tiny, %I used 10pt when I drew figures
 	labelformat=empty,
 }
-
 
 
 \usepackage[utf8]{inputenc}
@@ -65,7 +58,7 @@
 
 
 
-
+\usepackage{amsfonts}  %for \mathbb{Z}
 \usepackage{amsmath}  %align equations; text inside math
 
 \usepackage{amsthm} %for using open problem
@@ -84,7 +77,7 @@
 \usepackage[defaultlines=4,all]{nowidow}%forbid widow or orphan
 
 
-\usepackage[pdfencoding=auto]{hyperref}
+\usepackage{hyperref}
 \hypersetup{linktocpage=true}
 \hypersetup{colorlinks=true}
 \hypersetup{hidelinks}
@@ -112,13 +105,7 @@ Building, Morphing, Data structure, Zooming}}
 \urlstyle{same}
 %\Urlmuskip=0mu plus 1mu\relax
 
-%make the font of math charter; for \mathbb
-%cal=cmcal: make a difference between $\mathcal{H}$ and $\mathscr{H}$
-%see https://tex.stackexchange.com/questions/454415/how-to-use-mathcal-fonts-with-charter-font-from-mathdesign
-\usepackage[charter,cal=cmcal]{mathdesign}
-
-
-
+\usepackage[charter]{mathdesign} %make the font of math charter
 \usepackage{multicol}        % used for the two-column index
 %\pgfplotsset{compat=1.3} %make the label tight in axis picture
 
@@ -166,12 +153,9 @@ Building, Morphing, Data structure, Zooming}}
 
 %style: Loads bibliography style .bbx and citation style cbx
 %bibstyle: Loads bibliography style .bbx
-\usepackage[
-backend=bibtex,
-%backend=biber,
-style=trad-alpha, %style for my thesis
-%style=alphabetic, %style for my thesis
-sorting=nyt, %sort by name, year, title
+\usepackage[backend=bibtex,
+style=alphabetic, %style for my thesis
+sorting=nyvt, %sort by name, year, volume, title
 %bibstyle=authoryear, %no indices before names; year after names
 %bibstyle=numeric, %number the references
 hyperref=true,%transform citations and back references into 
@@ -193,20 +177,30 @@ useprefix=false,%sort bibliography not using prefix like "van"
 natbib=true]{biblatex}
 \addbibresource{general/Reference/BibReference.bib}
 
-%change "cited on page(s)" to "see page(s)" in Bibliography
-\DefineBibliographyStrings{english}{
-  backrefpage  = {see page},
-  backrefpages = {see pages},
-}
-%change parentheses to brackets in Bibliography
-\renewbibmacro*{pageref}{%
-  \iflistundef{pageref}
-    {}
-    {\printtext[brackets]{%\printtext[parens]
-       \ifnumgreater{\value{pageref}}{1}
-         {\bibstring{backrefpages}\ppspace}
-         {\bibstring{backrefpage}\ppspace}%
-       \printlist[pageref][-\value{listtotal}]{pageref}}}}
+%suppress "In:" for journal names
+%https://tex.stackexchange.com/questions/10682/suppress-in-biblatex
+%\renewbibmacro{in:}{}
+\renewbibmacro{in:}{%
+	\ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+
+%add commas after journal names
+%https://tex.stackexchange.com/questions/249010/adding-comma-after-journal-name-in-biblatex
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
+\renewbibmacro*{journal+issuetitle}{%
+	\usebibmacro{journal}%
+	\setunit*{\addcomma\space}%
+	\iffieldundef{series}
+	{}
+	{\newunit
+		\printfield{series}%
+		\setunit{\addspace}}%
+	\usebibmacro{volume+number+eid}%
+	\setunit{\addspace}%
+	\usebibmacro{issue+date}%
+	\setunit{\addcolon\space}%
+	\usebibmacro{issue}%
+	\newunit}
+
 
 %if a reference has doi, then we print only doi in bibliography;
 %otherwise, we print only url
@@ -245,13 +239,6 @@ natbib=true]{biblatex}
 	}
 }
 
-%% fix the bad definition of \ifempty 
-%\makeatletter
-%\def\ifempty#1{%
-%     \protected@edef\z{#1}\expandafter\ifblank\expandafter{\z}%
-%}
-%\makeatother
-
 %%display pagetotal of proceedings
 %\DeclareFieldFormat[inproceedings]{pagetotal}{\mkpagetotal[bookpagination]{#1}}
 %\renewbibmacro*{chapter+pages}{%
@@ -263,9 +250,46 @@ natbib=true]{biblatex}
 %	\newunit}
 
 
-\DeclareNameAlias{author}{family-given}%lastname before firstname
+
+%%%%----SET THE STYLE OF BIBLIOGRAPHY----%%%%
+%Remove the quotation marks for the titles in the reference
+\DeclareFieldFormat[article,inbook,incollection,
+inproceedings,patent,thesis,unpublished]{citetitle}{#1}
+\DeclareFieldFormat[article,inbook,incollection,
+inproceedings,patent,thesis,unpublished]{title}{#1}
+\DeclareNameAlias{author}{last-first}%lastname before firstname
 %\renewcommand*{\revsdnamepunct}{} %remove commas between last 
 %and first names
+
+
+%mke titles sentence case
+%https://tex.stackexchange.com/questions/86043/in-biblatex-make-title-sentence-case-but-not-journal-name/86051
+%https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/biblatex.def
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+{titlecase}{\MakeSentenceCase*{#1}}
+%keep the names of journals as they are
+\newbibmacro*{journal}{%
+	\iffieldundef{journaltitle}
+	{}
+	{\printtext[journaltitle]{%
+			\printfield[myplain]{journaltitle}%
+			\setunit{\subtitlepunct}%
+			\printfield[myplain]{journalsubtitle}}}}
+%keep the names of booktitles as they are
+\newbibmacro*{booktitle}{%
+	\ifboolexpr{
+		test {\iffieldundef{booktitle}}
+		and
+		test {\iffieldundef{booksubtitle}}
+	}
+	{}
+	{\printtext[booktitle]{%
+			\printfield[myplain]{booktitle}%
+			\setunit{\subtitlepunct}%
+			\printfield[myplain]{booksubtitle}}%
+		\newunit}%
+	\printfield{booktitleaddon}}
+\DeclareFieldFormat{myplain}{#1}
 
 
 %make the prefix of a name capital, e.g., van Dijk -> Van Dijk
@@ -282,52 +306,23 @@ natbib=true]{biblatex}
 \newcommand{\revise}[2]{#2}
 \newcommand{\mypar}[1]{\bigskip\noindent\textbf{#1.}~}
 
-
-\newcommand{\AreaAggTitle}
-    {Finding Optimal Sequences
-     \\ for Area Aggregation---
-     \\ \Astar vs.\ Integer Linear Programming}
-\newcommand{\AreaAggToCTitle}
-    {Finding Optimal Sequences for Area Aggregation---
-     \texorpdfstring{\\ \Astar vs.\ Integer Linear Programming}
-                    {A* vs.\ Integer Linear Programming}}
-\newcommand{\AreaAggChapterMark}
-    {Finding Optimal Sequences for Area Aggregation}
-
-\newcommand{\AdminBoundTitle}
-    {Continuously Generalizing\\ 
-     Administrative Boundaries\\
-     Based on Compatible Triangulations}
-\newcommand{\AdminBoundToCTitle}
-    {Continuously Generalizing Administrative Boundaries
-     \texorpdfstring{\\ Based on Compatible Triangulations}
-                    {Based on Compatible Triangulations}}
-\newcommand{\AdminBoundChapterMark}
-    {Continuously Generalizing Administrative Boundaries based on CT}
-
-\newcommand{\BldgGrowTitle}
-    {Continuously Generalizing\\ 
-    	Buildings to Built-up Areas\\
-    	by Aggregating and Growing}
-\newcommand{\BldgGrowToCTitle}
-    {Continuously Generalizing Buildings to Built-up Areas    	
-     \texorpdfstring{\\ by Aggregating and Growing}
-                    {by Aggregating and Growing}}
-\newcommand{\BldgGrowChapterMark}
-    {Continuously Generalizing Buildings to Built-up Areas}
-
-
-
-
-
 %Preface: Adminstrative Boundaries
 \newcommand{\ml}{\ensuremath{M_+}\xspace}
 \newcommand{\ms}{\ensuremath{M_-}\xspace}
 %\newcommand*{\mine}[1]{{\color{red}#1}}
 \newcommand*{\mine}[1]{{#1}}
 
-%see https://tex.stackexchange.com/questions/7032/good-way-to-make-textcircled-numbers
-\newcommand{\circled}[1]{\textcircled{#1}}
+\def\circled#1{%
+	~#1%
+	\pdfliteral{
+		q .5 w
+		10 0 0 10 -2.5 3.5 cm .05 w .5 0 m
+		.5 .276 .276 .5 0 .5 c -.276 .5 -.5 .276 -.5 0 c
+		-.5 -.276 -.276 -.5 0 -.5 c .276 -.5 .5 -.276 .5 0 c h
+		S Q
+	}~%
+}
+
 
 % math-mode version of "l" column type
 \newcolumntype{L}{>{$}l<{$}}
@@ -350,13 +345,13 @@ natbib=true]{biblatex}
 \newcolumntype{z}[1]
 {>{\raggedleft\arraybackslash\hspace{0pt}}m{#1}}
 
-%%math-mode version of "x,y,z" column type
-%\newcolumntype{X}[1]
-%{>{\raggedright\arraybackslash\hspace{0pt}}m{$#1$}}
-%\newcolumntype{Y}[1]
-%{>{\centering\arraybackslash\hspace{0pt}}m{$#1$}}
-%\newcolumntype{Z}[1]
-%{>{\raggedleft\arraybackslash\hspace{0pt}}m{$#1$}}
+%math-mode version of "x,y,z" column type
+\newcolumntype{X}[1]
+{>{\raggedright\arraybackslash\hspace{0pt}}m{$#1$}}
+\newcolumntype{Y}[1]
+{>{\centering\arraybackslash\hspace{0pt}}m{$#1$}}
+\newcolumntype{Z}[1]
+{>{\raggedleft\arraybackslash\hspace{0pt}}m{$#1$}}
 
 \newcommand{\dtrm}[2][]{d_{\mathrm{#2}, 
 t\ifthenelse{\equal{#1}{}}{}{_#1}}}
@@ -426,27 +421,6 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 {\eqmakebox[#1][l]{$\displaystyle#2$}}
 \newcommand{\embrd}[2][N]
 {\eqmakebox[#1][r]{$\displaystyle#2$}}
-
-
-
-
-
-
-
-
-
-
-
-%avoid warning
-%https://tex.stackexchange.com/questions/229638/package-biblatex-warning-babel-polyglossia-detected-but-csquotes-missing
-\usepackage{csquotes}
-
-%to avoid many conflicts
-%e.g., "Warning: Command \textcircled invalid in math mode"
-%e.g., "Warning: Not defining \perthousand."
-%e.g., "Warning: Font shape `OMS/cmsy/b/n' in size <3.75> not available(Font) size <5> substituted"
-%https://tex.stackexchange.com/questions/139241/using-matbbz-and-textregistered-in-math-mode
-\usepackage{textcomp}
 
 %make package refcheck compatible with package hyperref 
 \makeatletter

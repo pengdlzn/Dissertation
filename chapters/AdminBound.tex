@@ -1,11 +1,17 @@
-%\chapter[<ToC-title>]{<Title>} 
-\chapter[\AdminBoundToCTitle]{\AdminBoundTitle} 
-
-
+\chapter %\chapter[<ToC-title>]{<Title>}
+%we add "\hspace{0.95mm}~" 
+%to make the headline align on the top of the pages 
+[Continuously Generalizing 
+Administrative Boundaries\\%\hspace{0.95mm}~\\
+Based on Compatible Triangulations]
+{Continuously Generalizing\\ 
+	Administrative Boundaries\\
+	Based on Compatible Triangulations}
 \label{chap:Admin}
 
 %appear at the top of the pages
-\chaptermark{\AdminBoundChapterMark}
+\chaptermark{Continuously Generalizing 
+Administrative Boundaries based on CT}
 
 Nowadays people often browse through digital maps 
 on computers or small displays to get geographic information. 
@@ -100,7 +106,6 @@ For example, we try to generalize from
 \fig\ref{fig:Admin_Introduction}a to
 \fig\ref{fig:Admin_Introduction}d.
 Our method consists of the following five steps.  
-
 
 In step~\circled{1}, we find corresponding boundaries
 between the two maps,
@@ -589,10 +594,10 @@ The coefficients~$a$, $b$, and~$c$ are dependent on
 the coordinates of~$\alpha(0)$, $\alpha(1)$, $\beta(0)$, 
 and~$\beta(1)$, as follows. 
 \begin{align}
-a=~&(x_1-x_2-x_3+x_4)^2+(y_1-y_2-y_3+y_4)^2,  \nonumber \\
-b=~&-2(x_1-x_3)(x_1-x_2-x_3+x_4) \nonumber \\
-&-2(y_1-y_3)(y_1-y_2-y_3+y_4),  \nonumber \\
-c=~&(x_1-x_3)^2+(y_1-y_3)^2. \nonumber
+	a=~&(x_1-x_2-x_3+x_4)^2+(y_1-y_2-y_3+y_4)^2,  \nonumber \\
+	b=~&-2(x_1-x_3)(x_1-x_2-x_3+x_4) \nonumber \\
+	   &-2(y_1-y_3)(y_1-y_2-y_3+y_4),  \nonumber \\
+	c=~&(x_1-x_3)^2+(y_1-y_3)^2. \nonumber
 \end{align}
 Let~$X=au^2+bu+c$. 
 We have~$a\geq0$ and, 
