@@ -1,18 +1,8 @@
-\chapter %\chapter[<ToC-title>]{<Title>}
-%we add "\hspace{0.95mm}~" 
-%to make the headline align on the top of the pages 
-[Finding Optimal Sequences for Area Aggregation---\\%\hspace{0.95mm}~\\ 
-\Astar vs.\ Integer Linear Programming]
-%\Astar vs.\ Integer Linear Programming]
-{Finding Optimal Sequences\\ 
-	for Area Aggregation---\\
-	\Astar vs.\ Integer Linear Programming}
+%\chapter[<ToC-title>]{<Title>} 
+\chapter[\AreaAggToCTitle]{\AreaAggTitle} 
 \label{chap:AreaAgg}
-
 %appear at the top of the pages
-\chaptermark{Finding Optimal Sequences for 
-Area Aggregation%---\Astar vs.\ Integer Linear Programming
-}
+\chaptermark{\AreaAggChapterMark}
 
 The land-cover area is of significant importance on maps.
 When users zoom out, some land-cover areas become
@@ -311,7 +301,7 @@ and the goal map is simply the union of the~$n$ rectangles.
 At layer~$L_{k+1}$, we need to remove~$k$ of the~$2k$ 
 intermediate vertical boundaries. 
 For this, the number of choices is~$
-{{2k}\choose{k}}
+\binom{2k}{k}
 = \frac{2k\cdot (2k-1)\cdot \ldots \cdot (k+1)}
 {k\cdot (k-1)\cdot \ldots \cdot 1}
 \ge 2^k = 2^{(n-1)/2}$.
@@ -324,8 +314,7 @@ has an exponential lower bound.
 
 \fig\ref{fig:AreaAgg_SubdivisionName} shows that there are many 
 ways to aggregate from the start map to the goal map.
-Apparently, some of the ways are more reasonable than 
-others.
+Apparently, some of the ways are more reasonable than others.
 In our example, we consider 
 sequence~$(P_{1,1}, P_{2,1},P_{3,1},P_{4,1})$ 
 more reasonable than 
@@ -637,7 +626,7 @@ f_2(P_{s,i},P_{s+1,j})=
 
 
 
-\section{Using the \Astar Algorithm}
+\section{Using the \texorpdfstring{\Astar Algorithm}{A* Algorithm}}
 \label{sec:AreaAgg_AStar}
 
 \sect\ref{sec:AreaAgg_Preliminaries} has shown that
@@ -1115,7 +1104,7 @@ where vector~$\bm{X}$ represents integer variables,
 vector~$\bm{C} \in \mathbb{R}^I$, 
 vector~$\bm{H} \in \mathbb{R}^J$,
 and~$\bm{E}$ is a $(J \times I)$-matrix over the reals.
-Furthermore, if we require that
+Furthermore, if we require 
 $$
 \bm{X} 	\in \{0,1\}^I,
 $$
@@ -1246,13 +1235,12 @@ we define the length of their common boundary to be~$0$
 because we shall not remove any.
 Note that time $t\in T\setminus \{1,n\}$.
 We do not need~$z_{t,p,q,r}$ for time~$t=1$ 
-because, at the time,
-there are no two polygons in the same patch.
-Namely, it always holds that~$z_{1,p,q,r}=0$, 
+because there are no two polygons in the same patch.
+Namely, it always holds~$z_{1,p,q,r}=0$, 
 which does not help in our ILP.
 We do not need~$z_{t,p,q,r}$ for time~$t=n$
 because all the polygons will be in the same patch.
-In this case, equation~$z_{n,p,q,r}=1$ always holds,
+In this case, \eq$z_{n,p,q,r}=1$ always holds,
 which does not help in our ILP, either.
 
 We use a fourth set of variables
@@ -1273,7 +1261,7 @@ polygon~$p$ is assigned to center~$o$,
 and~$p$ has a neighbor assigned to center~$r$
 (see \figs\ref{fig:AreaAgg_Variables}
 and~\ref{fig:AreaAgg_Variables_Neighbor} for examples).
-We do not need a variable~$c_{t,p,o,r}$ for time~$t=n-1$ 
+We do not need variable~$c_{t,p,o,r}$ for time~$t=n-1$ 
 because there are only two patches left, 
 and they must be neighbors.
 
@@ -1287,8 +1275,9 @@ We define
 \embld[U]{\{0,1\}} \qquad 
 \forall t\in T\setminus\{n\}, \forall o \in P&
 \end{flalign*}
-with $w_{t,o}=1$ meaning 
-that patch~$o$ is a smallest patch at time~$t$
+with $w_{t,o}=1$ meaning if and only if, at time~$t$, 
+patch~$o$ is the smallest patch that is involved 
+in the aggregation step from time~$t$ to time~$t-1$
 (see for example \fig\ref{fig:AreaAgg_Variables}).
 
 In total, the number of variables
@@ -1403,8 +1392,8 @@ we restrict the variables introduced in
 \sect\ref{sub:AreaAgg_variables} 
 by setting up constraints.
 Recall that the intended meaning 
-of~$x_{t,p,r}=1$ is that, at time~$t$, 
-polygon~$p$ is assigned to center~$r$. 
+of~$x_{t,p,r}=1$ is if and only if 
+polygon~$p$ is assigned to center~$r$ at time~$t$. 
 To realize this functionality,
 our first constraint is that 
 polygon~$p$ is assigned to exactly one center at time~$t$. 
@@ -1422,7 +1411,7 @@ assigned by other polygons only when~$r$ is a center.
 In our case, if polygon~$r$ is a center, 
 then it must be assigned to itself,
 that is, $x_{t,r,r}=1$.
-If~$r$ is not a center, then $x_{t,r,r}=0$.
+If~$r$ is not a center, we have variable~$x_{t,r,r}=0$.
 In either case, we have
 \begin{flalign}
 \label{eq:CstrAssign}
@@ -1476,7 +1465,8 @@ where $T(r)$ is the type of polygon $r$ at time $t=1$.
 
 Next, we restrict binary variable~$y_{t,p,o,r}$,
 introduced in \sect\ref{sub:AreaAgg_variables}.  
-Recall that the intended meaning of~$y_{t,p,o,r}=1$ is that 
+Recall that the intended meaning of~$y_{t,p,o,r}=1$ 
+is if and only if 
 polygon~$p$ is assigned to center~$o$ at time~$t-1$ 
 and to center~$r$ at time~$t$.
 To enforce this, we use two types of constraints.
@@ -1484,7 +1474,7 @@ To enforce this, we use two types of constraints.
 First, if polygon~$p$ is assigned 
 to center~$o$ at time~$t-1$ ($x_{t-1,p,o}=1$)
 and assigned to center~$r$ at time $t$
-($x_{t,p,r}=1$), then $y_{t,p,o,r}=1$. 
+($x_{t,p,r}=1$), we have variable~$y_{t,p,o,r}=1$. 
 This requirement is expressed by
 \begin{flalign}
 \label{eq:CstrY1}
@@ -1497,7 +1487,7 @@ This requirement is expressed by
 
 Second, if~$p$ is not assigned to~$o$ at~$t-1$ ($x_{t-1,p,o}=0$)
 and/or~$p$ is not assigned to~$r$ at time~$t$ ($x_{t,p,o}=0$),
-then $y_{t,p,o,r}=0$.
+we have variable~$y_{t,p,o,r}=0$.
 This requirement is expressed by
 \begin{flalign}
 \label{eq:CstrY2}
@@ -1532,13 +1522,14 @@ This requirement is expressed by
 
 In \sect\ref{sub:AreaAgg_variables},
 we introduced binary variable~$z_{t,p,q,r}$.
-Recall that the intended meaning of~$z_{t,p,q,r}=1$ is that, 
-at time~$t$, polygons~$p$ and~$q$ are both in patch~$r$.
+Recall that the intended meaning of~$z_{t,p,q,r}=1$ 
+is if and only if
+polygons~$p$ and~$q$ are both in patch~$r$ at time~$t$.
 To enforce this, we need three types of constraints.
 
 First, if two polygons~$p$ and~$q$ are assigned 
 to center~$r$ at time~$t$ ($x_{t,p,r}=1$ and~$x_{t,q,r}=1$),
-then~$z_{t,p,q,r}=1$. 
+we have variable~$z_{t,p,q,r}=1$. 
 This requirement is expressed by
 \begin{flalign}
 \label{eq:CstrZ1}
@@ -1551,7 +1542,7 @@ This requirement is expressed by
 
 Second, at time~$t$, if~$p$ is not assigned to~$r$ ($x_{t,p,r}=0$)
 and/or~$q$ is not assigned to~$r$ ($x_{t,q,r}=0$), 
-then $z_{t,p,q,r}=0$. 
+we have variable~$z_{t,p,q,r}=0$. 
 This requirement is expressed by
 \begin{flalign}
 \label{eq:CstrZ2}
@@ -1594,7 +1585,7 @@ in the same patch ($z_{t,p,q}=1$) or not ($z_{t,p,q}=0$).
 Note that 
 constraints~(\ref{eq:CstrOneCenter}) and~(\ref{eq:CstrZ2}) 
 ensure that polygons~$p$ and~$q$ can be assigned 
-to one common center at most; therefore, we have $z_{t,p,q} \le 1$.
+to one common center at most; therefore, we have~$z_{t,p,q} \le 1$.
 We use our new variable~$z_{t,p,q}$
 to express the following requirement: 
 If two polygons have been aggregated into one patch, 
@@ -1641,12 +1632,12 @@ For a given center, \textcite{Cova2000_Contiguity}
 were able to find all the contiguous patches.
 In their method, when a node is to be assigned to a center, 
 a path from the node to the center was demanded 
-that each node is assigned to the center.
+that each node of the path is assigned to the center.
 %
 Similarly, \textcite{Shirabe2005Contiguity} modeled 
 the contiguity problem as a network flow.
 He required that there must be a path so that 
-some fluid could flow from a node to a sink (center).
+some fluid can flow from a node to a sink (center).
 %
 \textcite{Oehrlein2017Aggregation} utilized a method based 
 on \emph{vertex separators}.	
@@ -1678,17 +1669,23 @@ since we aggregate step by step.
 \end{figure} 
 
 We aggregate two patches only if they are neighbors.
-To ensure this, we need the binary variables~$c_{t,p,o,r}$
+To ensure this, we need binary variable~$c_{t,p,o,r}$
 introduced in \sect\ref{sub:AreaAgg_variables}.
 Recall that the intended meaning of~$c_{t,p,o,r}=1$ 
-is that, at time~$t$, 
+is if and only if, at time~$t$, 
 polygon~$p$ of patch~$o$ has 
 at least one neighboring polygon in patch~$r$.
 To enforce this behavior of~$c_{t,p,o,r}$, 
 we need four types of constraints.
 
-First, at time~$t$, polygon~$p$ must actually be assigned 
-to center~$o$,
+First, polygon~$p$ must actually be assigned 
+to center~$o$ at time~$t$ ($x_{t,p,o}=1$).
+In contrast, if~$p$ is not assigned to~$o$ ($x_{t,p,o}=0$),
+then variable~$c_{t,p,o,r}$ is impossible to tell
+if patch~$o$ and patch~$r$ are neighbors.
+In this case, we must not aggregate the two patches ($c_{t,p,o,r}=0$);
+otherwise, we may end up having noncontiguous patches.
+As a result,
 \begin{flalign}
 \label{eq:CstrC_Part}
 &\eqquadConstraintsC
@@ -1709,8 +1706,12 @@ to center~$o$,
 \end{array} &	
 \end{flalign}
 
-Second, at time~$t$, polygon~$p$ has at least 
-one neighbor that is assigned to center~$r$,
+Second, at time~$t$, at least one of polygon~$p$'s neighbor(s),
+say, polygon~$q$ has to be assigned to center~$r$ ($x_{t,q,r}=1$).
+If not, then variable~$c_{t,p,o,r}$ is impossible to tell
+if patches~$o$ and $r$ are neighbors.
+Analogous to the condition of constraint~(\ref{eq:CstrC_Part}),
+we have
 \begin{flalign}
 \label{eq:CstrC_Neighbor}
 &\eqquadConstraintsC
@@ -1734,8 +1735,12 @@ where~$N_\mathrm{nbr}(p)$ represents
 the set of polygons adjacent to~$p$.
 
 
-Third, if polygon~$p$ is in patch~$o$ and~$p$ has at least 
-one neighbor in patch~$r$, then we must enforce~$c_{t,p,o,r}=1$,
+Third, if polygon~$p$ is in patch~$o$ ($x_{t,p,o}=1$)
+and~$p$ has at least one neighbor, say, 
+polygon~$q$ in patch~$r$ ($x_{t,q,r}=1$),
+then we must enforce variable~$c_{t,p,o,r}=1$
+(according to the definition of this variable).
+We have
 \begin{flalign}
 \label{eq:CstrC_Positive}
 &\eqquadConstraintsC
@@ -1760,9 +1765,15 @@ one neighbor in patch~$r$, then we must enforce~$c_{t,p,o,r}=1$,
 
 Fourth, if we aggregate patch~$o$ into patch~$r$
 from time~$t-1$ to time~$t$, 
-then $y_{t,o,o,r}=1$.
+we have variable~$y_{t,o,o,r}=1$
+(see the definition of this variable 
+in \sect\ref{sub:AreaAgg_variables}).
 In this case, we must make sure that 
-the two patches are actually neighbors,
+the two patches are actually neighbors at time~$t-1$.
+That is to say, at least one of patch~$o$'s polygons 
+has at least one neighbor in patch~$r$ at time~$t-1$.
+If not, we have~$y_{t,o,o,r}=0$.
+That is, it holds
 \begin{flalign}
 \label{eq:CstrC_Agg}
 &\eqquadConstraintsC
@@ -1777,7 +1788,6 @@ If we do not require that
 each aggregation step must involve a smallest patch,
 then we only need constraints
 (\ref{eq:CstrOneCenter})--(\ref{eq:CstrC_Agg})
-explained so far 
 and variables~$x_{t,p,r}$, $y_{t,p,o,r}$, $z_{t,p,q,r}$,
 and~$c_{t,p,o,r}$.
 If we insist on involving a smallest patch at each step,
@@ -1788,15 +1798,16 @@ then we need more variables and more constraints.
 In order to make sure that 
 each of our aggregation steps involves a smallest patch,
 we need another type of variable,~$w_{t,o}$.
-Recall that the intended meaning of~$w_{t,o}=1$ is that 
+Recall that the intended meaning of~$w_{t,o}=1$ is 
+if and only if 
 polygon~$o$ is the center of 
 a smallest patch at time~$t$.
 We will use this to enforce that
 this patch is involved in the aggregation step 
 from time~$t$ to~$t+1$.
 At any time~$t$, 
-we pick exactly one smallest patch and aggregate it with 
-one of its neighbors;
+we pick exactly one smallest patch (there can be many) 
+and aggregate it with one of its neighbors;
 we do not care whether or not the neighbor is a smallest one.
 Therefore, we have
 \begin{flalign}
@@ -1808,20 +1819,20 @@ Therefore, we have
 \end{flalign}
 
 Assume that patch~$o$ is the smallest patch
-which is involved in the aggregation step from~$t$ to~$t+1$,
-and that we are aggregating patches~$o$ and~$r$.
+involved in the aggregation step from~$t$ to~$t+1$
+and that we are aggregating patch~$o$ and another patch, say,~$r$.
 There can be two cases.
-Patch~$o$ is aggregated into patch~$r$, 
-or the other way around.
+We aggregate~$o$ into~$r$ 
+or aggregate~$r$ into~$o$.
 In the first case, we have variable~$y_{t+1,o,o,r}=1$,
-and in the second case, we have~$y_{t+1,r,r,o}=1$.
-Either of the two constraints implies 
+and, in the second case, we have~$y_{t+1,r,r,o}=1$.
+Either of the two cases implies 
 that polygon~$o$ is indeed a center at time~$t$, 
 that is,~$x_{t,o,o} =1$.
 In order to enforce that
-the aggregation step involves patch~$o$,
-we must make sure that~$y_{t+1,o,o,r}=1$ or~$y_{t+1,r,r,o}=1$ 
-when $w_{t,o}=1$.
+the aggregation step involves patch~$o$ and another patch,
+we must make sure~$y_{t+1,o,o,r}=1$ or~$y_{t+1,r,r,o}=1$
+when~$w_{t,o}=1$.
 Consequently, we use the constraint
 \begin{flalign}
 \label{eq:CstrSInvolveSmallest}
@@ -1839,24 +1850,23 @@ Now we need to make sure that
 patch~$o$ with $w_{t,o}=1$ is indeed 
 a smallest patch at time~$t$.
 We define variable~$A_{t,r}$ as the area of 
-patch~$r$ at time~$t$, 
-that is,
+patch~$r$ at time~$t$. 
+That is, we have
 \begin{flalign*}
 &\eqquadConstraintW
 \embrd[S]{A_{t,r}} = 
 \embld[T]{\sum_{p\in P} a_p \cdot x_{t,p,r},} &
 \end{flalign*}
 where~$a_p$ is the area of polygon~$p$ 
-and is a constant (as viewed by the ILP).
+and, as viewed by the ILP, is a constant.
 Area~$A_{t,r}$ is positive 
-if and only if polygon~$r$ is a center at time~$t$,
-that is, if and only if~$x_{t,r,r}=1$.
-We define a very large number~$M$ 
+if and only if polygon~$r$ is a center at time~$t$ ($x_{t,r,r}=1$).
+We define constant~$M$ as a very large number
 to help us construct the corresponding constraints.
 It suffices to set~$M$ to 
 the area of the whole region, 
 i.e., $M=A_R$ (see \eq\ref{eq:f_type}). 
-We require that
+We require
 %\begin{flalign}
 %\label{eq:CstrSIndeedSmallest}
 %&\eqquadConstraints
@@ -1904,7 +1914,7 @@ all the other existing patches at time~$t$.
 
 In order to compute an aggregation sequence 
 involving a smallest patch at each step, 
-we need all the five types of variables and 
+we need all the five types of variables and all the
 constraints~(\ref{eq:CstrOneCenter})--(\ref{eq:CstrSIndeedSmallest}).
 In total, the number of constraints is~$O(n^4)$.
 

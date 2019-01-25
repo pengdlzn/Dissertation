@@ -60,8 +60,6 @@
 \usepackage{lipsum}  % Loading lipsum to write blind text
 
 
-
-\usepackage{amsfonts}  %for \mathbb{Z}
 \usepackage{amsmath}  %align equations; text inside math
 
 \usepackage{amsthm} %for using open problem
@@ -108,7 +106,12 @@ Building, Morphing, Data structure, Zooming}}
 \urlstyle{same}
 %\Urlmuskip=0mu plus 1mu\relax
 
-\usepackage[charter]{mathdesign} %make the font of math charter
+%make the font of math charter; for \mathbb
+%cal=cmcal: make a difference between $\mathcal{H}$ and $\mathscr{H}$
+%see https://tex.stackexchange.com/questions/454415/how-to-use-mathcal-fonts-with-charter-font-from-mathdesign
+\usepackage[charter,cal=cmcal]{mathdesign}
+
+
 \usepackage{multicol}        % used for the two-column index
 %\pgfplotsset{compat=1.3} %make the label tight in axis picture
 
@@ -157,8 +160,9 @@ Building, Morphing, Data structure, Zooming}}
 %style: Loads bibliography style .bbx and citation style cbx
 %bibstyle: Loads bibliography style .bbx
 \usepackage[backend=bibtex,
+%style=trad-alpha, %style for my thesis
 style=alphabetic, %style for my thesis
-sorting=nyvt, %sort by name, year, volume, title
+sorting=nyt, %sort by name, year, title
 %bibstyle=authoryear, %no indices before names; year after names
 %bibstyle=numeric, %number the references
 hyperref=true,%transform citations and back references into 
@@ -309,6 +313,48 @@ inproceedings,patent,thesis,unpublished]{title}{#1}
 \newcommand{\revise}[2]{#2}
 \newcommand{\mypar}[1]{\bigskip\noindent\textbf{#1.}~}
 
+
+
+
+\newcommand{\AreaAggTitle}
+    {Finding Optimal Sequences
+     \\ for Area Aggregation---
+     \\ \Astar vs.\ Integer Linear Programming}
+\newcommand{\AreaAggToCTitle}
+    {Finding Optimal Sequences for Area Aggregation---
+     \texorpdfstring{\\ \Astar vs.\ Integer Linear Programming}
+                    {A* vs.\ Integer Linear Programming}}
+\newcommand{\AreaAggChapterMark}
+    {Finding Optimal Sequences for Area Aggregation}
+
+\newcommand{\AdminBoundTitle}
+    {Continuously Generalizing\\ 
+     Administrative Boundaries\\
+     Based on Compatible Triangulations}
+\newcommand{\AdminBoundToCTitle}
+    {Continuously Generalizing Administrative Boundaries
+     \texorpdfstring{\\ Based on Compatible Triangulations}
+                    {Based on Compatible Triangulations}}
+\newcommand{\AdminBoundChapterMark}
+    {Continuously Generalizing Administrative Boundaries based on CT}
+
+\newcommand{\BldgGrowTitle}
+    {Continuously Generalizing\\ 
+    	Buildings to Built-up Areas\\
+    	by Aggregating and Growing}
+\newcommand{\BldgGrowToCTitle}
+    {Continuously Generalizing Buildings to Built-up Areas    	
+     \texorpdfstring{\\ by Aggregating and Growing}
+                    {by Aggregating and Growing}}
+\newcommand{\BldgGrowChapterMark}
+    {Continuously Generalizing Buildings to Built-up Areas}
+
+
+
+
+
+
+
 %Preface: Adminstrative Boundaries
 \newcommand{\ml}{\ensuremath{M_+}\xspace}
 \newcommand{\ms}{\ensuremath{M_-}\xspace}
@@ -424,6 +470,18 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 {\eqmakebox[#1][l]{$\displaystyle#2$}}
 \newcommand{\embrd}[2][N]
 {\eqmakebox[#1][r]{$\displaystyle#2$}}
+
+%avoid warning
+%https://tex.stackexchange.com/questions/229638/package-biblatex-warning-babel-polyglossia-detected-but-csquotes-missing
+\usepackage{csquotes}
+
+%to avoid many conflicts
+%e.g., "Warning: Command \textcircled invalid in math mode"
+%e.g., "Warning: Not defining \perthousand."
+%e.g., "Warning: Font shape `OMS/cmsy/b/n' in size <3.75> not available(Font) size <5> substituted"
+%https://tex.stackexchange.com/questions/139241/using-matbbz-and-textregistered-in-math-mode
+\usepackage{textcomp}
+
 
 %make package refcheck compatible with package hyperref 
 \makeatletter
