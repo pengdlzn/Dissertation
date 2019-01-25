@@ -245,6 +245,13 @@ natbib=true]{biblatex}
 	}
 }
 
+%% fix the bad definition of \ifempty 
+%\makeatletter
+%\def\ifempty#1{%
+%     \protected@edef\z{#1}\expandafter\ifblank\expandafter{\z}%
+%}
+%\makeatother
+
 %%display pagetotal of proceedings
 %\DeclareFieldFormat[inproceedings]{pagetotal}{\mkpagetotal[bookpagination]{#1}}
 %\renewbibmacro*{chapter+pages}{%
@@ -419,8 +426,6 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 {\eqmakebox[#1][l]{$\displaystyle#2$}}
 \newcommand{\embrd}[2][N]
 {\eqmakebox[#1][r]{$\displaystyle#2$}}
-
-
 
 
 
