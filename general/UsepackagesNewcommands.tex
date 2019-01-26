@@ -157,10 +157,13 @@ Building, Morphing, Data structure, Zooming}}
 \makeatother
 
 
+
 %style: Loads bibliography style .bbx and citation style cbx
 %bibstyle: Loads bibliography style .bbx
-\usepackage[backend=bibtex,
-%style=trad-alpha, %style for my thesis
+\usepackage[
+backend=biber,
+%backend=bibtex,
+%style=trad-alpha, %cause error "Argument of \MT@res@a has an extra }." on my laptop
 style=alphabetic, %style for my thesis
 sorting=nyt, %sort by name, year, title
 %bibstyle=authoryear, %no indices before names; year after names
@@ -176,13 +179,14 @@ maxbibnames=9, %the author names appearing in bibliography
 maxcitenames=2, %the author names appearing in text
 giveninits=true,
 %terseinits=true,%remove periods after initials of first names
-%doi=true,
+%doi=false,
 %isbn=false,url=false,
 eprint=false,
 %dashed=false,
 useprefix=false,%sort bibliography not using prefix like "van"
 natbib=true]{biblatex}
 \addbibresource{general/Reference/BibReference.bib}
+
 
 %change "cited on page(s)" to "see page(s)" in Bibliography
 \DefineBibliographyStrings{english}{
@@ -223,6 +227,35 @@ natbib=true]{biblatex}
 	\usebibmacro{issue}%
 	\newunit}
 
+
+%make titles sentence case
+%https://tex.stackexchange.com/questions/86043/in-biblatex-make-title-sentence-case-but-not-journal-name/86051
+%https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/biblatex.def
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+{titlecase}{\MakeSentenceCase*{#1}}
+%keep the names of journals as they are
+\renewbibmacro*{journal}{%
+	\iffieldundef{journaltitle}
+	{}
+	{\printtext[journaltitle]{%
+			\printfield[myplain]{journaltitle}%
+			\setunit{\subtitlepunct}%
+			\printfield[myplain]{journalsubtitle}}}}
+%keep the names of booktitles as they are
+\renewbibmacro*{booktitle}{%
+	\ifboolexpr{
+		test {\iffieldundef{booktitle}}
+		and
+		test {\iffieldundef{booksubtitle}}
+	}
+	{}
+	{\printtext[booktitle]{%
+			\printfield[myplain]{booktitle}%
+			\setunit{\subtitlepunct}%
+			\printfield[myplain]{booksubtitle}}%
+		\newunit}%
+	\printfield{booktitleaddon}}
+\DeclareFieldFormat{myplain}{#1}
 
 %if a reference has doi, then we print only doi in bibliography;
 %otherwise, we print only url
@@ -279,39 +312,13 @@ natbib=true]{biblatex}
 inproceedings,patent,thesis,unpublished]{citetitle}{#1}
 \DeclareFieldFormat[article,inbook,incollection,
 inproceedings,patent,thesis,unpublished]{title}{#1}
-\DeclareNameAlias{author}{last-first}%lastname before firstname
+
+\DeclareNameAlias{author}{family-given}%lastname before firstname
 %\renewcommand*{\revsdnamepunct}{} %remove commas between last 
 %and first names
 
 
-%mke titles sentence case
-%https://tex.stackexchange.com/questions/86043/in-biblatex-make-title-sentence-case-but-not-journal-name/86051
-%https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/biblatex.def
-\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]
-{titlecase}{\MakeSentenceCase*{#1}}
-%keep the names of journals as they are
-\newbibmacro*{journal}{%
-	\iffieldundef{journaltitle}
-	{}
-	{\printtext[journaltitle]{%
-			\printfield[myplain]{journaltitle}%
-			\setunit{\subtitlepunct}%
-			\printfield[myplain]{journalsubtitle}}}}
-%keep the names of booktitles as they are
-\newbibmacro*{booktitle}{%
-	\ifboolexpr{
-		test {\iffieldundef{booktitle}}
-		and
-		test {\iffieldundef{booksubtitle}}
-	}
-	{}
-	{\printtext[booktitle]{%
-			\printfield[myplain]{booktitle}%
-			\setunit{\subtitlepunct}%
-			\printfield[myplain]{booksubtitle}}%
-		\newunit}%
-	\printfield{booktitleaddon}}
-\DeclareFieldFormat{myplain}{#1}
+
 
 
 %make the prefix of a name capital, e.g., van Dijk -> Van Dijk
@@ -363,7 +370,6 @@ inproceedings,patent,thesis,unpublished]{title}{#1}
                     {by Aggregating and Growing}}
 \newcommand{\BldgGrowChapterMark}
     {Continuously Generalizing Buildings to Built-up Areas}
-
 
 
 
