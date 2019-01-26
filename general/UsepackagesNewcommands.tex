@@ -163,8 +163,8 @@ Building, Morphing, Data structure, Zooming}}
 \usepackage[
 backend=biber,
 %backend=bibtex,
-%style=trad-alpha, %cause error "Argument of \MT@res@a has an extra }." on my laptop
-style=alphabetic, %style for my thesis
+style=trad-alpha,
+%style=alphabetic, %style for my thesis
 sorting=nyt, %sort by name, year, title
 %bibstyle=authoryear, %no indices before names; year after names
 %bibstyle=numeric, %number the references
@@ -187,75 +187,14 @@ useprefix=false,%sort bibliography not using prefix like "van"
 natbib=true]{biblatex}
 \addbibresource{general/Reference/BibReference.bib}
 
-
-%change "cited on page(s)" to "see page(s)" in Bibliography
-\DefineBibliographyStrings{english}{
-  backrefpage  = {see page},
-  backrefpages = {see pages},
-}
-%change parentheses to brackets in Bibliography
-\renewbibmacro*{pageref}{%
-  \iflistundef{pageref}
-    {}
-    {\printtext[brackets]{%\printtext[parens]
-       \ifnumgreater{\value{pageref}}{1}
-         {\bibstring{backrefpages}\ppspace}
-         {\bibstring{backrefpage}\ppspace}%
-       \printlist[pageref][-\value{listtotal}]{pageref}}}}
-
-%suppress "In:" for journal names
-%https://tex.stackexchange.com/questions/10682/suppress-in-biblatex
-%\renewbibmacro{in:}{}
-\renewbibmacro{in:}{%
-	\ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
-
-%add commas after journal names
-%https://tex.stackexchange.com/questions/249010/adding-comma-after-journal-name-in-biblatex
-\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
-\renewbibmacro*{journal+issuetitle}{%
-	\usebibmacro{journal}%
-	\setunit*{\addcomma\space}%
-	\iffieldundef{series}
-	{}
-	{\newunit
-		\printfield{series}%
-		\setunit{\addspace}}%
-	\usebibmacro{volume+number+eid}%
-	\setunit{\addspace}%
-	\usebibmacro{issue+date}%
-	\setunit{\addcolon\space}%
-	\usebibmacro{issue}%
-	\newunit}
+\DeclareNameAlias{author}{family-given}%lastname before firstname
+%\renewcommand*{\revsdnamepunct}{} %remove commas between last 
+%and first names
 
 
-%make titles sentence case
-%https://tex.stackexchange.com/questions/86043/in-biblatex-make-title-sentence-case-but-not-journal-name/86051
-%https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/biblatex.def
-\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]
-{titlecase}{\MakeSentenceCase*{#1}}
-%keep the names of journals as they are
-\renewbibmacro*{journal}{%
-	\iffieldundef{journaltitle}
-	{}
-	{\printtext[journaltitle]{%
-			\printfield[myplain]{journaltitle}%
-			\setunit{\subtitlepunct}%
-			\printfield[myplain]{journalsubtitle}}}}
-%keep the names of booktitles as they are
-\renewbibmacro*{booktitle}{%
-	\ifboolexpr{
-		test {\iffieldundef{booktitle}}
-		and
-		test {\iffieldundef{booksubtitle}}
-	}
-	{}
-	{\printtext[booktitle]{%
-			\printfield[myplain]{booktitle}%
-			\setunit{\subtitlepunct}%
-			\printfield[myplain]{booksubtitle}}%
-		\newunit}%
-	\printfield{booktitleaddon}}
-\DeclareFieldFormat{myplain}{#1}
+
+
+
 
 %if a reference has doi, then we print only doi in bibliography;
 %otherwise, we print only url
@@ -306,16 +245,20 @@ natbib=true]{biblatex}
 
 
 
-%%%%----SET THE STYLE OF BIBLIOGRAPHY----%%%%
-%Remove the quotation marks for the titles in the reference
-\DeclareFieldFormat[article,inbook,incollection,
-inproceedings,patent,thesis,unpublished]{citetitle}{#1}
-\DeclareFieldFormat[article,inbook,incollection,
-inproceedings,patent,thesis,unpublished]{title}{#1}
-
-\DeclareNameAlias{author}{family-given}%lastname before firstname
-%\renewcommand*{\revsdnamepunct}{} %remove commas between last 
-%and first names
+%change "cited on page(s)" to "see page(s)" in Bibliography
+\DefineBibliographyStrings{english}{
+  backrefpage  = {see page},
+  backrefpages = {see pages},
+}
+%change parentheses to brackets in Bibliography
+\renewbibmacro*{pageref}{%
+  \iflistundef{pageref}
+    {}
+    {\printtext[brackets]{%\printtext[parens]
+       \ifnumgreater{\value{pageref}}{1}
+         {\bibstring{backrefpages}\ppspace}
+         {\bibstring{backrefpage}\ppspace}%
+       \printlist[pageref][-\value{listtotal}]{pageref}}}}
 
 
 
