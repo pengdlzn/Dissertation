@@ -18,6 +18,7 @@
 \renewcommand\scriptsize{\@setfontsize\scriptsize{7.5}{8.5}} %original: 7, 8
 %I define a new fontsize the same as I used inside figures.
 \newcommand\mysubcaptionfont{\@setfontsize\mysubcaptionfont\@xpt\@xiipt}
+%\newcommand\mysubcaptionfont{\@setfontsize\mysubcaptionfont\@xivpt\@xivpt}
 \makeatother
 \small
 \normalsize
@@ -30,7 +31,7 @@
 \captionsetup{labelfont=bf,
     justification=justified %Distribute text evenly between margins
 }
-\captionsetup[subfigure]{
+\captionsetup[sub]{
 	justification=centering,
 	font=mysubcaptionfont, %I used 10pt when I drew figures
 	labelformat=empty,
