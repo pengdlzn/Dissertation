@@ -162,7 +162,7 @@ we prefer aggregating a grass area into a farm area
 rather than into a settlement area.
 This is a typical \emph{optimization} problem,
 where we stick to hard constraints and 
-try to fulfill soft ones as good as possible.
+try to fulfill soft ones as well as possible.
 Optimization for map generalization is important 
 not only because it finds optimal solutions,
 but also because it helps us to evaluate the quality of a model
@@ -171,11 +171,11 @@ Haunert2008Assuring,Haunert2016Optimization}.
 Recall that we wish to minimize the changes of types
 when aggregating areas one by one.
 A model could be to minimize 
-the \emph{smallest} change over all the steps.
+the \emph{greatest} change over all the steps.
 Using optimization, we are able to find optimal solutions
 of this model at least for small instances.
 If even the optimal solutions are bad,
-then the model is not reasonable.
+then the model may be not reasonable.
 In this case, we should improve the model; 
 we may want to minimize 
 the \emph{average} change over all the steps.
@@ -228,12 +228,13 @@ energy minimization.
 According to his setting, a line contains less energy
 if it is smooth and close to the original line.
 He repeatedly displaced the line 
-until finding a stable state 
-in terms of minimizing his energy function.
+until a stable state 
+in terms of minimizing his energy function is found.
 \textcite{HaunertWolff2010AreaAgg} aggregated land-cover areas
-based on mixed-integer linear programming.
-This method is based on global optimization and minimizes 
-type changes as well as a cost for non-compact shapes 
+based on mixed-integer linear programming
+to generate a map at a target scale.
+Their method is based on a global optimization.
+They minimize a combination of type changes and cost for non-compact shapes 
 while satisfying constraints on the sizes of the output regions.
 \textcite{Haunertwolff2010Building} simplified building
 footprints by solving an integer linear program (ILP).
@@ -472,13 +473,12 @@ We formalize this optimization problem as that of
 finding a shortest path in a (very large) graph.
 %We compared the \Astar algorithm and 
 %integer linear programming in solving this problem.
-For solving such a problem, standard approaches
-are the \Astar algorithm or integer linear programming.
+We present the \Astar algorithm and integer linear programming
+to solve this optimization problem.
 %We compare how the two methods solve our problem.
 To avoid long computing times, we allow the two methods to 
 return non-optimal results.
-In addition, we present a greedy algorithm 
-as a benchmark.
+In addition, we present a greedy algorithm as a benchmark.
 We tested the three methods with a
 dataset of the official German topographic database ATKIS.
 Our main result is that

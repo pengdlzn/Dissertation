@@ -45,7 +45,7 @@ the problem becomes complicated.
 \centering
 \includegraphics[page=1]{AreaAgg_Preliminaries}
 \caption{The input and a possible output for an instance of 
-our problem}
+our problem.}
 \label{fig:AreaAgg_example}
 \end{figure}
 
@@ -149,7 +149,7 @@ proposed to split tiny polygons
 and then to merge the split parts into the neighboring polygons.
 \textcite{Meijers2016Split} developed an algorithm 
 to split a polygon (the splittee) 
-based on constrained Delaunay triangulation.
+based on a constrained Delaunay triangulation.
 During splitting, their algorithm is capable of
 taking into account
 the attractivenesses between the splittee and its neighbors.
@@ -160,7 +160,8 @@ will get a larger portion from the splittee.
 \section{Preliminaries}
 \label{sec:AreaAgg_Preliminaries}
 
-We show how to compute an aggregation sequence for one region. 
+We show how to compute an aggregation sequence 
+for a single region, $R$. 
 For a goal map with many regions,
 we ``interleave'' the sequences for each of them
 with respect to the order of the smallest patches 
@@ -265,8 +266,8 @@ We represent each land-cover area by a polygon with a type.
 We denote by $P$ the set of polygons on the start map.
 We use~$p$, $q$, $r$, or~$o$ to denote polygons.
 A \emph{patch} is a set of polygons whose union is connected. 
-The patch also has the property type.
-We use~$u$ or~$v$ to denote patches.
+Each patch also has a unique land-cover area type.
+We use~$u$ or~$v$ to denote the patches.
 
 
 Recall that we are dealing with a single region and 
@@ -358,7 +359,7 @@ rather than into an area with type \emph{city}.
 In terms of shape, we hope to have areas 
 which are as \emph{compact} as possible.
 Our argument is that an area is easier 
-to be identified by human being 
+to be identified by a human being 
 if it is more compact (less clutter).
 %
 We also consider the total \emph{length} 
@@ -423,7 +424,8 @@ f_\mathrm{type}(P_{s,i},P_{s+1,j})=\frac{A_{u}}{A_R}
 \frac{d(T(u),T(v))}{T_{\max}},
 \end{equation}
 where~$A_u$ is the area of patch~$u$, 
-and~$A_R$ is the area of region~$R$.
+and~$A_R$ is the area of region~$R$
+(see \sect\ref{sec:AreaAgg_Preliminaries}).
 We use~$A_R$ and~$T_{\max}$ 
 to normalize the cost of type change. 
 Constant~$T_{\max}$, the maximum cost over all type changes,  
@@ -438,7 +440,7 @@ as the cost function of type change
 \textcite[\chap2]{Choudhary1992Elements}
 shows the definition of a metric.
 A metric distance is symmetric, 
-which is different from the unsymmetric one used in
+which is different from the non-symmetric one used in
 \textcite{Dilo2009tGAP}.
 In their definition, for example, 
 the distance from type \emph{building} to type \emph{road} is~$0.5$,
@@ -450,7 +452,7 @@ we define the cost of type change over the steps by
 \begin{equation}
 \label{eq:g_type}
 g_\mathrm{type}(\Pistar)=
-\sum_{s=1}^{t-1}f_\mathrm{type}(P_{s,i_s},P_{s+1,i_{s+1}})
+\sum_{s=1}^{t-1}f_\mathrm{type}(P_{s,i_s},P_{s+1,i_{s+1}}).
 \end{equation}
 
 \begin{figure}[tb]
@@ -540,14 +542,12 @@ For path~$\Pistar$ (see \sect\ref{sec:AreaAgg_f_type}),
 we define the cost of length over all 
 intermediate maps 
 (that is, neglecting~$P_{1,1}$ 
-and the last subdivison in the path) by
+and the last subdivision in the path) by
 \begin{equation}
 \label{eq:g_length}
 g_\mathrm{lgth}(\Pistar)=
 \sum_{s=2}^{\tstar-1}f_{\mathrm{lgth}}(P_{s,i_s}).
 \end{equation}
-
-
 
 \subsection{Combining cost functions}
 \label{sec:AreaAgg_Combining}
@@ -574,7 +574,7 @@ in finding optimal sequences for area aggregation.
 As said before, we want to make a comparison involving
 integer linear programming.
 Therefore, we also introduce a combination
-that can be computed linearly, as
+that can be computed linearly. That is,
 \begin{equation}
 \label{eq:g_2}
 g_2(\Pistar)= (1-\lambda)g_\mathrm{type}(\Pistar)
@@ -586,29 +586,35 @@ algorithm using $g_2$.
 
 \section{A Greedy Algorithm}
 \label{sec:AreaAgg_Greedy}
+
+
 At any time~$t$,
 our greedy algorithm aggregates the smallest patch
 with one of its neighbors.
-Recall that when we aggregate a patch into another patch,
-the union uses the type of the latter.
-Suppose that patch~$u$ is the smallest patch,
-and patch~$v$ is one of~$u$'s neighbors.
+We pick the neighbor in a greedy way.
+We suppose that the smallest patch,~$u$, has~$k_u$ neighbors,
+then there are~$2k_u$ ways to aggregate
+(when we aggregate a patch into another patch,
+the union uses the type of the latter).
+In order to guarantee that our final result
+(e.g., the polygon of layer~$L_4$ in 
+\fig\ref{fig:AreaAgg_SubdivisionName})
+will have the type of~$T_\mathrm{goal}$,
+we add one more rule to our greedy algorithm.
+Suppose that patch~$v$ is one of~$u$'s neighbors.
 The greedy algorithm aggregates~$u$ into~$v$ 
 if the type distances fulfill that
 $d\left(T(u), T_\mathrm{goal}\right) 
 \ge d\left(T(v), T_\mathrm{goal}\right)$;
-otherwise, we aggregate~$v$ into~$u$.
-In this way, we can guarantee that our final result
-(e.g., the polygon of layer~$L_4$ in 
-\fig\ref{fig:AreaAgg_SubdivisionName})
-will have the type of~$T_\mathrm{goal}$.
-At each aggregation step,
-the greedy algorithm computes the costs of 
-aggregating the smallest patch 
-with each of the neighbors
-and then selects the aggregation that costs least.
-In other words, the smallest patch is aggregated with 
+otherwise, the algorithm aggregates~$v$ into~$u$.
+This rule excludes, say,~$k_e$ aggregation choices,
+and we have~$2k_u - k_e$ choices left.
+Then we compute the costs for each of 
+the~$2k_u - k_e$ aggregation choices
+and select the aggregation that has the least cost.
+In other words, we aggregate the smallest patch with 
 its most \emph{compatible} neighbor.
+
 In accordance with our two combinatorial costs in 
 \sect\ref{sec:AreaAgg_Combining},
 we define two cost functions.
@@ -619,15 +625,24 @@ The first cost function is
 \label{eq:f_1}
 f_1(P_{s,i},P_{s+1,j})=
 (1-\lambda)f_\mathrm{type}(P_{s,i},P_{s+1,j})
-+\lambda f_{\mathrm{comp}}(P_{s+1,j}). \nonumber
++\lambda f_{\mathrm{comp}}(P_{s+1,j}).
 \end{equation}
 The second cost function is
 \begin{equation}
 \label{eq:f_2}
 f_2(P_{s,i},P_{s+1,j})=
 (1-\lambda)f_\mathrm{type}(P_{s,i},P_{s+1,j})
-+\lambda f_{\mathrm{lgth}}(P_{s+1,j}). \nonumber
++\lambda f_{\mathrm{lgth}}(P_{s+1,j}).
 \end{equation}
+We take one of the~$2k_u - k_e$ aggregation choices 
+according to \eqs\ref{eq:f_1} or~\ref{eq:f_2}
+in our two experiments.
+The cost of a whole sequence can be computed by
+\eqs\ref{eq:g_1} or~\ref{eq:g_2}.
+
+
+
+
 
 
 
@@ -785,7 +800,10 @@ K\sum_{s=t}^{t+K'-1}f_\mathrm{type}(P_{s,i'_s},P_{s+1,i'_{s+1}})+
     the estimated cost of type change~$h_{\mathrm{type}}$
     (see \eqs\ref{eq:h_type} and~\ref{eq:o_type}),
 	based on the aggregation result of 
-	\fig\ref{fig:AreaAgg_FirstStep}b.}
+	\fig\ref{fig:AreaAgg_FirstStep}b.
+    Note that this aggregation sequence is impossible in reality,
+    but it is fine for estimating
+    (see the argument in \sect\ref{sec:AreaAgg_h_type}).}
 \label{fig:AreaAgg_h_type}
 \end{figure*}
 
@@ -821,7 +839,7 @@ such a subdivision,~$P_{t+1,i''_{t+1}}$, is
 \begin{equation}
 \label{eq:LeftEdgeNum}
 \mathcal{N}_{t+1,i''_{t+1}}=
-\mathcal{N}_\mathrm{ext} + \sum_{b \in B(P_{t+1,i''_{t+1}})} \|b\|.
+\mathcal{N}_\mathrm{ext} + \sum_{b \in B(P_{t+1,i''_{t+1}})} \|b\|,
 \end{equation}
 where notation~$\|b\|$ represents the number of boundary~$b$'s edges.
 
@@ -835,6 +853,9 @@ where notation~$\|b\|$ represents the number of boundary~$b$'s edges.
 	At each step we remove the boundary with the fewest edges. 		
 	The numbers represent the 
 	numbers of the interior boundaries' edges.
+    Note that this aggregation sequence is impossible in reality,
+    but it is fine for estimating
+    (see the argument in \sect\ref{sec:AreaAgg_h_type}).    
 	This example corresponds to the aggregation step in 
 	\fig\ref{fig:AreaAgg_FirstStep}b.
 }
@@ -970,6 +991,9 @@ h_\mathrm{lgth}(\Pnode)=
 	i.e., $l_\mathrm{int}(P_{s,i'''_s})$.
 	The numbers represent the 
 	lengths of the interior boundaries.
+    Note that this aggregation sequence is impossible in reality,
+    but it is fine for estimating
+    (see the argument in \sect\ref{sec:AreaAgg_h_type}).    
 	This example corresponds to the aggregation step in 
 	\fig\ref{fig:AreaAgg_FirstStep}b.
 }
@@ -1018,7 +1042,7 @@ of the two kinds of coffee,
 then~$x$ and~$y$ are our variables.
 Our objective is to
 $$
-\mathrm{maximize} 	\quad	 5x+4y
+\mathrm{maximize} 	\quad	 5x+4y.
 $$
 To provide~$x\,$kg of coffee with intensity~$40\%$,
 we need to use~$0.4x\,$kg of coffee powder 
@@ -1103,7 +1127,7 @@ The general form of an \emph{integer linear program} (ILP) is
 &&\text{maximize} 	\quad&& \bm{C}^\mathrm{T}\bm{X}	&		\\
 &&\text{subject to} \quad&& \bm{EX}			&\le \bm{H}, 	\\
 &&					\quad&& \bm{X} 			&\ge \bm{0}, 	\\
-&&\text{and}		\quad&& \bm{X} 			&\in \mathbb{Z}^I.
+&&\text{and}		\quad&& \bm{X} 			&\in \mathbb{Z}^I,
 \end{alignat*}
 where vector~$\bm{X}$ represents integer variables, 
 vector~$\bm{C} \in \mathbb{R}^I$, 
@@ -2690,7 +2714,7 @@ For example, assignment to a given center~$r$ is symmetric,
 hence we have
 \begin{equation*}
 \label{eq:CstrZX}
-z_{t,p,q,r}= z_{t,p,q,r} \qquad
+z_{t,p,q,r}= z_{t,q,p,r} \qquad
 \forall t \in {T} \setminus \{1,n\}, 
 \forall p, q, r \in P.
 \end{equation*}
