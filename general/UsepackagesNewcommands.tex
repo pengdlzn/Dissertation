@@ -28,7 +28,7 @@
 
 \DeclareCaptionFont{mysubcaptionfont}{\mysubcaptionfont}
 %\usepackage{caption} %was defined in wup.cls
-\captionsetup{labelfont=bf,
+\captionsetup{
     justification=justified %Distribute text evenly between margins
 }
 \captionsetup[sub]{
@@ -36,6 +36,8 @@
 	font=mysubcaptionfont, %I used 10pt when I drew figures
 	labelformat=empty,
 }
+
+
 
 
 \usepackage[utf8]{inputenc}
@@ -80,6 +82,8 @@
 % when including figure files
 \usepackage[defaultlines=4,all]{nowidow}%forbid widow or orphan
 
+\usepackage{ragged2e}
+\justifying
 
 \usepackage{hyperref}
 \hypersetup{linktocpage=true}
@@ -92,7 +96,7 @@
 \hypersetup{pdfkeywords = {Land-cover area, Administrative boundary, 
 Building, Morphing, Data structure, Zooming}}
 \hypersetup{pdfdisplaydoctitle = true}
-\newcommand{\dlpLinkColor}{darkgray}
+\newcommand{\dlpLinkColor}{black}
 \hypersetup{
 	linktoc=all,
 	colorlinks,
@@ -280,47 +284,56 @@ natbib=true]{biblatex}
 
 \newcommand{\revise}[2]{#2}
 \newcommand{\mypar}[1]{\bigskip\noindent\textbf{#1.}~}
+%\newcommand{\mysmalltitle}[1]{{\bigskip\noindent\sffamily\bfseries #1}}
 
-
+%define that formats for subsubsections
+\titleformat{\subsubsection}
+{\normalfont\sffamily\bfseries}{\thesubsubsection}{1em}{}
 
 
 \newcommand{\AreaAggTitle}
-    {Finding Optimal Sequences
-     \\ for Area Aggregation---
-     \\ \Astar vs.\ Integer Linear Programming}
+{Finding Optimal Sequences
+ \\ for Area Aggregation---
+ \\ \Astar vs.\ Integer Linear Programming}
 \newcommand{\AreaAggToCTitle}
-    {Finding Optimal Sequences for Area Aggregation---
-     \texorpdfstring{\\ \Astar vs.\ Integer Linear Programming}
-                    {A* vs.\ Integer Linear Programming}}
+{Finding Optimal Sequences for Area 
+Aggregation---\texorpdfstring{\Astar vs.\ Integer Linear Programming}
+                             {A* vs.\ Integer Linear Programming}}
 \newcommand{\AreaAggChapterMark}
-    {Finding Optimal Sequences for Area Aggregation}
+{Finding Optimal Sequences for Area Aggregation}
 
 \newcommand{\AdminBoundTitle}
-    {Continuously Generalizing\\ 
-     Administrative Boundaries\\
-     Based on Compatible Triangulations}
+{Continuously Generalizing Administrative Boundaries Based on Compatible Triangulations}
+%{Continuously Generalizing\\ 
+% Administrative Boundaries\\
+% Based on Compatible Triangulations}
 \newcommand{\AdminBoundToCTitle}
-    {Continuously Generalizing Administrative Boundaries
-     \texorpdfstring{\\ Based on Compatible Triangulations}
-                    {Based on Compatible Triangulations}}
+{Continuously Generalizing Administrative Boundaries
+ Based on Compatible Triangulations}     
 \newcommand{\AdminBoundChapterMark}
-    {Continuously Generalizing Administrative Boundaries based on CT}
+{Continuously Generalizing Administrative Boundaries Based on CTs}
 
 \newcommand{\BldgGrowTitle}
-    {Continuously Generalizing\\ 
-    	Buildings to Built-up Areas\\
-    	by Aggregating and Growing}
+{Continuously Generalizing\\ 
+   	Buildings to Built-up Areas\\
+   	by Aggregating and Growing}
 \newcommand{\BldgGrowToCTitle}
-    {Continuously Generalizing Buildings to Built-up Areas    	
-     \texorpdfstring{\\ by Aggregating and Growing}
-                    {by Aggregating and Growing}}
+{Continuously Generalizing Buildings to Built-up Areas
+ by Aggregating and Growing}
 \newcommand{\BldgGrowChapterMark}
-    {Continuously Generalizing Buildings to Built-up Areas}
+{Continuously Generalizing Buildings to Built-up Areas}
 
+\newcommand{\MorphTitle}
+{Morphing Polylines\\
+ Based on Least-Squares Adjustment}
+\newcommand{\MorphToCTitle}
+{Morphing Polylines Based on Least-Squares Adjustment}
 
-
-
-
+\newcommand{\DataStrTitle}
+{Choosing the Right Data Structures\\
+ for Solving Spatial Problems}
+\newcommand{\DataStrToCTitle}
+{Choosing the Right Data Structures for Solving Spatial Problems}
 
 %Preface: Adminstrative Boundaries
 \newcommand{\ml}{\ensuremath{M_+}\xspace}

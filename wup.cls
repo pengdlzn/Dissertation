@@ -314,6 +314,7 @@
 	\chaptertitlename\ \thechapter}{8pt}{}
 \titlespacing*{\chapter}{0pt}{*2}{*3}
 
+
 \titleformat{\section}{\normalfont\sffamily\Large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\normalfont\sffamily\large\bfseries}{\thesubsection}{1em}{}
 

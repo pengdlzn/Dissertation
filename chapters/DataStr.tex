@@ -1,6 +1,5 @@
-\chapter %\chapter[<ToC-title>]{<Title>}
-[Choosing the Right Data Structures for Solving Spatial Problems]
-{Choosing the Right Data Structures \\for Solving Spatial Problems}
+%\chapter[<ToC-title>]{<Title>} 
+\chapter[\DataStrToCTitle]{\DataStrTitle}
 \label{chap:DataStr}
 
 Detecting correspondences between different spatial datasets
@@ -148,7 +147,7 @@ thus we need little extra memory for recording the output.
 
 
 
-\subsection{The sweep-line algorithm}
+\subsection{The Sweep-Line Algorithm}
 \label{sec:DataStr_SLAlgorithm}
 
 
@@ -257,7 +256,7 @@ also supports the points-in-interval query.
 
 
 
-\subsection{The Delaunay-triangulation-based algorithm}
+\subsection{The Delaunay-Triangulation-Based Algorithm}
 \label{sec:DataStr_DTAlgorithm} 
 
 The DT is a useful tool for partitioning the plane 
@@ -380,7 +379,7 @@ is in $O(k+n\log n)$.
 The memory consumption of the DT-based algorithm is in $O(n)$.
 
 
-\subsection{The grid-based algorithm}
+\subsection{The Grid-Based Algorithm}
 \label{sec:DataStr_GridAlgorithm}
 
 The third algorithm that 
@@ -479,7 +478,7 @@ and~$k$ grows linearly.
 
 
 
-\subsection{Case study on random data}
+\subsection{Case Study on Random Data}
 \label{sec:DataStr_CaseStudy_RandomData} 
 We randomly generated ten point sets u.i.d. 
 in the unit square. 
@@ -504,7 +503,7 @@ we set side length~$\sigma=\varepsilon_{0}\sqrt{N/n}$.
 \label{fig:DataStr_RandomData}
 \end{figure}
 
-\subsubsection{Time consumption}
+\subsubsection{Time Consumption}
 In the experiment with~$\varepsilon =\varepsilon_{0}$ 
 (see \fig\ref{fig:DataStr_RandomTimeEpsilonFix}), 
 the quadratic size of the output dominates the 
@@ -554,7 +553,7 @@ that with radius~$r_{2}$ by a factor of~$2$.
 
 
 
-\subsubsection{Output size and memory consumption}
+\subsubsection{Output Size and Memory Consumption}
 The curves of the output size perform as expected
 (see \fig\ref{fig:DataStr_RandomMemory}). 
 The output size grows in a quadratic way
@@ -625,7 +624,7 @@ about~$10\%$ less than the C5 TreeSet implementation.
 %	\label{fig:DataStr_RandomMemory}
 %\end{figure}
 
-\subsection{Case study on real-world data}
+\subsection{Case Study on Real-World Data}
 \label{sec:DataStr_CaseStudy_RealData} 
 We use a set~$P$ of~$277{,}034$ points 
 from OpenStreetMap that represent 
@@ -720,7 +719,7 @@ roughly the same as the number of points.
 
 
 
-\subsubsection{Time consumption}
+\subsubsection{Time Consumption}
 
 We got similar results as in
 \sect\ref{sec:DataStr_CaseStudy_RandomData}. 
@@ -756,7 +755,7 @@ and~\ref{fig:DataStr_BavariaTimeEpsilonDecrease}a).
 
 
 
-\subsubsection{Output size and memory consumption}
+\subsubsection{Output Size and Memory Consumption}
 Also, the curves of the output size perform as expected
 (see \fig\ref{fig:DataStr_BavariaMemory}a). 
 For the grid-based algorithm, when we try to achieve that 

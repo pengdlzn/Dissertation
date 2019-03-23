@@ -97,12 +97,12 @@ by integrating our results into the \emph{space-scale cube}
 
 
 \mypar{Contribution}
-We formally define our problem, 
+We formally model our problem, 
 introduce the basic concepts of our method, 
 and analyze the size of our model in a worst-case scenario
 (\sect\ref{sec:AreaAgg_Preliminaries}).
-We define our cost functions in 
-\sect\ref{sec:AreaAgg_CostFunctions}.
+We define our cost functions 
+(\sect\ref{sec:AreaAgg_CostFunctions}).
 Then, we compare three methods for finding aggregation sequences.
 First, we develop 
 a greedy algorithm (\sect\ref{sec:AreaAgg_Greedy}).
@@ -111,7 +111,8 @@ based on the \Astar algorithm
 (\sect\ref{sec:AreaAgg_AStar}).
 Third, we model our pathfinding problem as
 an \emph{integer linear program} (ILP), 
-and then we solve this program with minimizing our cost function.
+and we solve this program with minimizing our cost function
+(\sect\ref{sec:AreaAgg_ILP}).
 Our ILP uses binary (0--1) variables. 
 These variables help us to model our problem, 
 but in general, it is NP-hard 
@@ -124,8 +125,8 @@ which are more complex and slower.
 Our case study 
 uses a dataset of the German topographic database ATKIS 
 (\sect\ref{sec:AreaAgg_CaseStudy}).
-In the conclusions, we show possible ways to improve our 
-methods in \sect\ref{sec:AreaAgg_Conclusions}. 
+In the concluding remarks, we show possible ways to improve our 
+methods (\sect\ref{sec:AreaAgg_Conclusions}). 
 
 We do not deal with simplifying polylines in this chapter.
 The simplification can be handled separately from the
@@ -168,7 +169,7 @@ with respect to the order of the smallest patches
 (see for example \fig\ref{fig:AreaAgg_IntegrateSequence}).
 This integration is similar to the merge step in the 
 Mergesort algorithm; 
-see \textcite[pp.~29--37]{Cormen2009}.
+see \textcite[\sect2.3]{Cormen2009}.
 To allow us to describe our method more easily,
 below we assume that the goal map has only one region.
 This region consists of~$n$ land-cover 
@@ -220,39 +221,29 @@ that adheres to our smallest-first requirement simply
 an \emph{aggregation sequence}.
 
 
-\mypar{Model}
-We consider a directed graph $G$, 
+\subsection{Model}
+\label{sec:AreaAgg_Model}
+We consider a directed graph $G_\mathrm{S}$, 
 which we call the \emph{subdivision graph} 
 (see \fig\ref{fig:AreaAgg_SubdivisionName}). 
-The node set $V$ of~$G$ contains a node for every
-possible map (or \emph{subdivision}), including the start map, all
-possible intermediate-scale maps, and the goal map.
-The arc set~$E$ of~$G$ contains an arc $(\Pnode, P_{t+1,j})$ 
-between any two maps~$\Pnode$ and~$P_{t+1,j}$ in~$V$ 
+The node set $V_\mathrm{S}$ of~$G_\mathrm{S}$ 
+contains nodes for all the
+possible maps (or \emph{subdivisions}), including the start map, 
+all possible intermediate-scale maps, and the goal map.
+The arc set~$E_\mathrm{S}$ of~$G_\mathrm{S}$ 
+contains an arc $(\Pnode, P_{t+1,j})$ 
+between any two maps~$\Pnode$ and~$P_{t+1,j}$ in~$V_\mathrm{S}$ 
 if~$P_{t+1,j}$ can be reached from~$\Pnode$ 
 with a single aggregation operation,
 involving a smallest area.
-Then, any directed path in~$G$ from the start map to the goal map
+On this basis, any directed path in~$G_\mathrm{S}$ 
+from the start map to the goal map
 defines a possible aggregation sequence.
-Our idea is to obtain an optimal aggregation sequence through 
-computing a minimum-weight path from the start to the goal.
-This idea obviously requires that the arc weights are 
-set such that a minimum-weight start--goal
-path does actually correspond to an aggregation sequence of 
-maximum cartographic quality.  
-Moreover, putting the idea to practice is far from trivial 
-since graph~$G$ can be huge as we will argue later.
-We compare a greedy algorithm, \Astar, and an ILP-based algorithm
-in finding such paths.
-Note that we only know 
-subdivisions~$\Pstart$ and~$\Pgoal$ at the beginning.
-We generate a subdivision (node) only when we want to visit it.
-
 
 \begin{figure}[tb]
 \centering
 \includegraphics[page=3]{AreaAgg_Preliminaries}
-\caption{The subdivision graph~$G$. 
+\caption{The subdivision graph~$G_\mathrm{S}$. 
 	The nodes of the graph are the subdivisions. 
 	There is an arc	from subdivision~\Pnode 
 	to subdivision~${P}_{t+1,j}$ 
@@ -261,14 +252,16 @@ We generate a subdivision (node) only when we want to visit it.
 \label{fig:AreaAgg_SubdivisionName}
 \end{figure}
 
-\mypar{Notation}
+
+\subsection{Notation}
+\label{sec:AreaAgg_Notation}
+
 We represent each land-cover area by a polygon with a type.
-We denote by $P$ the set of polygons on the start map.
+We denote by~$P$ the set of polygons on the start map.
 We use~$p$, $q$, $r$, or~$o$ to denote polygons.
 A \emph{patch} is a set of polygons whose union is connected. 
 Each patch also has a unique land-cover area type.
 We use~$u$ or~$v$ to denote the patches.
-
 
 Recall that we are dealing with a single region and 
 there are~$n$ land-cover areas on the start map in this region. 
@@ -283,31 +276,96 @@ where layer~${L}_t=\{{P}_{t,1},\dots,{P}_{t,n_t}\}$
 contains every possible subdivision~\Pnode\ with~$n-t+1$ patches 
 (see \fig\ref{fig:AreaAgg_ExponentialSize}).
 
+
 \begin{figure}[tb]
 \centering
 \includegraphics[page=4]{AreaAgg_Preliminaries}
-\caption{An example to show that the size of our problem 
-	has an exponential lower bound.}
+\caption{An example to show that 
+    the size of subdivision graph~$G_\mathrm{S}$
+	has exponential lower bound.}
 \label{fig:AreaAgg_ExponentialSize}
 \end{figure}
 
-\mypar{Exponential lower bound}
-We now analyze the size of subdivision graph~$G$.
+Sometimes, we need a graph to represent the adjacencies of
+the land-cover areas in a subdivision,
+we call such a graph $G_\mathrm{A}$
+(see \fig\ref{fig:AreaAgg_Variables_Graph}). 
+
+
+\begin{figure}[tb]
+\centering
+\includegraphics[page=3]{AreaAgg_ILP}
+\caption{The graph of a subdivision.
+	Each polygon of the subdivision is represented as a node 
+	in the graph.
+	There is an edge between two nodes
+	if the corresponding two polygons are adjacent.
+}
+\label{fig:AreaAgg_Variables_Graph}
+\end{figure} 
+
+
+
+
+
+\subsection{Exponential Lower Bound}
+\label{sec:AreaAgg_Exponential}
+We now analyze the size of subdivision graph~$G_\mathrm{S}$.
 Our analysis is inspired by \textcite{Keane1975Size},
-where we also use a row of~$n$~areas.
+where we use a row of~$n$ land-cover areas.
 In our instance
 (see \fig\ref{fig:AreaAgg_ExponentialSize}), 
-the start map consists of~$n=2k+1$ rectangles,
-and the goal map is simply the union of the~$n$ rectangles.
-At layer~$L_{k+1}$, we need to remove~$k$ of the~$2k$ 
-intermediate vertical boundaries. 
-For this, the number of choices is~$
-\binom{2k}{k}
-= \frac{2k\cdot (2k-1)\cdot \ldots \cdot (k+1)}
-{k\cdot (k-1)\cdot \ldots \cdot 1}
-\ge 2^k = 2^{(n-1)/2}$.
-That is to say, the size of our model
-has an exponential lower bound.
+the start map consists of~$n=2k+1$ rectangular patches,
+and the goal map is simply the union of the~$n$ patches.
+The patches have area 
+sizes~$
+%\left( 
+100 + \frac{1}{n}, 99+ \frac{2}{n}, 
+100 + \frac{3}{n}, 99+ \frac{4}{n}, \ldots, 
+99 + \frac{n-1}{n}, \text{and~} 101 
+%\right)
+$, 
+from left to right.
+According to our rule, we always 
+aggregate the smallest patch with one of its neighbors.
+Therefore, in the first~$k$ steps from the start map,
+we aggregate every other patch with one of its neighbors.
+At each of the steps, we have two choices,
+aggregating with the left patch or with the right one.
+As a result, there are~$2^k = 2^{(n-1)/2}$ subdivisions 
+in layer~$L_{k+1}$.
+That is to say, the size of subdivision graph~$G_\mathrm{S}$
+has exponential lower bound.
+
+
+\subsection{Methods}
+\label{sec:AreaAgg_Methods}
+
+Our idea is to obtain an optimal aggregation sequence through 
+computing a minimum-weight path from the start to the goal 
+(see \fig\ref{fig:AreaAgg_SubdivisionName}).
+This idea obviously requires that the arc weights are 
+set such that a minimum-weight start--goal
+path does actually correspond to an aggregation sequence of 
+maximum cartographic quality.  
+Moreover, putting the idea to practice is far from trivial 
+since graph~$G_\mathrm{S}$ can be huge.
+We compare a greedy algorithm, \Astar, and an ILP-based algorithm
+in finding such paths.
+Note that our inputs are only
+subdivisions~$\Pstart$ and~$\Pgoal$.
+We generate a subdivision (node) only when we want to visit it.
+
+In directed acyclic graphs, shortest paths can be found slightly faster 
+than in general directed or undirected graphs.
+An off-the-shelf shortest-path algorithm for directed acyclic graphs
+(e.g., \textcite[\sect25.2]{Cormen2009}),
+however, will explore the whole graph, which has exponential size.
+The challenge in our work was to tune the A* algorithm such that it
+explores only a small fraction of the graph.
+
+
+
 
 
 \section{Cost Functions}
@@ -407,7 +465,7 @@ longer lines generally yield lower map readability.
 \end{figure}
 
 
-\subsection{Cost of type change}
+\subsection{Cost of Type Change}
 \label{sec:AreaAgg_f_type}
 
 Suppose that we are at the step of aggregating 
@@ -440,7 +498,7 @@ as the cost function of type change
 \textcite[\chap2]{Choudhary1992Elements}
 shows the definition of a metric.
 A metric distance is symmetric, 
-which is different from the non-symmetric one used in
+which is different from the asymmetric one used in
 \textcite{Dilo2009tGAP}.
 In their definition, for example, 
 the distance from type \emph{building} to type \emph{road} is~$0.5$,
@@ -467,7 +525,7 @@ g_\mathrm{type}(\Pistar)=
 \label{fig:AreaAgg_FirstStep}	
 \end{figure}
 
-\subsection{Cost of compactness}
+\subsection{Cost of Compactness}
 \label{sec:AreaAgg_f_comp}
 
 We use the compactness definition of \citet{Frolov1975}, 
@@ -509,7 +567,7 @@ g_\mathrm{comp}(\Pistar)=
 \end{equation}
 
 
-\subsection{Cost of length}
+\subsection{Cost of Length}
 \label{sec:AreaAgg_costlength}
 
 We denote the set of interior boundaries 
@@ -549,7 +607,7 @@ g_\mathrm{lgth}(\Pistar)=
 \sum_{s=2}^{\tstar-1}f_{\mathrm{lgth}}(P_{s,i_s}).
 \end{equation}
 
-\subsection{Combining cost functions}
+\subsection{Combining Cost Functions}
 \label{sec:AreaAgg_Combining}
 In order to minimize the type change 
 and maximize the compactness,
@@ -748,7 +806,7 @@ K'= \min \{K, n-t\}.
 
 
 
-\subsection{Estimating the cost of type change}
+\subsection{Estimating the Cost of Type Change}
 \label{sec:AreaAgg_h_type}
 
 To find a lower bound of the cost of type change, 
@@ -808,7 +866,7 @@ K\sum_{s=t}^{t+K'-1}f_\mathrm{type}(P_{s,i'_s},P_{s+1,i'_{s+1}})+
 \end{figure*}
 
 
-\subsection{Estimating the cost of compactness}
+\subsection{Estimating the Cost of Compactness}
 \label{sec:AreaAgg_h_comp}
 
 We estimate the cost of compactness based on regular polygons.
@@ -940,7 +998,7 @@ h_\mathrm{comp}(\Pnode)=
 
 
 
-\subsection{Estimating the cost of length}
+\subsection{Estimating the Cost of Length}
 \label{sec:AreaAgg_h_length}
 
 At time $s$, there are $n-s+1$ patches.
@@ -1001,7 +1059,7 @@ h_\mathrm{lgth}(\Pnode)=
 \end{figure*}
 
 
-\subsection{Combining estimated costs}
+\subsection{Combining Estimated Costs}
 \label{sec:AreaAgg_CombinationEstimated}
 In accordance 
 with our two combinatorial costs in 
@@ -1685,18 +1743,6 @@ that is more intuitive for our problem
 since we aggregate step by step.
 
 
-\begin{figure}[tb]
-\centering
-\includegraphics[page=3]{AreaAgg_ILP}
-\caption{The graph of a subdivision.
-	Each polygon of the subdivision is represented as a node 
-	in the graph.
-	There is an edge between two nodes
-	if the corresponding two polygons are adjacent.
-}
-\label{fig:AreaAgg_Variables_Graph}
-\end{figure} 
-
 We aggregate two patches only if they are neighbors.
 To ensure this, we need binary variable~$c_{t,p,o,r}$
 introduced in \sect\ref{sub:AreaAgg_variables}.
@@ -2061,7 +2107,7 @@ the resulting cost function for type change is a metric.
 \label{fig:AreaAgg_TypeDistances}
 \end{figure}
 
-\subsection{Using costs of type change and compactness}
+\subsection{Using Costs of Type Change and Compactness}
 \label{sec:AreaAgg_CaseStudy1}
 
 As illustrated in \sect\ref{sec:AreaAgg_Combining},
@@ -2391,7 +2437,7 @@ is shown in \fig\ref{fig:AreaAgg_CaseStudy1_Rg53}.
 
 
 
-\subsection{Using costs of type change and length}
+\subsection{Using Costs of Type Change and Length}
 \label{sec:AreaAgg_CaseStudy2}
 
 We compare the greedy algorithm, \Astar, and ILP

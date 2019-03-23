@@ -9,7 +9,7 @@ users need to have access to maps at different scales.
 In order to generate these maps,
 national mapping agencies produce a base map
 and then derive maps at smaller scales by 
-\emph{map generalization}
+\emph{map generalization}.
 More specifically, 
 map generalization is the process of extracting and arranging
 geographical information from detailed data in order to produce maps
@@ -57,6 +57,7 @@ e.g., \textcite{Suba2016Road} state.
 \section{State of the Art}
 \label{sec:Intro_State}
 
+\subsection{Continuous Map Generalization}
 
 CMG has received a lot of attention
 from cartographers and computer scientists.
@@ -140,8 +141,8 @@ their structure yields the rivers that should be kept
 as well as how much these rivers should be simplified.
 
 
+\subsection{Optimization in Map Generalization}
 
-\mypar{Optimization in map generalization}
 Map generalization generally specifies 
 and takes into account requirements
 in order to produce maps of high quality
@@ -257,8 +258,8 @@ represented by a point,
 stays in the same face as before the generalization.
 
 
+\subsection{Optimization in Continuous Map Generalization}
 
-\mypar{Optimization in \emph{continuous} map generalization}
 Optimization becomes more delicate
 when we deal with CMG.
 In this field, we have requirements 
@@ -321,6 +322,7 @@ for morphing between polylines (see \chap\ref{chap:Morph}).
 % There is no optimization used in \chap\ref{chap:DataStr}.
 In the following, we briefly recall these methods.
 
+\subsection{\texorpdfstring{The \Astar Algorithm}{The A* Algorithm}}
 
 Given a graph with nodes and weighted edges,
 a typical task is to find a shortest path 
@@ -345,6 +347,7 @@ If the estimated distances are always smaller than the exact
 distances to the goal node, 
 then \Astar will find a shortest path.
 
+\subsection{Integer Linear Programming}
 Linear programming models an optimization problem as objective 
 functions subject to constraints,
 where the objective functions and constraints are represented by 
@@ -367,7 +370,7 @@ which is also known as NP-hard; see for more details
 \textcite[\chap16]{Schrijver1986}.
 
 
-
+\subsection{Dynamic Programming}
 Dynamic programming decomposes 
 a big instance of a complex problem 
 into a collection of smaller subinstances.
@@ -382,6 +385,7 @@ e.g., in Mergesort,
 in dynamic programming subinstances of equal size 
 are usually \emph{not} disjoint but overlap.
 
+\subsection{Least-Squares Adjustment}
 Least-squares adjustment is a model for solving 
 over-constrained problems.  
 It handles computes a set of unknowns 
@@ -395,7 +399,7 @@ but we choose the one with the least sum of squared adjustments.
 Based on this set of adjustments,
 we can finally compute the unknowns.
 
-
+\subsection{Minimum Spanning Tree}
 Given a graph with nodes and weighted edges, 
 a minimum spanning tree (MST) of the graph 
 is a minimum-weight subset
@@ -439,27 +443,17 @@ In the remainder of this section,
 we present our results in more detail.
 
 
-\subsubsection{%
-Finding Optimal Sequences for Area Aggregation---\\
-\Astar vs. Integer Linear Programming}
+\subsubsection{\AreaAggToCTitle}
 
 To provide users with maps of different scales and 
 to allow them to zoom in and out without losing context,
 automatic methods for map generalization are needed.
 We approach this problem for land-cover maps.
-%Given two maps of the same region at two different scales,
-%a relevant problem is to compute maps for any intermediate scale.
 Given two land-cover maps at two different scales, 
 we want to find a sequence of small incremental
-% To help map users not to lose context during zooming,
-% we try to provide maps that change as continuous as possible.
-% Since maps at some different scales often exist, 
-% a relevant problem is to find maps at any intermediate scales.
-% Given two land-cover maps of different scales, 
-% we wish to find a sequence of small incremental
 changes that gradually transforms one map into the other.
 We assume that the two input maps consist of polygons 
-each of which belongs to a given land-cover class. 
+each of which belongs to a given land-cover type. 
 Every polygon on the smaller-scale map
 is the union of a set of adjacent polygons 
 on the larger-scale map. 
@@ -471,11 +465,8 @@ but compute the whole sequence of pairwise merges at once,
 based on global optimization.
 We formalize this optimization problem as that of 
 finding a shortest path in a (very large) graph.
-%We compared the \Astar algorithm and 
-%integer linear programming in solving this problem.
 We present the \Astar algorithm and integer linear programming
 to solve this optimization problem.
-%We compare how the two methods solve our problem.
 To avoid long computing times, we allow the two methods to 
 return non-optimal results.
 In addition, we present a greedy algorithm as a benchmark.
@@ -505,9 +496,7 @@ part of which has been published~\parencite[see][]{Peng2017AStar}.
 \label{fig:Intro_AreaAgg_Case612}
 \end{figure}
 
-\subsubsection{%
-Continuously Generalizing Administrative Boundaries\\
-Based on Compatible Triangulations}
+\subsubsection{\AdminBoundToCTitle}
 
 Topological consistency is a key issue 
 in cartographic generalization.
@@ -557,9 +546,7 @@ provincial boundaries of Tianjin province, China.}
 \label{fig:Intro_AdminBound_Tianjin}
 \end{figure}
 
-\subsubsection{%
-Continuously Generalizing Buildings to Built-up Areas\\
-by Aggregating and Growing}
+\subsubsection{\BldgGrowToCTitle}
 
 To enable smooth zooming, 
 we propose a method to continuously generalize buildings 
@@ -604,8 +591,7 @@ Guillaume Touya~\parencite[see][]{Peng2017Building}.
 \end{figure}
 
 
-\subsubsection{Morphing Polylines 
-	Based on Least-Squares Adjustment}
+\subsubsection{\MorphToCTitle}
 
 One way of continuously generalizing polylines 
 is to use morphing techniques. 
@@ -642,8 +628,7 @@ and Christophe Hurter~\parencite[see][]{Peng2013LSA}.
 \label{fig:Intro_LSA_Compare}
 \end{figure}
 
-\subsubsection{Choosing the Right Data Structures 
-	for Solving Spatial Problems}
+\subsubsection{\DataStrToCTitle}
 
 When we plan to implement a program, 
 there are always many data structures that

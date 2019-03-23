@@ -188,7 +188,7 @@ in the following subsections.
 \end{figure}
 
 
-\subsection{Growing buildings by buffering}
+\subsection{Growing Buildings by Buffering}
 \label{sec:Grow}
 We denote by $d_\mathrm{G}$ 
 the \emph{growing distance} for the goal map.
@@ -239,8 +239,7 @@ when an angle is smaller (more acute) than $83.6 \degree$.
 
 
 
-\subsection{Simplifying grown buildings based on dilating and 
-eroding}
+\subsection{Simplifying Grown Buildings Based on Dilating and Eroding}
 \label{sec:DilationErosion}
 As mentioned earlier, 
 methods of simplifying building have already been well studied. \citet{Damen2008} generalized buildings using 
@@ -378,8 +377,7 @@ r_\mathrm{h} M_t) .
 \end{figure}
 
 
-\subsection{Iteratively aggregating close buildings by adding 
-bridges}
+\subsection{Iteratively Aggregating Close Buildings by Adding Bridges}
 \label{sec:Aggregate}
 
 
@@ -484,7 +482,7 @@ we say that these buildings are in the same \emph{goal group}.
 \label{fig:BridgeMoreBuilding}
 \end{figure}
 
-\subsection{Simplifying buildings using the Imai--Iri algorithm}
+\subsection{Simplifying Buildings Using the Imai--Iri Algorithm}
 \label{sec:ImaiIri}
 
 When the scale is decreasing ($M_t$ increasing), 
@@ -558,7 +556,7 @@ This is why we choose the Imai--Iri algorithm.
 %
 
 
-\subsection{Generating buildings on intermediate-scale maps}
+\subsection{Generating Buildings on Intermediate-Scale Maps}
 \label{sec:Unite}
 
 Both the eroding and the line simplification 
@@ -693,7 +691,7 @@ we clip the building using the goal shape
 and remove the parts outside.
 
 
-\subsection{Eliminating small buildings and small holes}
+\subsection{Eliminating Small Buildings and Small Holes}
 \label{sec:Eliminate}
 Following the previous steps may result in 
 some small isolated building aggregates.
@@ -721,7 +719,7 @@ The real area threshold for a hole at time $t$ is
 a_{\mathrm{h},t}=a_\mathrm{h}\cdot M_t^2.
 \]
 
-\subsection{Running time}
+\subsection{Running Time}
 Suppose that our input has $n$ edges in total.
 Operations like growing, dilating, 
 eroding, merging, and clipping 

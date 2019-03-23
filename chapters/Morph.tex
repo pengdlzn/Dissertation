@@ -1,11 +1,10 @@
-\chapter %\chapter[<ToC-title>]{<Title>}
-[Morphing Polylines Based on Least-Squares Adjustment]
-{Morphing Polylines \\Based on Least-Squares Adjustment}
+%\chapter[<ToC-title>]{<Title>}
+\chapter[\MorphToCTitle]{\MorphTitle}
 \label{chap:Morph}
 
 
 Digital maps such as Google Maps or OpenStreetMap have become 
-one of the most important sources of geographic information. 
+one of the most important sources of to obtain geographic information. 
 When users interactively browse through such maps on computers 
 or small displays, they often need to zoom in and out to get the 
 information desired. Often, zooming is supported by a multiple 
@@ -65,40 +64,16 @@ lengths; see \figs\ref{fig:Morph_LengthChanging}c and
 \ref{fig:Morph_LengthChanging}d.
 
 \begin{figure}[tb]
-%\captionsetup[subfigure]
-%{justification=centering,font=normalsize}
-\begin{subfigure}[b]{.49\textwidth}
-	\centering
-	\includegraphics[page=1]{Morph_LengthChanging_Morph}
-	\caption{\textbf{(a)}}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{.49\textwidth}
-	\centering
-	\includegraphics[page=1]{Morph_LengthChanging}
-	\caption{\textbf{(b)}}
-\end{subfigure}
-
-\bigskip
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\includegraphics[page=2]{Morph_LengthChanging_Morph}
-\caption{\textbf{(c)}}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{.49\textwidth}
-	\centering
-	\includegraphics[page=2]{Morph_LengthChanging}
-	\caption{\textbf{(d)}}
-\end{subfigure}
-	\caption{Morphing between 
-		a source polyline and a target polyline.
-		When morphing based on straight-line trajectories (a), 
-		edge~$e_3$ receives almost zero length 
-		at time~$t=0.75$ and then grows again (b). 
-		With our method (c), 
-		the edge lengths change almost linearly (d).}
-	\label{fig:Morph_LengthChanging}
+\centering	
+\includegraphics[page=2]{Morph_LengthChanging}
+\caption{Morphing between 
+	a source polyline and a target polyline.
+	When morphing based on straight-line trajectories (a), 
+	edge~$e_3$ receives almost zero length 
+	at time~$t=0.75$ and then grows again (b). 
+	With our method (c), 
+	the edge lengths change almost linearly (d).}
+\label{fig:Morph_LengthChanging}
 \end{figure}
 
 The chapter is organized as follows. 
@@ -281,10 +256,10 @@ We apply an algorithm similar to
 \textcite{Noellenburg2008}, 
 but any other method could be used as well.
 \begin{figure}[tb]
-	\centering	
-	\includegraphics[page=1]{Morph_Methodology}
-	\caption{Illustration of corresponding vertices.}
-	\label{fig:Morph_Injection}
+\centering	
+\includegraphics[page=1]{Morph_Methodology}
+\caption{Illustration of corresponding vertices.}
+\label{fig:Morph_Injection}
 \end{figure}
 
 
@@ -297,7 +272,7 @@ thus~$D(0)=B'$ and~$D(1)=C'$.
 We denote the~$i$-th vertex of~$D(t)$ by~$d_i (t)$.
 
 
-\subsection{Soft constraints}
+\subsection{Soft Constraints}
 \label{sec:Morph_SoftConstraints}
 We compute polyline~$D(t)$ by constraining its 
 angles and the lengths of its edges. 
@@ -437,7 +412,7 @@ in order to avoid this problem,
 we add hard constraints of
 prescribing some end vertices of the new polyline.
 
-\subsection{Hard constraints}
+\subsection{Hard Constraints}
 \label{sec:Morph_HardConstraints}
 
 There may be some common characteristic vertices on 
@@ -554,7 +529,7 @@ estimates for the unknowns in the LSA.
 
 
 
-\subsection{Iterative process}\label{sec:Morph_Iterative}
+\subsection{Iterative Process}\label{sec:Morph_Iterative}
 
 Since our model contains non-linear constraints
 (see \eqs\ref{eq:Morph_AdjustedAngle}
@@ -593,7 +568,7 @@ To make the soft constraints of angles meaningful,
 we always prescribe the first two vertices 
 and the last two vertices of the polylines.
 
-\subsection{Case study on artificial data}
+\subsection{Case Study on Artificial Data}
 \label{case-study-on-artificial-data}
 
 We tested our method on an instance from \textcite{Bereg2005};
@@ -695,7 +670,7 @@ at time~$t = 0.90$ when we have the extra vertices.
 	\label{fig:Morph_ExtraVertices}
 \end{figure}
 
-\subsection{Case study on real data}
+\subsection{Case Study on Real-World Data}
 \label{sec:Morph_CaseStudy}
 
 We tested our method on a part of the coastline of China 
