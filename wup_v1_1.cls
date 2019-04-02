@@ -123,7 +123,7 @@
 	\@pageSizeSmallfalse%
 	\@pageSizeMediumtrue%
 	\@pageSizeLargefalse%
-	\PassOptionsToClass{10pt}{book} %Dongliang
+	\PassOptionsToClass{10pt}{book}
 
 	\setlength{\length@titles}{120mm}
 }
@@ -504,7 +504,6 @@
 					\else
 						SUBMISSION YEAR
 					\fi
-					%Dongliang's change: commented following seven lines
 					\\ Gutachter:
 					\if@advisor
 						\command@advisor

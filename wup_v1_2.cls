@@ -48,6 +48,7 @@
 \newif\if@acknowledgmentsPage   % Prints the acknowledgments page
 \newif\if@prefacePage           % Prints the preface page
 \newif\if@abstractPage          % Prints the abstract page
+\newif\if@abstractGermanPage          % Prints the abstract page %Dongliang
 \newif\if@tableOfContentsPage   % Prints the table of contents page
 
 \newif\if@graphicx				% Loads the package graphicx for images
@@ -96,6 +97,8 @@
 %		prints the preface page
 %	[no]abstract (default noabstract)
 %		prints the abstract page
+%	[no]abstractGerman (default noabstractGerman) %Dongliang
+%		prints the abstract page of German %Dongliang
 %	[no]tableofcontents (default tableofcontents)
 %		prints the table of contents page
 %
@@ -116,7 +119,7 @@
 	
 	\setlength{\length@titles}{105mm}
 }
-\DeclareOption{pagesize170x240}{%
+\DeclareOption{pagesize170x240}{%Dongliang's dissertation: 6.69x9.45 inch
 	\@pageSizeSmallfalse%
 	\@pageSizeMediumtrue%
 	\@pageSizeLargefalse%
@@ -153,6 +156,7 @@
 	\def\the@acknowledgmentsLabel{Acknowledgments}
 	\def\the@prefaceLabel{Preface}
 	\def\the@abstractLabel{Abstract}
+	\def\the@abstractGermanLabel{Zusammenfassung} %Dongliang
 }
 \DeclareOption{german}{%
 	\def\the@dedicationLabel{Widmung}
@@ -169,6 +173,7 @@
 	\@acknowledgmentsPagetrue
 	\@prefacePagetrue
 	\@abstractPagetrue
+	\@abstractGermanPagetrue %Dongliang
 	\@tableOfContentsPagetrue
 }
 \DeclareOption{nofrontmatter}{
@@ -179,6 +184,7 @@
 	\@acknowledgmentsPagefalse
 	\@prefacePagefalse
 	\@abstractPagefalse
+	\@abstractGermanPagefalse  %Dongliang
 	\@tableOfContentsPagefalse
 }
 \DeclareOption{halftitle}{\@halfTitlePagetrue}
@@ -195,6 +201,8 @@
 \DeclareOption{nopreface}{\@prefacePagefalse}
 \DeclareOption{abstract}{\@abstractPagetrue}
 \DeclareOption{noabstract}{\@abstractPagefalse}
+\DeclareOption{abstractGerman}{\@abstractGermanPagetrue}  %Dongliang
+\DeclareOption{noabstractGerman}{\@abstractGermanPagefalse}  %Dongliang
 \DeclareOption{tableofcontents}{\@tableOfContentsPagetrue}
 \DeclareOption{notableofcontents}{\@tableOfContentsPagefalse}
 
@@ -212,7 +220,7 @@
 }
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
-\ExecuteOptions{twoside,pagesize170x240,wupfont,noheadline,dissertation,english,halftitle,title,imprint,nodedication,noacknowledgments,preface,noabstract,tableofcontents,graphicx}
+\ExecuteOptions{twoside,pagesize170x240,wupfont,noheadline,dissertation,english,halftitle,title,imprint,nodedication,noacknowledgments,preface,noabstract,noabstractGerman,tableofcontents,graphicx}%Dongliang
 \ProcessOptions
 
 %----------------------
@@ -249,7 +257,7 @@
 
 % Graphic package
 \if@graphicx
-	\RequirePackage[final]{graphicx}
+%	\RequirePackage[final]{graphicx} %Dongliang's change, we have \RequirePackage{tikz} at the very beginning
 	\graphicspath{{images/}}
 	\newcommand{\printLogo}{\includegraphics[height=1cm]{WUPlogo_titlepage}}
 	\newcommand{\printByNcNd}{\includegraphics[height=5mm]{by-nc-nd_eu}}
@@ -402,6 +410,8 @@
 \newcommand{\Preface}[1]{\@prefacetrue\def\command@preface{#1}}
 \newif\if@abstract \@abstractfalse
 \newcommand{\Abstract}[1]{\@abstracttrue\def\command@abstract{#1}}
+\newif\if@abstractGerman \@abstractGermanfalse %Dongliang
+\newcommand{\AbstractGerman}[1]{\@abstractGermantrue\def\command@abstractGerman{#1}} %Dongliang
 
 %-------------------------------------
 % Miscellaneous commands and variables
@@ -669,6 +679,19 @@
 	}
 \fi
 
+%Dongliang
+%--------------
+% Abstract page German
+%--------------
+\if@abstractGermanPage
+	\newcommand{\makeAbstractGermanPage}{%
+		\chapter{\the@abstractGermanLabel}
+		%\thispagestyle{empty}
+		\if@abstractGerman\command@abstractGerman\fi
+		\clearpage\springEvenPageNoNumber
+	}
+\fi
+
 %------------------
 % Table of contents
 %------------------
@@ -706,6 +729,8 @@
 	\if@prefacePage\makePrefacePage\fi
 
 	\if@abstractPage\makeAbstractPage\fi
+
+	\if@abstractGermanPage\makeAbstractGermanPage\fi %Dongliang
 
 	\if@tableOfContentsPage\makeTableOfContentsPage\fi
 
