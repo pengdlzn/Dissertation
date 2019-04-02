@@ -592,7 +592,7 @@ about~$10\%$ less than the C5 TreeSet implementation.
     $n=200,000$.}
 \label{fig:DataStr_RandomTimeEpsilonFix}
 %
-\vspace{8mm}
+\vspace{5.5mm}
 %
 \centering
 \includegraphics[page=3]{DataStr_Plot_Random}
@@ -605,7 +605,7 @@ about~$10\%$ less than the C5 TreeSet implementation.
 	$n=200{,}000$.}
 \label{fig:DataStr_RandomTimeEpsilonDecrease}
 %	
-\vspace{8mm}
+\vspace{5.5mm}
 %
 \centering
 \includegraphics[page=4]{DataStr_Plot_Random}
@@ -617,11 +617,11 @@ about~$10\%$ less than the C5 TreeSet implementation.
 
 
 %\begin{figure}[tb]	
-%	\centering
-%	\includegraphics[page=4]{DataStr_Plot_Random}
-%	\caption{Output size and memory consumption of the 
-%		algorithms for the random data.}
-%	\label{fig:DataStr_RandomMemory}
+%\centering
+%\includegraphics[page=4]{DataStr_Plot_Random}
+%\caption{Output size and memory consumption of the 
+%	algorithms for the random data.}
+%\label{fig:DataStr_RandomMemory}
 %\end{figure}
 
 \subsection{Case Study on Real-World Data}
@@ -638,7 +638,7 @@ $$
 d_\mathrm{avg}=\sqrt{(x_\mathrm{max}-x_\mathrm{min})\cdot 
 (y_\mathrm{max}-y_\mathrm{min})/N_0},
 $$
-where~$x_\mathrm{max}$, $x_\mathrm{min}$, $y_\mathrm{max}$, 
+where coordinates~$x_\mathrm{max}$, $x_\mathrm{min}$, $y_\mathrm{max}$, 
 and~$y_\mathrm{min}$ are defined as in 
 \sect\ref{sec:DataStr_GridAlgorithm}.
 According to our data, 
@@ -684,7 +684,8 @@ which models that
 we have two point sets from different sources.
 Now, we try to find the corresponding points. 
 In order to extract from~$P$ 
-ten datasets~$P_{1},\ldots,P_{10}$ of different sizes, 
+ten datasets of different sizes,
+i.e., datasets~$P_{1}, P_{2}, \ldots, P_{10}$, 
 we selected for~$P_{j}$ each point in~$P$ 
 with probability~$j/10$. 
 Hence, datasets~$\vert P_{j}\vert \approx 
@@ -692,7 +693,7 @@ Hence, datasets~$\vert P_{j}\vert \approx
 and~$\vert P_{10}\vert =\vert P\vert$.
 
 
-For~$j=1,\ldots ,10$, 
+For~$j=1, 2, \ldots, 10$, 
 let dataset~$\bar{P}_{j}=P_{j}\cup P_{j}'$,
 where~$P_{j}'$ is the set of perturbed points 
 obtained from the points in~$P_{j}$. 
@@ -832,7 +833,7 @@ for finding all the pairs of close points.
 	\fig\ref{fig:DataStr_RandomTimeEpsilonFix}.}
 \label{fig:DataStr_BavariaTimeEpsilonFix}
 %	
-\vspace{8mm}
+\vspace{5.5mm}
 %
 \centering
 \includegraphics[page=3]{DataStr_Plot_Bavaria}

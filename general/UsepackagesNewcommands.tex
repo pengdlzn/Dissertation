@@ -170,8 +170,8 @@ Building, Morphing, Data structure, Zooming}}
 \usepackage[
 backend=biber,
 %backend=bibtex,
-style=trad-alpha,
-%style=alphabetic, %style for my thesis
+%style=trad-alpha,
+style=alphabetic, %style for my thesis
 sorting=nyt, %sort by name, year, title
 %bibstyle=authoryear, %no indices before names; year after names
 %bibstyle=numeric, %number the references
@@ -250,14 +250,20 @@ natbib=true]{biblatex}
 %	\printfield{pagetotal}%
 %	\newunit}
 
-
-
+%\ppspace defaults to \addnbspace, a non-breaking space
+%we redefine \ppspace to a normal space
+%https://tex.stackexchange.com/questions/167065/what-is-the-reason-to-put-a-tilde-between-p-page-and-the-number
+\renewcommand{\ppspace}{ }
 %change "cited on page(s)" to "see page(s)" in Bibliography
 \DefineBibliographyStrings{english}{
-  backrefpage  = {see page},
-  backrefpages = {see pages},
+  backrefpage  = {see p\adddot},
+  backrefpages = {see pp\adddot},
+  %https://tex.stackexchange.com/questions/277272/biblatex-how-to-remove-the-period-after-p-pp-in-bibliography-only
+%  page  = {p\adddot},
+%  pages = {pp\adddot},
 }
-%change parentheses to brackets in Bibliography
+
+%change parentheses of backrefs to brackets in Bibliography
 \renewbibmacro*{pageref}{%
   \iflistundef{pageref}
     {}
@@ -271,6 +277,36 @@ natbib=true]{biblatex}
 
 
 
+%\iffalse
+%For the references, the following commands make the titles 
+%lowercase (sentence case),
+%while keep book/journal/conference etc. names unchanged 
+\DeclareFieldFormat{sentencecase}{\MakeSentenceCase{#1}}
+\renewbibmacro*{title}{%
+	\ifthenelse{\iffieldundef{title}\AND\iffieldundef{subtitle}}
+	{}
+	{\ifthenelse{\ifentrytype{article}\OR\ifentrytype{inbook}%
+			\OR\ifentrytype{incollection}\OR\ifentrytype{inproceedings}%
+			\OR\ifentrytype{inreference}}
+		{\printtext[title]{%
+				\printfield[sentencecase]{title}%
+				\setunit{\subtitlepunct}%
+				\printfield[sentencecase]{subtitle}}}%
+		{\printtext[title]{%
+				\printfield[titlecase]{title}%
+				\setunit{\subtitlepunct}%
+				\printfield[titlecase]{subtitle}}}%
+		\newunit}%
+	\printfield{titleaddon}}
+
+%Remove the quotation marks for the titles in the reference
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,
+patent,thesis,unpublished]{citetitle}{#1}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,
+patent,thesis,unpublished]{title}{#1}
+
+
+
 %make the prefix of a name capital, e.g., van Dijk -> Van Dijk
 %https://tex.stackexchange.com/questions/226893/biblatex-handling-of-dutch-van-prefix
 \renewbibmacro*{begentry}{\midsentence} %lower-case in the bibliography
@@ -278,6 +314,9 @@ natbib=true]{biblatex}
 \AtBeginDocument{\toggletrue{blx@useprefix}}
 \makeatother
 
+%change \textsc{DOI} to DOI, and so on, in bibliography
+%https://tex.stackexchange.com/questions/58636/how-to-change-the-font-for-biblatex-acronyms
+\renewcommand*{\mkbibacro}[1]{#1}
 
 %General
 
@@ -454,6 +493,14 @@ t\ifthenelse{\equal{#1}{}}{}{_#1}}}
 %https://tex.stackexchange.com/questions/139241/using-matbbz-and-textregistered-in-math-mode
 \usepackage{textcomp}
 
+%define command \blankpage
+%https://tex.stackexchange.com/questions/36880/insert-a-blank-page-after-current-page
+\def\blankpage{%
+      \clearpage%
+      \thispagestyle{empty}%
+      \addtocounter{page}{-1}%
+      \null%
+      \clearpage}
 
 %make package refcheck compatible with package hyperref 
 \makeatletter

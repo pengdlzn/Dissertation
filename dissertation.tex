@@ -25,6 +25,8 @@ headline, %the line at the top of each page
 
 \begin{document}
 
+
+
 \include{chapters/Introduction}
 \include{chapters/AreaAgg}
 \include{chapters/AdminBound}
@@ -38,5 +40,11 @@ headline, %the line at the top of each page
 heading=bibintoc, %put "Bibliography" into table of contents
 %title={Article}, %change "Bibliography" to "Article"
 ]
+
+%add some blank pages so that 
+%the overall page count is dividable through 4
+\blankpage
+\blankpage
+\blankpage
 
 \end{document}
