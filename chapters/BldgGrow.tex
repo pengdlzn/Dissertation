@@ -11,9 +11,10 @@ This discrete strategy may result in sudden changes,
 which disturb user navigation.
 To provide better zooming experience, 
 we try to produce a sequence of maps 
-with small incremental changes 
+with small incremental changes to transit 
 from a level to another level.
-This process is known as \emph{continuous generalization}.
+This process is known as \emph{continuous map generalization} 
+(or continuous generalization).
 
 A way to achieve continuous generalization is to use morphing.
 Often, a start map (at a larger-scale) and 
@@ -26,18 +27,19 @@ between two maps need to be defined.
 For example, corresponding points 
 between a pair of polylines have been investigated based on 
 dynamic programming \citep{Noellenburg2008}, 
-Delaunay triangulations and 
+by Delaunay triangulations and 
 binary line generalisation tree \citep{Deng2015},
-and simulated annealing \citep{Li2017Annealing}.
-From a point to its corresponding point,
+and by simulated annealing \citep{Li2017Annealing}.
+When morphing from a point to its corresponding point,
 a straight-line trajectory is often used to interpolate.
 \citet{Peng2013LSA} defined trajectories 
-based on least-square adjustment 
-in order to obtain more reasonable intermediate-scale polylines.
+based on least-squares adjustment 
+in order to obtain more reasonable intermediate-scale polylines,
+in terms of the angles and the edge lengths.
 Using morphing, \citet{Peng2016Admin} continuously generalized 
 administrative boundaries based on compatible triangulations. 
 When the numbers of line features are different 
-on the start and goal maps, 
+on the start map and the goal map, 
 a continuous selection is required; 
 \citet{Chimani2014Eat} proposed to generate a 
 removing sequence applicable for road network.
@@ -67,15 +69,18 @@ a user-defined tolerance.
 At the same time, their method does not introduce any topological conflict.
 \citet{Buchin2011_Simp} simplified buildings based on 
 edge-move operations.
-Their method preserves orientations of the edges.
+Their method preserves orientations of the edges,
+guarantees topological correctness, and works fast.
+
 
 When users zoom out on digital maps, 
 buildings become smaller and 
 the distances between them decrease. 
 In addition to simplifying the buildings,
-we also need to aggregate them when they become close \cite{Weibel1997}. 
+we also need to aggregate them when 
+they become too close \cite{Weibel1997}. 
 Several methods were proposed 
-to aggregate buildings while preserving their shape 
+to aggregate buildings while preserving their shapes 
 (e.g., right angles);
 see \citet{Regnauld2001,RegnauldRevell07,Damen2008}. 
 These algorithms can be used as inspirations 
@@ -87,9 +92,11 @@ individual buildings (that appear on our start map).
 For instance, \citet{Chaudhry2008} identified 
 the boundaries of urban settlement 
 by calculating `citiness' based on buildings. 
-However, this method cannot be adapted 
+However, it is difficult to use their method 
 to provide a continuous transformation 
-from buildings to built-up areas.
+from buildings to built-up areas
+because using settlement boundaries will 
+make the buildings lose their shapes quite fast.
 
 Finally, some papers directly tackle 
 the continuous transformation of buildings 
@@ -381,16 +388,17 @@ r_\mathrm{h} M_t) .
 \label{sec:Aggregate}
 
 
-We grow each original building and, as illustrated in 
-\sect\ref{sec:DilationErosion}, simplify the grown building.
-If some buildings become too close after these operations,
+We grow all the original buildings (on the start map) and, 
+as illustrated in \sect\ref{sec:DilationErosion}, 
+simplify the grown buildings.
+If some buildings become too close to each other after these operations,
 we aggregate them by adding bridges
 (see for example \fig\ref{fig:GrowAndBridge}).
 Following \citet{Stoter2009}, 
-we define that two buildings are too close if their distance is 
-less than
+we define that two buildings are too close 
+if the distance between them is less than
 $\varepsilon= 0.2\,\mathrm{mm}$ on map.
-The real separation threshold at time $t$ is
+The real separation threshold at time~$t$ is
 \begin{equation*}
 \label{eq:d_epsilont}
 d_{\varepsilon, t} = \varepsilon \cdot M_t.
@@ -417,17 +425,17 @@ the original buildings intersecting with the same merged buffer
 are identified as a group of close buildings.
 For each pair of the original buildings in the same group,
 we connect them by adding a line segment 
-linking the pair of nearest points.
-There can be many line segments, 
-and they may cross each other or even intersect with buildings.
+to link the pair of nearest points.
+There can be many such line segments, 
+and they may cross each other or may even intersect with buildings.
 To make the topology simple, 
 we select only some of the line segments as \emph{bridges}.  
 If we consider each building as a node and 
 each line segment as an edge, 
 then we have a graph.
-Using the algorithm of \citet{Prim1957}, 
+By the algorithm of \citet{Prim1957}, 
 we find a minimum spanning tree (MST) in the graph,
-using the lengths of the line segments as the weights.
+where we use the lengths of the line segments as the weights.
 As a result, we use the line segments 
 that corresponds to the edges in the MST as bridges.
 We aggregate the group of original buildings 
@@ -461,10 +469,11 @@ does not decrease from \fig\ref{fig:BridgeMoreBuilding}g
 to \fig\ref{fig:BridgeMoreBuilding}i,
 we stop the iteration.
 
-When buildings are grown and aggregated iteratively, 
+When buildings have been grown and aggregated iteratively, 
 bridges have been added. 
-These bridges have a width of~$2\dtrm{G}$ at time~$t$.
-This setting guarantees that no bridge is thin when~$t=1$.
+These bridges have a width of~$2\dtrm{G}$ 
+(see \eq\ref{eq:d_Gt})at time~$t$.
+This setting guarantees that no bridge will be thin when time~$t=1$.
 As we aggregated all the buildings that will become too close, 
 all the separation distances 
 between each pair of buildings (or aggregates) 

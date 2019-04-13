@@ -252,7 +252,7 @@ which have the same number, say $n$, of vertices
 (see \fig\ref{fig:Morph_Injection}b).
 How to find the corresponding pairs of vertices 
 is not discussed in this chapter. 
-We apply an algorithm similar to
+We apply a dynamic-programming algorithm similar to
 \textcite{Noellenburg2008}, 
 but any other method could be used as well.
 \begin{figure}[tb]
@@ -574,23 +574,24 @@ and the last two vertices of the polylines.
 We tested our method on an instance from \textcite{Bereg2005};
 see \fig\ref{fig:Morph_Data}.
 The corresponding vertices computed 
-by the dynamic-programming algorithm 
+by the dynamic-programming algorithm
+(see \sect\ref{sec:Morph_Preliminaries})
 are shown in \fig\ref{fig:Morph_Data}b.
 \fig\ref{fig:Morph_Comparison} 
 shows the results of morphing 
 from polyline~$B$ to polyline~$C$ based on
-straight-line trajectories and LSA, respectively. 
+straight-line trajectories and our LSA, respectively. 
 Based on straight-line trajectories, 
 the left part of the ``bend'' shrinks, 
 and a self-intersection occurs at time~$t = 0.75$. 
-Based on LSA, the same part of the bend moves
-to the right side and then to the target edges. 
-The latter is more reasonable.
+While based on LSA, the same part of the bend moves
+to the right side and then moves to the target edges. 
+Therefore, our method is more reasonable.
 
 \begin{figure}[tb]
 	\centering	
 	\includegraphics[page=1]{Morph_CaseStudy_Artificial}
-	\caption{A dataset used in our experiments.}
+	\caption{An artificial data used in our case study.}
 	\label{fig:Morph_Data}
 \end{figure}
 
@@ -609,10 +610,11 @@ First, if we define the corresponding vertices
 between the polylines 
 with a simple linear interpolation algorithm
 (as shown in \fig\ref{fig:Morph_Undesirable}a), 
-then we will obtain undesirable results 
+then we obtain undesirable results 
 when morphing polyline~$C$ to polyline~$B$ 
-based on LSA 
-(see \fig\ref{fig:Morph_Undesirable}b for example).
+based on LSA.
+\fig\ref{fig:Morph_Undesirable}b shows that 
+the ``interpolated line'' jumped below polyline~$C$.
 
 \begin{figure}[tb]
 	\centering	
@@ -623,9 +625,10 @@ based on LSA
 
 Second, we may have self-intersections for some instances.
 \fig\ref{fig:Morph_DataComplex} shows such an example,
-where we have several self-intersections at time~$t=0.5$.  
-We should try to develop some techniques 
-to avoid this problem.
+where we have several self-intersections at time~$t=0.5$.
+This is because that 
+we do not have a mechanism to guarantee topological correctness
+of generated polylines.
 
 Third, sometimes the iterative process
 (see \sect\ref{sec:Morph_Iterative})
@@ -715,7 +718,7 @@ and~\ref{eq:Morph_LengthConstraints}.
 		\textbf{(c)} $t=0.75$~~~~~~~~~
 		\textbf{(d)} Target polyline}
 \end{subfigure}
-\caption{Case study on real data.}
+\caption{Case study on real-world data.}
 \label{fig:Morph_RealData}
 \end{figure}
 

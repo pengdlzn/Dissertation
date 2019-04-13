@@ -2,18 +2,19 @@
 \chapter[\DataStrToCTitle]{\DataStrTitle}
 \label{chap:DataStr}
 
-Detecting correspondences between different spatial datasets
-has been drawn a lot of attention in map generalization 
+Detecting corresponding objects,
+which represent the same real-world entity,
+from two different spatial datasets
+has drawn a lot of attention in map generalization 
 \parencite[e.g.,][]{Noellenburg2008,Peng2016Admin,Deng2015}
 and data conflation 
 \parencite[e.g.,][]{Zhang2008Matching,Masuyama2006Tessellation,
 	Tong2014Matching,Ruiz2011Conflation}.
-A reason is that corresponding objects,
-which represent the same real-world entity,
-may have different coordinates; 
-measurements introduce errors, 
+However, corresponding objects may have different coordinates
+because of many reasons.
+For example, measurements introduce errors, 
 and different organizations may use their own approaches 
-to produce datasets \parencite{Beeri2005}.
+to produce spatial datasets \parencite{Beeri2005}.
 An important criteria of determining corresponding objects
 is to investigate if they have close positions. 
 For example, \textcite{Beeri2005} assumed that 
@@ -34,12 +35,11 @@ We consider two points to be close
 if they lie within a square of a pre-specified 
 side length, say,~$\varepsilon$. 
 In other words, points~$p$ and~$q$ are close 
-if distance~$L_{\infty }(p,q)=\max (\Delta x,\Delta y)
-\le \varepsilon$, where 
-$\Delta x=\vert p_{x}-q_{x}\vert $ and 
-$\Delta y=\vert p_{y}-q_{y}\vert$
-are the differences of $x$- and $y$-coordinates, respectively;
-see \fig\ref{fig:DataStr_Problem}.
+if we have distance~$L_{\infty }(p,q)=\max (\Delta x,\Delta y)
+\le \varepsilon$, where~$\Delta x=\vert p_{x}-q_{x}\vert$ 
+and~$\Delta y=\vert p_{y}-q_{y}\vert$
+are the differences of~$x$- and~$y$-coordinates, respectively
+(see \fig\ref{fig:DataStr_Problem}).
 
 \begin{figure}[tb]
 \centering
@@ -51,14 +51,19 @@ see \fig\ref{fig:DataStr_Problem}.
 \label{fig:DataStr_Problem}
 \end{figure}
 
-When implementing and testing some ad-hoc solutions 
-for this problem, 
-we made a number of observations 
-that we found worth sharing with the GIS community. 
-That is to sat, the ultimate goal of this chapter 
+In order to solve the problem efficiently,
+we have implemented and tested some ad-hoc solutions,
+including using different algorithms and different data structures.
+During this process,
+we have made a number of observations
+in terms of running time and memory consumption,
+cost by the different solutions.
+We think that it is worth to share our observations
+with the GIS community.
+That is to say, the ultimate goal of this chapter 
 is not to identify the algorithm 
-that performs best for the problem at hand. 
-Instead, we want to address the issues 
+that performs the best for the problem at hand. 
+Rather, we want to address the issues 
 that we had during implementing and testing; 
 we want to discuss the lessons we learned.
 
@@ -68,60 +73,65 @@ requires~$\Theta (n^{2})$ time,
 where~$n$ is the number of points. 
 This running time is worst-case optimal 
 since the size of the output can be~$\Theta (n^{2})$ 
-if~$\varepsilon$ is sufficiently large. 
+if side length~$\varepsilon$ is sufficiently large. 
 Typically, however, the size of the output is small. 
 Hence, it is desirable to use algorithms 
 whose running time do not only depend on 
 the size of the input ($n$, the number of points), 
-but also on the size of the output, that is, 
-the number of pairs of close points, 
-which we denote by~$k$. 
+but also depend on the size of the output, that is, 
+the number of pairs of close points. 
 Such an algorithm is called \emph{output-sensitive}. 
-Our problem is different from \textcite{Saalfeld1988}. 
-For a given point on one map, they found the 
+Note that our problem is different from \textcite{Saalfeld1988}. 
+For a given point on one map, they wanted to find the 
 single nearest point in another map,
 which can be accomplished in~$O(n\log n)$ time 
 \parencite{Shamos1975}.
 
 We consider three obvious output-sensitive algorithms: 
 A sweep-line (SL) algorithm, 
-an algorithm based on the Delaunay Triangulation (DT), and 
+an algorithm based on the Delaunay triangulation (DT), and 
 a hashing-like approach that uses a grid. 
-The SL algorithm runs in~$O(k+n\log n)$ worst-case time.
-The same running time holds for the DT-based algorithm 
+The sweep-line algorithm runs in~$O(k+n\log n)$ worst-case time,
+where~$k$ is the number of pairs of close points, 
+i.e., the size of output.
+The same running time holds for the algorithm 
+based on the Delaunay triangulation
 under the assumption that 
-the input points are randomly and independently drawn 
-in a unit square (see \sect\ref{sec:DataStr_Algorithms}). 
+the input points are randomly and independently distributed 
+in a unit square.
+The definition of this distribution will be shown
+in \sect\ref{sec:DataStr_Algorithms}. 
 Under the same assumption 
 regarding the distribution of the input, 
-the grid-based algorithm runs in~$O(k+n)$ time. 
+the grid-based algorithm runs in~$O(k+n)$ time,
+which is the most efficient. 
 We sketch the three algorithms in 
 \sect\ref{sec:DataStr_Algorithms}. 
 We have implemented them, and 
 we have compared their performances on random data 
 and real-world data (see \sect\ref{sec:DataStr_CaseStudy}). 
-We conclude the chapter in \sect\ref{sec:DataStr_Conclusion}.
+We conclude this chapter in \sect\ref{sec:DataStr_Conclusion}.
 
 
 
 We remark that we focus on methods 
 that can be implemented easily.
-For this reason we have not included a method that uses 
+For this reason, we have not included a method that uses 
 two-dimensional range trees
-\parencite{Bentley1977Multivariate,Lueker1978,Lee1980Tree}, 
+\parencite[e.g.,][]{Bentley1977Multivariate,Lueker1978,Lee1980Tree}, 
 which is a two-level data structure based on
 balanced binary search tree (BBST);
 see \textcite[\chap13]{Cormen2009}.
 The method works as follows. 
-We insert all~$n$ input points into the range tree 
-and then query the tree, for each point~$p$, 
+It inserts all~$n$ input points into a range tree.
+For each point~$p$, it queries the tree
 with a range of size~$2\varepsilon \times 2\varepsilon$ 
 centered at~$p$.
-The running time of this method is~$O(k+n\log ^{2}n)$, the 
-memory consumption is~$O(n\log n)$;
-see \textcite{Bentley1977Multivariate,}. 
-The running time can be improved to~$O(k+n\log n)$ 
-by using fractional cascading
+The running time of that method is~$O(k+n\log ^{2}n)$, 
+the memory consumption is~$O(n\log n)$;
+see \textcite{Bentley1977Multivariate}. 
+Furthermore, the running time can be improved to~$O(k+n\log n)$ 
+by using the fractional cascading
 \parencite[\chap5]{deBerg2008}, 
 but we would need additional implementation effort.
 
@@ -367,7 +377,7 @@ other algorithms even when we use radius~$r_1$.
 \end{figure}
 
 
-Constructing the DT takes $O(n\log n)$ time 
+Constructing the DT takes~$O(n\log n)$ time 
 and~$O(n)$ memory \parencite{Leach1992Delaunay}. 
 Actually, under our assumption concerning the input 
 distribution, the DT can be constructed in linear time
@@ -507,50 +517,57 @@ we set side length~$\sigma=\varepsilon_{0}\sqrt{N/n}$.
 In the experiment with~$\varepsilon =\varepsilon_{0}$ 
 (see \fig\ref{fig:DataStr_RandomTimeEpsilonFix}), 
 the quadratic size of the output dominates the 
-actual time consumption of the DT-based algorithm.
+actual time consumption of the DT-based algorithm
+(see \fig\ref{fig:DataStr_RandomTimeEpsilonFix}a).
 The same holds for the C\# SortedDictionary 
-implementation of the SL algorithm. 
+implementation of the SL algorithm
+(see \fig\ref{fig:DataStr_RandomTimeEpsilonFix}a). 
 The implementations of C\# SortedSet and C5 TreeSet  
-both perform linearithmically, 
-and the grid-based algorithm performs linearly: 
-In these cases, the actual time consumption is 
+both perform in a linearithmic way, 
+and the grid-based algorithm performs linearly
+(see \fig\ref{fig:DataStr_RandomTimeEpsilonFix}b).
+In the three cases, the actual time consumption is 
 dominated by the term 
-that depends on the size~$n$ of the input.
+that depends on the size of input,~$n$.
 
 
 In the experiment with~$\varepsilon =\varepsilon_{0}\sqrt{N/n}$ 
 (see \fig\ref{fig:DataStr_RandomTimeEpsilonDecrease}), 
 the DT-based algorithm, however, now shows 
-a (near-)linear time consumption. 
+a (near-)linear time consumption
+(see \fig\ref{fig:DataStr_RandomTimeEpsilonDecrease}a). 
 Still, it is much slower than the other four implementations. 
-Interestingly, the C\# SortedDictionary 
-implementation still shows a quadratic behavior. 
+Interestingly, the implementation based on C\# SortedDictionary 
+still shows a quadratic behavior
+(see \fig\ref{fig:DataStr_RandomTimeEpsilonDecrease}a). 
 This is due to the fact 
 that the height-$\varepsilon $ strip above the sweep line 
 contains an expected linear number of points ($n\varepsilon$), 
 which are traversed by the \emph{where} method 
-of the SortedDictionary data structure. 
-The C\# SortedSet, C5 TreeSet, and the grid-based 
+of the SortedDictionary data structure.
+According to \fig\ref{fig:DataStr_RandomTimeEpsilonDecrease}b,
+the C\# SortedSet, C5 TreeSet, and the grid-based 
 implementations 
 perform similarly as in the experiment 
-with~$\varepsilon =\varepsilon_{0}$
-. In both experiments, the simple grid-based algorithm is by 
+with~$\varepsilon =\varepsilon_{0}$. 
+In both experiments, the simple grid-based algorithm is by 
 far the fastest
-(by a factor of roughly~$7$; 
+(by a factor of roughly~$7$);
 see \figs\ref{fig:DataStr_RandomTimeEpsilonFix}b
-and~\ref{fig:DataStr_RandomTimeEpsilonDecrease}b).
-
-
+and~\ref{fig:DataStr_RandomTimeEpsilonDecrease}b.
 
 
 We also observed that, in both experiments, 
 the time of computing the DT was about 
 the same as the running times of 
-the two SL implementations. 
+the two SL implementations
+(see \figs\ref{fig:DataStr_RandomTimeEpsilonFix}b
+and~\ref{fig:DataStr_RandomTimeEpsilonDecrease}b).
+Indeed, the running time of computing the DT 
+is also~$O(n\log n)$; see \sect\ref{sec:DataStr_DTAlgorithm}.
 In addition, The DT-based 
 algorithm with radius~$r_{1}$ is faster than 
 that with radius~$r_{2}$ by a factor of~$2$.
-
 
 
 \subsubsection{Output Size and Memory Consumption}
@@ -566,7 +583,7 @@ the pairs of close points
 but just counted the number of pairs, 
 we basically did not need any extra memory for the output.
 Therefore, the two experiments with different values 
-of~$\varepsilon$ need the same amount of memory. 
+of side length~$\varepsilon$ need the same amount of memory. 
 \fig\ref{fig:DataStr_RandomMemory}b 
 shows that the memory consumption of all our 
 methods grows linearly. 

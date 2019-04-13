@@ -504,7 +504,7 @@ vertices).
 %pairs of subpolylines. The problem is to determine 
 %corresponding 
 %subpolylines. (improve this section accordingly)
-The algorithm \textsc{Optcor} models the problem of 
+The algorithm, \textsc{Optcor}, models the problem of 
 computing corresponding points as 
 finding an optimum correspondence, 
 with respect to a cost function.
@@ -513,21 +513,22 @@ correspondence for an edge, namely,
 the edge corresponds to a vertex, 
 to an edge, or to a merged sequence of edges.
 We call all the three cases corresponding subpolylines
-as a point or an edge is a degenerate subpolyline. 
+as a point or an edge can be regarded as a degenerate subpolyline. 
 
 For a pair of corresponding subpolylines, 
-\textcite{Noellenburg2008} define the cost 
+\textcite{Noellenburg2008} defined the cost 
 as a combination of three values: 
-(i)~the distance between the corresponding points, 
+(i)~the average distance between the corresponding points, 
 (ii)~the length difference of the pair of subpolylines, and 
 (iii)~the changes of the vectors between corresponding points. 
-Then \textsc{Optcor} computes corresponding points 
+Then, \textsc{Optcor} computes corresponding points 
 by ``looking back'' to combine 
-the last $1,2,\ldots, or~k$ edges as a subpolyline, 
+the last $1,2,\ldots, \text{or}~k$ edges as a subpolyline, 
 while minimizing the cost over 
 the whole pair of corresponding polylines. 
-Here, $k$ is a user-specified parameter, 
-which gives a trade-off between quality and efficiency.
+Here, parameter~$k$ gives a trade-off between quality and efficiency.
+It can be specified by users according to the dataset.
+
 
 To make the problem simple, 
 our variant considers only the first value in their cost, 
@@ -905,10 +906,10 @@ where the polylines have been preprocessed
 Since we can hardly see the details
 if we present the whole map, 
 we focus on a small portion, say, 
-Tianjin province\footnote{Interactive animations 
-of more	provinces are available at \url
+Tianjin province\footnote{Please try our interactive animations 
+of provinces Tianjin, Fujian, and Shanghai at \url
 {http://www1.pub.informatik.uni-wuerzburg.de/pub/data/agile2016/}.
-(We recommend opening the website with Google Chrome.)}
+We recommend opening the website with Google Chrome.}
 (also known as Tianjin municipality);
 see \figs\ref{fig:Admin_Data}b and~\ref{fig:Admin_Data}d.
 
