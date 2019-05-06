@@ -260,7 +260,7 @@ We represent each land-cover area by a polygon with a type.
 We denote by~$P$ the set of polygons on the start map.
 We use~$p$, $q$, $r$, or~$o$ to denote polygons.
 A \emph{patch} is a set of polygons whose union is connected. 
-Each patch also has a unique land-cover area type.
+Each patch also has a unique land-cover type.
 We use~$u$ or~$v$ to denote the patches.
 
 Recall that we are dealing with a single region and 
@@ -479,17 +479,17 @@ We define the cost of type change of this step by
 \label{eq:f_type}
 f_\mathrm{type}(P_{s,i},P_{s+1,j})=\frac{A_{u}}{A_R}
 \cdot
-\frac{d(T(u),T(v))}{T_{\max}},
+\frac{d_\mathrm{type}(T(u),T(v))}{d_\mathrm{type\_max}},
 \end{equation}
 where~$A_u$ is the area of patch~$u$, 
 and~$A_R$ is the area of region~$R$
 (see \sect\ref{sec:AreaAgg_Preliminaries}).
-We use~$A_R$ and~$T_{\max}$ 
+We use~$A_R$ and~$d_\mathrm{type\_max}$ 
 to normalize the cost of type change. 
-Constant~$T_{\max}$, the maximum cost over all type changes,  
+Constant~$d_\mathrm{type\_max}$, the maximum cost over all type changes,  
 is known from the input. 
 The input specifies, for each pair~$(T_1,T_2)$ of types, 
-cost~$d(T_1,T_2)$ of changing type~$T_1$ to type~$T_2$.
+cost~$d_\mathrm{type}(T_1,T_2)$ of changing type~$T_1$ to type~$T_2$.
 Specifically, we denote by~$T_\mathrm{goal}$ the type of 
 the patch on the goal map.
 For simplicity, we use a metric 
@@ -662,8 +662,8 @@ we add one more rule to our greedy algorithm.
 Suppose that patch~$v$ is one of~$u$'s neighbors.
 The greedy algorithm aggregates~$u$ into~$v$ 
 if the type distances fulfill that
-$d\left(T(u), T_\mathrm{goal}\right) 
-\ge d\left(T(v), T_\mathrm{goal}\right)$;
+$d_\mathrm{type}\left(T(u), T_\mathrm{goal}\right) 
+\ge d_\mathrm{type}\left(T(v), T_\mathrm{goal}\right)$;
 otherwise, the algorithm aggregates~$v$ into~$u$.
 This rule excludes, say,~$k_e$ aggregation choices,
 and we have~$2k_u - k_e$ choices left.
@@ -1414,7 +1414,7 @@ we compute the total cost of type change by
 \embrd[V]{F_\mathrm{type}} =
 \sum_{t=2}^{n} \sum_{p\in P} \sum_{o\in P} \sum_{r\in P}
 \left(\frac{a_p}{A_R} \cdot
-\frac{d(T(o),T(r))}{T_{\max}}\cdot 
+\frac{d_\mathrm{type}(T(o),T(r))}{d_\mathrm{type\_max}}\cdot 
 y_{t,p,o,r}\right), & 
 \end{flalign*}
 where, similar to \eq\ref{eq:f_type}, 
@@ -2055,7 +2055,7 @@ to type \emph{fence} is~$2$,
 to type \emph{street} is~$4$, and
 to type \emph{farm land} is~$6$.
 In this tree, the maximum distance is~$6$, 
-which means~$T_\mathrm{max}=6$ for \eq\ref{eq:f_type}.
+which means~$d_\mathrm{type\_max}=6$ for \eq\ref{eq:f_type}.
 According to \citet{Rada1989SemanticMetric}, 
 the resulting cost function for type change is a metric.
 
@@ -2327,7 +2327,7 @@ In this case, the smallest patch has type~$5112$, and the
 surrounding one has~$2112$.
 The type of the goal patch is~$4102$.
 According to \fig\ref{fig:AreaAgg_TypeDistances},
-type distances~$d(5112,4102)=4$ and~$d(2112,4102)=6$.
+type distances~$d_\mathrm{type}(5112,4102)=4$ and~$d_\mathrm{type}(2112,4102)=6$.
 As a result, our greedy algorithm uses~$5112$ 
 as the type for the new patch. 
 This choice is a big mistake 

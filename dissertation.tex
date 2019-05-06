@@ -20,12 +20,10 @@ headline, %the line at the top of each page
 
 
 \input{general/UsepackagesNewcommands}
-\input{general/CoverAcknowledgmentsPrefaceAbstract}
+\input{general/CoverPrefaceAbstract}
 
 
 \begin{document}
-
-
 
 \include{chapters/Introduction}
 \include{chapters/AreaAgg}
@@ -41,10 +39,15 @@ heading=bibintoc, %put "Bibliography" into table of contents
 %title={Article}, %change "Bibliography" to "Article"
 ]
 
+\chapter*{Acknowledgments}%
+\addcontentsline{toc}{chapter}{Acknowledgments}%
+\input{general/Acknowledgments}
+
+
 %add some blank pages so that 
 %the overall page count is dividable through 4
 \blankpage
 \blankpage
-\blankpage
+%\blankpage
 
 \end{document}
