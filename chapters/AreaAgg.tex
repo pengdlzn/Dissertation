@@ -330,7 +330,10 @@ According to our rule, we always
 aggregate the smallest patch with one of its neighbors.
 Therefore, in the first~$k$ steps from the start map,
 we aggregate every other patch with one of its neighbors.
-At each of the steps, we have two choices,
+However, we do not know which one is the right choice
+at each of the steps
+in order to minimize our costs (see \sect\ref{sec:AreaAgg_CostFunctions}).
+We have to try both of the two choices,
 aggregating with the left patch or with the right one.
 As a result, there are~$2^k = 2^{(n-1)/2}$ subdivisions 
 in layer~$L_{k+1}$.
@@ -342,7 +345,7 @@ has exponential lower bound.
 \label{sec:AreaAgg_Methods}
 
 Our idea is to obtain an optimal aggregation sequence through 
-computing a minimum-weight path from the start to the goal 
+computing a path with minimum weight, from the start to the goal 
 (see \fig\ref{fig:AreaAgg_SubdivisionName}).
 This idea obviously requires that the arc weights are 
 set such that a minimum-weight start--goal
@@ -488,15 +491,13 @@ We use~$A_R$ and~$d_\mathrm{type\_max}$
 to normalize the cost of type change. 
 Constant~$d_\mathrm{type\_max}$, the maximum cost over all type changes,  
 is known from the input. 
-The input specifies, for each pair~$(T_1,T_2)$ of types, 
+The input specifies
 cost~$d_\mathrm{type}(T_1,T_2)$ of changing type~$T_1$ to type~$T_2$.
 Specifically, we denote by~$T_\mathrm{goal}$ the type of 
 the patch on the goal map.
 For simplicity, we use a metric 
 as the cost function of type change
-(see \sect\ref{sec:AreaAgg_CaseStudy}); 
-\textcite[\chap2]{Choudhary1992Elements}
-shows the definition of a metric.
+(see \sect\ref{sec:AreaAgg_CaseStudy}).
 A metric distance is symmetric, 
 which is different from the asymmetric one used in
 \textcite{Dilo2009tGAP}.
@@ -506,7 +507,8 @@ but the distance from \emph{road} to \emph{building} is~$0$.
 
 For path $\Pistar=(P_{1,i_1}, P_{2,i_2}, \dots, 
 P_{\tstar,i_{\tstar}})$,
-we define the cost of type change over the steps by
+we define the cost of type change %over the steps 
+by
 \begin{equation}
 \label{eq:g_type}
 g_\mathrm{type}(\Pistar)=
@@ -529,15 +531,15 @@ g_\mathrm{type}(\Pistar)=
 \label{sec:AreaAgg_f_comp}
 
 We use the compactness definition of \citet{Frolov1975}, 
-i.e., the compactness value for a patch, say,~$u$ is
+i.e., the compactness value of a patch, say,~$u$ is
 \begin{equation*}
 \label{eq:comp}
 c(u)=\frac{2 \sqrt{\pi A_u}}{l_u},
 \end{equation*}
 where~$A_u$ and~$l_u$ are 
 the area and the perimeter. 
-For a subdivision \Psnode, we denote by~$C(\Psnode)$ 
-the set of the patches' compactnesses.
+For subdivision \Psnode, we denote by~$C(\Psnode)$ 
+the set of the patches' compactness values.
 
 We wish to maximize the sum of the average compactnesses 
 over all intermediate maps,
@@ -641,6 +643,143 @@ g_2(\Pistar)= (1-\lambda)g_\mathrm{type}(\Pistar)
 We compare the greedy algorithm, \Astar, and an ILP-based 
 algorithm using $g_2$.
 
+\section{NP-hardness Proof}
+\label{sec:AreaAgg_NP-hardness}
+
+Although we have shown that the graph of subdivisions
+has an exponential size
+(see \sect\ref{sec:AreaAgg_Preliminaries}),
+one may develop a clever algorithm 
+to find an optimal sequence efficiently.
+In the following, we prove that 
+finding such a sequence is indeed NP-hard.
+In the proof, we neglect the cost of compactness or the cost of length.
+Considering one of the two costs 
+will make the computation even more difficult.
+
+
+\newtheorem{thm}{Theorem}
+\begin{thm}
+\textsc{AreaAggregationSequence} is NP-hard 
+even if we only consider the cost of type change.
+\end{thm}
+
+\begin{proof}
+Our NP-hardness proof is by reduction from 
+the NP-complete problem \textsc{PlanarVertexCover}, 
+which is to decide, for a given 
+planar graph~$G_\mathrm{A} = (V_\mathrm{A},E_\mathrm{A})$, 
+whether there exists a vertex cover 
+with at most a given number~$k_\mathrm{A}$ of vertices. 
+For an instance of \textsc{PlanarVertexCover}
+(\fig\ref{fig:AreaAgg_Reduction}a), 
+we define a corresponding instance of \textsc{AreaAggregationSequence}
+whose start map consists of gray, black, and white areas and 
+whose goal map consists of only one large gray patch.
+The adjacency graphs of the two maps are illustrated 
+in \figs\ref{fig:AreaAgg_Reduction}b and~\ref{fig:AreaAgg_Reduction}c, 
+where the colors of the vertices represent 
+the colors of the corresponding areas.
+More precisely, for each vertex of~$G_\mathrm{A}$
+in \fig\ref{fig:AreaAgg_Reduction}a, 
+we define a gray vertex and a black vertex, 
+which we connect with an edge. 
+For each edge $\{u,v\}$ of~$G_\mathrm{A}$, 
+we define two white vertices and 
+connect each of them both with the black vertex for $u$
+and the black vertex for $v$
+(\fig\ref{fig:AreaAgg_Reduction}b).
+
+\begin{figure}[tb]
+\centering
+\includegraphics[page=1]{AreaAgg_NPHard}
+\caption{The reduction for our NP-hardness proof.
+    The dashed polygon in (c) shows 
+    that the vertices are merged.}
+\label{fig:AreaAgg_Reduction}
+\end{figure}
+
+We define the weights of the vertices 
+in \fig\ref{fig:AreaAgg_Reduction}b as follows:
+\begin{itemize}
+\item Every white vertex has weight~$1$.
+\item Every black vertex has weight~$2$.
+\item Every gray vertex has weight~$2|V_\mathrm{A}| + 2|E_\mathrm{A}|$,
+which is equal to the total weight of all white and black vertices.
+\end{itemize}
+When we merge two vertices, 
+the weight of the new vertex is the sum of the two.
+In each aggregation step, 
+we require the smallest area to be aggregated with one of its neighbors.
+The area sizes correspond to the weights of the vertices in \fig\ref{fig:AreaAgg_Reduction}b.   
+Therefore, our definition of the weights to a certain degree determines 
+the order in which the vertices are selected:
+\begin{itemize}
+\item \emph{Phase I}: In each of the first~$2|E_\mathrm{A}|$ steps, 
+a white vertex is selected and merged with one of its neighbors, 
+such that the white vertex receives the neighbor's color or vice versa
+(\fig\ref{fig:reduction2} shows a possible result).
+\item \emph{Phase II}: In each of the next~$|V_\mathrm{A}|$ steps, 
+a non-gray vertex is selected and merged with one of its neighbors.
+\item \emph{Phase III}: $|V_\mathrm{A}|-1$ steps remain to reach the goal map.
+\end{itemize}
+
+To complete the reduction, 
+we need to define the costs of color changes. 
+For any color change, 
+we charge one unit of cost per unit weight.
+Due to our construction, Phases II and III can be accomplished with
+a total cost of~$2|V_\mathrm{A}|+2|E_\mathrm{A}|$, 
+no matter how Phase I is accomplished.
+This is because, after Phase I, 
+every non-gray patch will be adjacent to a gray patch (vertex).
+Thus, if any non-gray patch becomes selected in Phase II, 
+it can be aggregated with a gray patch (vertex) and 
+receive the color gray. 
+This implies that Phase II costs $2|V_\mathrm{A}|+2|E_\mathrm{A}|$ 
+(which is equal to the total weight of 
+all initially white and black vertices) and, 
+since after Phase II all patches are gray, 
+Phase III does not cause any additional cost.  
+It is also clear that 
+there is no cheaper way to accomplish Phases II and III,
+since it is impossible to color a vertex gray in Phase I.
+Consequently, since the total cost of Phases II and III is fixed, 
+it is only interesting to ask 
+at which cost Phase I can be accomplished.
+It turns out that, if $G_\mathrm{A}$ 
+has a vertex cover $C_\mathrm{A} \subseteq V_\mathrm{A}$, 
+then Phase I can be accomplished with cost $2|C_\mathrm{A}|$;
+only the black vertices corresponding to vertices in~$C_\mathrm{A}$ 
+need to change their color from black to white, and 
+each of them has weight~$2$ (see \fig\ref{fig:reduction2}).
+To summarize, if graph~$G_\mathrm{A}$ has a vertex cover~$C_\mathrm{A}$, 
+then the corresponding instance of \textsc{AreaAggregationSequence} 
+has a solution of 
+total cost~$2|C_\mathrm{A}|+2|V_\mathrm{A}|+2|E_\mathrm{A}|$.
+
+It remains to be shown that, 
+if $C_\mathrm{A}^*$ is a minimum vertex cover of $G_\mathrm{A}$, 
+then there is no solution with total cost 
+less than $2|C_\mathrm{A}^*|+2|V_\mathrm{A}|+2|E_\mathrm{A}|$.
+To see why, we assume that such a solution exists.
+If we keep the black color of a vertex from $C_\mathrm{A}^*$ 
+(the total cost decreases by $2$),
+then we will need to at least change two white vertices
+to black vertices
+(the total cost increases by $2$ at least).
+Therefore, we have found a contradiction to our assumption.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[page=2]{AreaAgg_NPHard}
+\caption{The situation after Phase I has been conducted 
+    such that all black vertices corresponding to a vertex cover 
+    of~$G_\mathrm{A}$ have been recolored white.
+    The dashed polygons show that the vertices are merged.}
+\label{fig:reduction2}
+\end{figure}
+\end{proof}
 
 \section{A Greedy Algorithm}
 \label{sec:AreaAgg_Greedy}
@@ -1286,8 +1425,8 @@ then the polygon must be assigned to itself,
 that is, $x_{t,r,r}=1$.
 
 
-Our second set of variables is used to compute the
-cost of type change.  We introduce
+We use the second set of variables in order to compute the
+cost of type change. We introduce
 \begin{flalign*}
 &\eqquadVariable
 \embrd[V]{y_{t,p,o,r}} \in
@@ -1868,8 +2007,8 @@ and~$c_{t,p,o,r}$.
 If we insist on involving a smallest patch at each step,
 then we need more variables and more constraints.
 
-
-\mypar{Aggregation involving a smallest patch}
+\subsubsection{Aggregation involving a smallest patch}
+%\mypar{}
 In order to make sure that 
 each of our aggregation steps involves a smallest patch,
 we need another type of variable,~$w_{t,o}$.
@@ -2111,7 +2250,8 @@ the resulting cost function for type change is a metric.
 \label{sec:AreaAgg_CaseStudy1}
 
 As illustrated in \sect\ref{sec:AreaAgg_Combining},
-we compare \Astar and the greedy algorithm using $g_1(\Pnode)$,
+we compare the \Astar algorithm and 
+the greedy algorithm using $g_1(\Pnode)$,
 which is a combination of the costs 
 of type change and compactness (see \eq\ref{eq:g_1}).
 For \Astar, we overestimated 
