@@ -32,7 +32,7 @@ to obtain a less-detailed representation
 based on small incremental changes, 
 e.g., the Generalized Area Partitioning tree (GAP-tree).
 This tree can be constructed if only the larger-scale map is given
-\citep{vanOosterom1995Development} 
+\citep{vanOosterom2005} 
 or if both the larger-scale map and the smaller-scale map 
 are given \citep{HaunertDilo2009}.
 Typically, the next change in such a sequence 
@@ -49,16 +49,22 @@ our problem.}
 \label{fig:AreaAgg_example}
 \end{figure}
 
-We assume that there exist many-to-one relationships between the 
-areas of the
-start map and the areas of the goal map.
+We assume that there exist many-to-one relationships 
+between the areas of the start map and the areas of the goal map.
 This assumption is based on the fact that many algorithms 
 \parencite[e.g.,][]{HaunertWolff2010AreaAgg,
 vanSmaalen2003,Oehrlein2017Aggregation}
-that aggregate land-cover areas
-result in many-to-one relationships.
+result in many-to-one relationships
+when aggregating land-cover areas.
 Their inputs and generalized results together
 can be used as our inputs.
+However, we should not use those algorithms
+to generate a sequence of maps at different scales
+because those algorithms do not take into account 
+the consistence between the generated maps.
+We use both a start map and a goal map instead of using only the start map
+because our generated maps at intermediate scales should be able to
+benefit from a goal map with high quality.
 We term the areas of the goal map \emph{regions}.
 That is, every region is the union of a set of areas 
 on the start map.
@@ -76,16 +82,25 @@ That method produces a land-cover map at a single smaller scale,
 given a land-cover map at a larger scale.
 Although \textcite{HaunertWolff2010AreaAgg}
 attain results of high quality, 
-they do not produce land-cover maps at intermediate scales.
+they do not produce a sequence of land-cover maps.
+
+Our method can also be extended to find an aggregation sequence 
+for two maps (a start map and a goal map) that are from different sources.
+In that case, one could compute a map overlay of the two maps
+and use the result 
+(with combined boundaries from both input maps and land cover classes 
+from the given large-scale map) 
+as the start map.
 
 In this chapter, we try to find an optimal sequence
 to aggregate the land-cover areas on the start map
-one by one until we arrive the goal map.
+one by one until we arrive at the goal map.
 We first independently deal with each region of the goal map 
 (with its components on the start map).
 Once we have found an aggregation sequence for each region, 
 we integrate all the sequences into an overall sequence,
-which transforms the start map into the goal map. 
+which transforms the start map into the goal map
+(see \fig\ref{fig:AreaAgg_IntegrateSequence}). 
 Our aggregation sequence may be cooperated with
 the GAP-face tree \citep{vanOosterom2005},
 the map cube model \citep{Timpf1998},
@@ -95,23 +110,39 @@ Smoothly (dis-)appearing areas can be realized
 by integrating our results into the \emph{space-scale cube}
 \parencite{vanOosterom2014tGAP,vanOosterom2014tGAPSSC}.
 
+\begin{figure*}[tb]
+\centering
+\includegraphics[page=2]{AreaAgg_Preliminaries}
+\caption{Integrating two aggregation sequences 
+	of different regions: 
+	the resulting sequence contains the given sequences 
+	as subsequences and 
+	always takes the subdivision with smallest patch next.
+	The gray arrows show the integration of the two regions.
+}
+\label{fig:AreaAgg_IntegrateSequence}
+\end{figure*}
 
 \mypar{Contribution}
 We formally model our problem, 
-introduce the basic concepts of our method, 
-and analyze the size of our model in a worst-case scenario
+analyze the size of our model in a worst-case scenario,
+introduce our methods,
+and present the basic concepts of our method
 (\sect\ref{sec:AreaAgg_Preliminaries}).
 We define our cost functions 
 (\sect\ref{sec:AreaAgg_CostFunctions}).
-Then, we compare three methods for finding aggregation sequences.
-First, we develop 
+We prove that our problem is NP-hard
+(\sect\ref{sec:AreaAgg_NP-hardness}).
+Then, we develop and compare three methods 
+for finding aggregation sequences.
+First, we present 
 a greedy algorithm (\sect\ref{sec:AreaAgg_Greedy}).
-Second, we present a new global optimization approach
+Second, we develop a new global optimization approach
 based on the \Astar algorithm 
 (\sect\ref{sec:AreaAgg_AStar}).
 Third, we model our pathfinding problem as
 an \emph{integer linear program} (ILP), 
-and we solve this program with minimizing our cost function
+and we solve this ILP with minimizing our cost function
 (\sect\ref{sec:AreaAgg_ILP}).
 Our ILP uses binary (0--1) variables. 
 These variables help us to model our problem, 
@@ -119,9 +150,8 @@ but in general, it is NP-hard
 to solve an ILP optimally.
 By comparing with the greedy algorithm, 
 which is used as a benchmark,
-we are able to see whether it is worth 
-to use \Astar or the ILP-based algorithm, 
-which are more complex and slower.  
+we are able to see whether \Astar or the ILP-based algorithm, 
+which are more complex and slower, indeed perform better.  
 Our case study 
 uses a dataset of the German topographic database ATKIS 
 (\sect\ref{sec:AreaAgg_CaseStudy}).
@@ -176,18 +206,7 @@ This region consists of~$n$ land-cover
 areas (components) on the start map. 
 In other words, the union of the~$n$ land-cover areas 
 is the only region on the goal map.
-\begin{figure*}[tb]
-\centering
-\includegraphics[page=2]{AreaAgg_Preliminaries}
-\caption{Integrating two aggregation sequences 
-	of different regions: 
-	the resulting sequence contains the given sequences 
-	as subsequences and 
-	always takes the subdivision with smallest patch next.
-	The gray arrows show the integration of the two regions.
-}
-\label{fig:AreaAgg_IntegrateSequence}
-\end{figure*}
+
 
 
 To find a sequence of small changes 
@@ -195,7 +214,8 @@ that transforms the start map into the goal map,
 we require that 
 every change involves only two areas of the current map.
 More precisely, in each step the smallest area~$u$ is merged 
-with one of its neighbors (adjacent areas)~$v$
+with one of its neighbors~$v$ 
+($v$ does not have to be the smallest neighbor)
 such that~$u$ and~$v$ are replaced by their union.
 The type of the union is restricted to be 
 the type of either~$u$ or~$v$.
@@ -203,7 +223,8 @@ If the union uses the type of~$u$,
 we say that area~$v$ is \emph{aggregated into} area~$u$, 
 and vice versa. 
 How to aggregate exactly is decided by 
-optimizing a global cost function.
+optimizing a global cost function
+(see \sect\ref{sec:AreaAgg_CostFunctions}).
 This requirement ensures that the 
 size of the smallest area on the map increases in each step.
 Hence, the sequence reflects a gradual reduction of the 
@@ -356,14 +377,29 @@ since graph~$G_\mathrm{S}$ can be huge.
 We compare a greedy algorithm, \Astar, and an ILP-based algorithm
 in finding such paths.
 Note that our inputs are only
-subdivisions~$\Pstart$ and~$\Pgoal$.
+subdivisions~$\Pstart$ and~$\Pgoal$
+(see \fig\ref{fig:AreaAgg_SubdivisionName}).
 We generate a subdivision (node) only when we want to visit it.
 
 In directed acyclic graphs, shortest paths can be found slightly faster 
 than in general directed or undirected graphs.
 An off-the-shelf shortest-path algorithm for directed acyclic graphs
+%\parencite[e.g.,][\sect25.2]{Cormen2009},
 (e.g., \textcite[\sect25.2]{Cormen2009}),
 however, will explore the whole graph, which has exponential size.
+The \Astar algorithm can be seen as 
+a refinement of Dijkstra's algorithm, 
+which for a user-specified given source 
+computes shortest paths to all other nodes in an edge-weighted graph
+\parencite{Dijkstra1959}. 
+Even when using Dijkstra's algorithm 
+to compute only a single shortest path to a user-specified destination, 
+a large number of nodes need to be explored. 
+The same holds for shortest-path algorithms 
+that make use of a topological order of the nodes 
+in a directed acyclic graph. 
+Compared to these algorithms, 
+the \Astar algorithm can greatly reduce the number of explored nodes.
 The challenge in our work was to tune the A* algorithm such that it
 explores only a small fraction of the graph.
 
@@ -458,7 +494,8 @@ longer lines generally yield lower map readability.
 \centering
 \includegraphics[page=1]{AreaAgg_CostsAndEstimations}
 \caption{Aggregating land-cover areas 
-	according to different preferences.
+	according to different preferences
+    by \textcite{Cheng2006}.
 	Aggregating a small land-cover area into another one 
 	that isolates the area (b), 
 	that is the largest neighbor (c), 
@@ -532,16 +569,16 @@ g_\mathrm{type}(\Pistar)=
 
 We use the compactness definition of \citet{Frolov1975}, 
 i.e., the compactness value of a patch, say,~$u$ is
-\begin{equation*}
+\begin{equation}
 \label{eq:comp}
 c(u)=\frac{2 \sqrt{\pi A_u}}{l_u},
-\end{equation*}
+\end{equation}
 where~$A_u$ and~$l_u$ are 
 the area and the perimeter. 
 For subdivision \Psnode, we denote by~$C(\Psnode)$ 
 the set of the patches' compactness values.
 
-We wish to maximize the sum of the average compactnesses 
+We wish to maximize the sum of the average compactness values 
 over all intermediate maps,
 while our objective will be
 minimizing a cost function.
@@ -551,7 +588,7 @@ Recalling that there are~$n-s+1$ patches at time~$s$,
 we define the cost of compactness for subdivision~\Psnode as
 \begin{equation}
 \label{eq:f_comp}
-f_{\mathrm{comp}}(\Psnode)=
+f_\mathrm{comp}(\Psnode)=
 \frac{1-\frac{1}{n-s+1} \sum_{c\in C(\Psnode)}c}{n-2},
 \end{equation}
 where we use values~$n-s+1$ and~$n-2$ to normalize 
@@ -578,7 +615,7 @@ The cost in terms of interior length of
 this subdivision is defined as
 \begin{equation}
 \label{eq:f_length}
-f_{\mathrm{lgth}}(\Psnode)=
+f_\mathrm{lgth}(\Psnode)=
 \frac{\big(\sum_{b\in B (\Psnode)} 
 	|b|\big)\big/D(s)}{n-2}, 
 \end{equation} 
@@ -609,11 +646,33 @@ g_\mathrm{lgth}(\Pistar)=
 \sum_{s=2}^{\tstar-1}f_{\mathrm{lgth}}(P_{s,i_s}).
 \end{equation}
 
+Note that in theory, a patch, $u$, with a small perimeter 
+can be extremely non-compact 
+according to measure~$c(u)$ in \eq\ref{eq:comp}, 
+thus the two measures, $f_\mathrm{comp}$ and~$f_\mathrm{lgth}$, 
+are not interchangeable. 
+However, if we assume that all areas of the map have the same size 
+(i.e., $A_u$ of \eq\ref{eq:comp} is a constant), 
+it would make no difference whether 
+we minimize an area's perimeter 
+or maximize the area's compactness~$c(u)$. 
+Obviously, the areas in our dataset have different sizes. 
+However, since we iteratively remove the smallest area, 
+the differences do not become too large. 
+Therefore, measuring the overall compactness of a map 
+based on the total length of 
+all the interior boundaries is quite reasonable.
+
 \subsection{Combining Cost Functions}
 \label{sec:AreaAgg_Combining}
-In order to minimize the type change 
-and maximize the compactness,
-we combine the two cost functions as
+When we generate a sequence of intermediate-scale maps,
+we want to change the types of the land-cover areas 
+as little as possible
+and want to have compact land-cover areas.
+Therefore, we combine 
+the cost of type change (\eq\ref{eq:g_type})
+and the cost of compactness (\eq\ref{eq:g_comp}).
+That is,
 \begin{equation}
 \label{eq:g_1}
 g_1(\Pistar)= (1-\lambda)g_\mathrm{type}(\Pistar)
@@ -632,16 +691,21 @@ Using $g_1(\Pnode)$, we compare a greedy algorithm and \Astar
 in finding optimal sequences for area aggregation.
 
 As said before, we want to make a comparison involving
-integer linear programming.
-Therefore, we also introduce a combination
-that can be computed linearly. That is,
+integer linear programming 
+while our cost of compactness (see \eq\ref{eq:comp})
+cannot be computed linearly in an integer linear program.
+Therefore, we combine 
+the cost of type change (\eq\ref{eq:g_type})
+and the cost of length (\eq\ref{eq:g_length}),
+which can be computed linearly in an integer linear program. 
+That is,
 \begin{equation}
 \label{eq:g_2}
 g_2(\Pistar)= (1-\lambda)g_\mathrm{type}(\Pistar)
 +\lambda g_\mathrm{lgth}(\Pistar).
 \end{equation}
 We compare the greedy algorithm, \Astar, and an ILP-based 
-algorithm using $g_2$.
+algorithm using~$g_2$.
 
 \section{NP-hardness Proof}
 \label{sec:AreaAgg_NP-hardness}
@@ -695,7 +759,7 @@ and the black vertex for $v$
 \includegraphics[page=1]{AreaAgg_NPHard}
 \caption{The reduction for our NP-hardness proof.
     The dashed polygon in (c) shows 
-    that the vertices are merged.}
+    the merged vertices.}
 \label{fig:AreaAgg_Reduction}
 \end{figure}
 
@@ -784,6 +848,17 @@ Therefore, we have found a contradiction to our assumption.
 \section{A Greedy Algorithm}
 \label{sec:AreaAgg_Greedy}
 
+A motivation for the greedy algorithm is that 
+a very similar iterative algorithm has been used by
+\textcite{vanOosterom2005} 
+for constructing the tGAP data structure.
+However, we have to make minor modifications to ensure that 
+the computed aggregation sequence ends with the goal map that, 
+in our situation, is given as a part of the input.
+We use our greedy algorithm as a benchmark
+so that we are able to see 
+whether the \Astar algorithm or the ILP-based algorithm 
+indeed perform better.
 
 At any time~$t$,
 our greedy algorithm aggregates the smallest patch
@@ -849,7 +924,7 @@ The cost of a whole sequence can be computed by
 \sect\ref{sec:AreaAgg_Preliminaries} has shown that
 the size of finding an optimal aggregation sequence 
 can be exponential.
-That is to say, the graph~$G$---our search space---can 
+That is to say, the graph~$G_\mathrm{S}$---our search space---can 
 be of exponential size.
 In order to avoid computing the whole graph explicitly,
 we use the \Astar algorithm \parencite{Hart1968,PatelAStar}.
@@ -912,7 +987,7 @@ We propose another strategy that fits our problem.
 We first try finding an optimal solution by \Astar. 
 If we fail to find one after 
 we have visited a predefined number, 
-say,~$W$ of nodes of graph~$G$,
+say,~$W$ of nodes of graph~$G_\mathrm{S}$,
 then we restart.
 In the retrying, we overestimate the first~$K$ steps 
 starting at each node
@@ -1075,7 +1150,7 @@ c_\mathrm{reg}(\mathcal{N})=
 \sqrt{\frac{\pi}{\mathcal{N}} \bigg/
 	\tan{\frac{\pi}{\mathcal{N}}}}.
 \end{equation*}
-Note that~$c_\mathrm{reg}(\mathcal{N})$ increases 
+Note that compactness~$c_\mathrm{reg}(\mathcal{N})$ increases  
 with increasing~$\mathcal{N}$.
 A patch with~$\mathcal{N}_{t+1,i''_{t+1}}$ edges has
 compactness~$c_\mathrm{reg} (\mathcal{N}_{t+1,i''_{t+1}})$.
@@ -1185,7 +1260,7 @@ h_\mathrm{lgth}(\Pnode)=
 	At each step, we keep the necessary number 
 	of interior boundaries with least lengths in order to find a 
 	lower bound of the total length of the interior boundaries, 
-	i.e., $l_\mathrm{int}(P_{s,i'''_s})$.
+	i.e., $\ell_\mathrm{int}(P_{s,i'''_s})$.
 	The numbers represent the 
 	lengths of the interior boundaries.
     Note that this aggregation sequence is impossible in reality,
@@ -1350,7 +1425,9 @@ than using other integers.
 \centering
 \includegraphics[page=4]{AreaAgg_ILP}
 \caption{Examples of linear programming (a)
-	and integer linear programming (b). 
+	and integer linear programming (b).
+    In (a), any point in the gray area is a feasible solution;
+    in (b), only the gray points are feasible solutions.
 }
 \label{fig:AreaAgg_ILPIllustration}
 \end{figure*}
@@ -1553,7 +1630,7 @@ we compute the total cost of type change by
 \embrd[V]{F_\mathrm{type}} =
 \sum_{t=2}^{n} \sum_{p\in P} \sum_{o\in P} \sum_{r\in P}
 \left(\frac{a_p}{A_R} \cdot
-\frac{d_\mathrm{type}(T(o),T(r))}{d_\mathrm{type\_max}}\cdot 
+\frac{d_\mathrm{type}\left(T(o),T(r)\right)}{d_\mathrm{type\_max}}\cdot 
 y_{t,p,o,r}\right), & 
 \end{flalign*}
 where, similar to \eq\ref{eq:f_type}, 
@@ -1580,7 +1657,7 @@ of all the intermediate subdivisions by
 \frac{1}{n-2} \sum_{t=2}^{n-1} 
 \frac{\sum_{b\in B (\Pstart)} |b| - 
 	\frac{1}{2} \sum_{p \in P}\sum_{q \in P}\sum_{r \in P} 
-	\big(|b_{pq}|\cdot z_{t,p,q,r}\big)} {D(t)}, &
+	\left(|b_{pq}|\cdot z_{t,p,q,r}\right)} {D(t)}, &
 \end{flalign}
 where variable~$b_{pq}$ represents the common boundary 
 between polygons~$p$ and~$q$. 
@@ -1602,7 +1679,7 @@ into \eq\ref{eq:F_length_raw}, we have
 \left(
 \frac{1}{n-t} -
 \frac{\sum_{p \in P}\sum_{q \in P}\sum_{r \in P} 
-	\big(|b_{pq}|\cdot z_{t,p,q,r}\big)}
+	\left(|b_{pq}|\cdot z_{t,p,q,r}\right)}
 {2(n-t)\sum_{b\in B (\Pstart)} |b| }
 \right). &
 \end{flalign*}
@@ -2008,7 +2085,6 @@ If we insist on involving a smallest patch at each step,
 then we need more variables and more constraints.
 
 \subsubsection{Aggregation involving a smallest patch}
-%\mypar{}
 In order to make sure that 
 each of our aggregation steps involves a smallest patch,
 we need another type of variable,~$w_{t,o}$.
@@ -2266,7 +2342,7 @@ Table~\ref{tab:AreaAgg_CaseStudy1_Statistics}.
 %
 Comparing to \Astar, 
 the greedy algorithm visited 
-fewer nodes and arcs in graph~$G$ 
+fewer nodes and arcs in graph~$G_\mathrm{S}$ 
 and used much less time.
 However, \Astar managed to find solutions with 
 lower total cost,~$117.3$ (or~$117.2$), 
@@ -2331,7 +2407,7 @@ we cannot verify that only from the cost values.
 \begin{tabular}{lRRRCCCCCd{3.7}}
 \toprule
 \multicolumn{1}{l}{Methods} &
-\multicolumn{1}{l}{\#OS} &
+\multicolumn{1}{c}{\#OS} &
 \multicolumn{1}{c}{\#FS} &
 \multicolumn{1}{r}{$k_\mathrm{sum}$} &  
 \multicolumn{1}{c}{\#nodes} & 
@@ -2531,7 +2607,7 @@ is shown in \fig\ref{fig:AreaAgg_CaseStudy1_Rg53}.
     the type of the largest polygon on the start map 
     changed only once, which is good; 
     while the type of the largest polygon changed twice 
-    in the sequence obtained by the Greedy algorithm.}
+    in the sequence obtained by the greedy algorithm.}
 \label{fig:AreaAgg_CaseStudy1_Rg85}
 \end{figure}
 
@@ -2554,7 +2630,7 @@ is shown in \fig\ref{fig:AreaAgg_CaseStudy1_Rg53}.
 \includegraphics[page=3]{AreaAgg_CaseStudy1}
 \caption{An optimal sequence of intermediate subdivisions 
 	of region~$53$ obtained by \Astar 
-	using costs of type change and compactness.		 
+	using the costs of type change and compactness.		 
 	The numbers indicate the numbers of patches.		
 }
 \label{fig:AreaAgg_CaseStudy1_Rg53}
@@ -2642,7 +2718,7 @@ the total cost of the solutions by the greedy algorithm.
 \begin{tabular}{lRRRCCCCCd{3.7}}
 \toprule
 \multicolumn{1}{l}{Methods} &
-\multicolumn{1}{l}{\#OS} &
+\multicolumn{1}{c}{\#OS} &
 \multicolumn{1}{c}{\#FS} &
 \multicolumn{1}{r}{$k_\mathrm{sum}$} &  
 \multicolumn{1}{c}{\#nodes} & 
@@ -2777,8 +2853,7 @@ when using the two time limits, i.e., $100\,$s and~$200\,$s.
 Among all the instances that were solved to optimality by \Astar
 in both experiments (i.e., \sects\ref{sec:AreaAgg_CaseStudy1} 
 and~\ref{sec:AreaAgg_CaseStudy2}),
-region~$358$
-(marked in \tab\ref{tab:CostsInDetail})
+region~$358$ (marked in \tab\ref{tab:CostsInDetail})
 is the largest one.
 In both experiments, the cost of type change is~$0.044$.
 The optimal aggregation sequences for this region
@@ -2794,7 +2869,7 @@ Using cost function~$g_2$, we had a similar problem.
 The subdivision with~$7$ patches is such an example,
 where we expect the result of 
 \fig\ref{fig:AreaAgg_CaseStudy2_Rg358}c.
-In an earlier version of this chapter \parencite{Peng2017AStar},
+In an earlier version of this chapter \parencite[see][]{Peng2017AStar},
 we tried a combination of minimizing type changes 
 and maximizing the sum of the smallest compactness values, 
 over the whole sequence.
@@ -2803,7 +2878,19 @@ in \fig\ref{fig:AreaAgg_CaseStudy2_Rg358}b.
 This problem, however, can be fixed easily 
 by forbidding two patches to aggregate 
 if their common boundary is too short.
-
+Moreover, there are two more possible solutions.
+First, we could integrate the shared length
+into our cost function, as did by \textcite{vanOosterom2005}.
+Second, we could weight the cost of shape more heavily
+(i.e., increasing weight factor~$\lambda$ of 
+\eqs\ref{eq:g_1} and~\ref{eq:g_2}).
+According to our experiences, 
+the weight factor that we applied defines a reasonable trade-off 
+between the different conflicting objectives, 
+when considering a solution as a whole. 
+However, we are far from claiming that 
+the applied weight factor has been optimally chosen. 
+This would probably require a user study.
 
 \begin{figure}[h!tb]
 \centering
@@ -2811,6 +2898,12 @@ if their common boundary is too short.
 \caption{Some intermediate subdivisions of region~$358$ 
 	obtained by \Astar with different cost functions.
 	The numbers indicate the numbers of patches.
+    The step from $8$ patches to $7$ patches 
+    when using cost function~$g1$ is a bad move; see figure (b). 
+    Instead, we expect the result of figure (a). 
+    Using cost function~$g2$, we had a similar problem. 
+    The subdivision with $7$ patches is such an example, 
+    where we expect the result of figure (c).
 }
 \label{fig:AreaAgg_CaseStudy2_Rg358}
 \end{figure}
@@ -2949,6 +3042,10 @@ as did by \textcite{vanSmaalen2003}.
 For example, aggregating 
 \emph{farmland} with \emph{hedge} 
 yields an area with type \emph{vegetation}.
+%
+In our setting, we ignored the fact that
+some features may inherently take linear forms
+(e.g., rivers).
 %
 These issues can be considered in our future work.
 %

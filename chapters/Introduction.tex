@@ -33,7 +33,8 @@ a map must be changed to provide information
 appropriate to the corresponding zoom level.
 However, large discrete changes may distract users.
 The \emph{on-the-fly generalization}~\parencite{Weibel2017Fly},
-which generalizes features in real time, can mitigate this problem.
+which generalizes map features (e.g., polyglines and polygons) 
+in real time, can mitigate this problem.
 Still, large discrete changes can be introduced.
 By a usability test, \textcite{Midtbo2007} have shown that 
 a map is easier to follow 
@@ -59,7 +60,8 @@ e.g., \textcite{Suba2016Road} state.
 
 \subsection{Continuous Map Generalization}
 
-CMG has received a lot of attention
+\emph{Continuous map generalization} (CMG)
+has received a lot of attention
 from cartographers and computer scientists.
 \Textcite{vanKreveld2001} proposed five gradual changes
 to support the continuous zooming of maps, 
@@ -169,14 +171,25 @@ not only because it finds optimal solutions,
 but also because it helps us to evaluate the quality of a model
 \parencite{Haunert2017Label,
 Haunert2008Assuring,Haunert2016Optimization}.
-Recall that we wish to minimize the changes of types
-when aggregating areas one by one.
-A model could be to minimize 
+When we wish to minimize the changes of types
+in aggregating areas one by one,
+a model could be to minimize 
 the \emph{greatest} change over all the steps.
-Using optimization, we are able to find optimal solutions
-of this model at least for small instances.
-If even the optimal solutions are bad,
-then the model may be not reasonable.
+Using a greedy algorithm,
+we can minimize the change at each step,
+but the result does not necessarily minimize the greatest change
+over all the steps.
+If a result is bad,
+we cannot tell if the bad result comes from the model 
+or from the greedy algorithm.
+Using optimization,
+we are able to find optimal solutions
+of the model at least for small instances.
+If even an optimal solution is bad,
+then we can exclude that the bad result 
+is from the greedy algorithm.
+That is to say,
+the bad result is because of the model.
 In this case, we should improve the model; 
 we may want to minimize 
 the \emph{average} change over all the steps.
@@ -258,7 +271,7 @@ represented by a point,
 stays in the same face as before the generalization.
 
 
-\subsection{Optimization in Continuous Map Generalization}
+\subsection{Optimization in \emph{Continuous} Map Generalization}
 
 Optimization becomes more delicate
 when we deal with CMG.
@@ -463,6 +476,7 @@ the smallest area is merged with one of its neighbors.
 We do not select that neighbor according to a prescribed rule 
 but compute the whole sequence of pairwise merges at once, 
 based on global optimization.
+We have proved that this problem is NP-hard.
 We formalize this optimization problem as that of 
 finding a shortest path in a (very large) graph.
 We present the \Astar algorithm and integer linear programming
