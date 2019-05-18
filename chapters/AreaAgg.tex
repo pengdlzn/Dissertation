@@ -110,7 +110,7 @@ Smoothly (dis-)appearing areas can be realized
 by integrating our results into the \emph{space-scale cube}
 \parencite{vanOosterom2014tGAP,vanOosterom2014tGAPSSC}.
 
-\begin{figure*}[tb]
+\begin{figure*}[h]
 \centering
 \includegraphics[page=2]{AreaAgg_Preliminaries}
 \caption{Integrating two aggregation sequences 
@@ -158,13 +158,13 @@ uses a dataset of the German topographic database ATKIS
 In the concluding remarks, we show possible ways to improve our 
 methods (\sect\ref{sec:AreaAgg_Conclusions}). 
 
+
+
+
 We do not deal with simplifying polylines in this chapter.
 The simplification can be handled separately from the
-aggregation of areas, for example, 
-by using one method of 
-\textcite{Douglas1973},
-\textcite{Saalfeld1999},
-or \textcite{Wu2004DP}.
+aggregation of areas by using one of the existing methods
+\parencite[e.g.,][]{Douglas1973,Saalfeld1999,Wu2004DP}.
 Those methods can be used to set up 
 the binary line generalisation tree (BLG-tree) of
 \textcite{vanOosterom1995Development},
@@ -261,7 +261,7 @@ On this basis, any directed path in~$G_\mathrm{S}$
 from the start map to the goal map
 defines a possible aggregation sequence.
 
-\begin{figure}[tb]
+\begin{figure}[h]
 \centering
 \includegraphics[page=3]{AreaAgg_Preliminaries}
 \caption{The subdivision graph, $G_\mathrm{S}$. 
@@ -309,14 +309,14 @@ contains every possible subdivision~\Pnode\ with~$n-t+1$ patches
 
 Sometimes, we need a graph to represent the adjacencies of
 the land-cover areas in a subdivision,
-we call such a graph $G_\mathrm{A}$
+we call such a graph~$G_\mathrm{A}$
 (see \fig\ref{fig:AreaAgg_Variables_Graph}). 
 
 
 \begin{figure}[tb]
 \centering
 \includegraphics[page=3]{AreaAgg_ILP}
-\caption{The graph of a subdivision.
+\caption{The adjacency graph of a subdivision,~$G_\mathrm{A}$.
 	Each polygon of the subdivision is represented as a node 
 	in the graph.
 	There is an edge between two nodes
@@ -333,21 +333,19 @@ we call such a graph $G_\mathrm{A}$
 \label{sec:AreaAgg_Exponential}
 We now analyze the size of subdivision graph~$G_\mathrm{S}$.
 Our analysis is inspired by \textcite{Keane1975Size},
-where we use a row of~$n$ land-cover areas.
+where we also use a row of~$n$ land-cover areas.
 In our instance
 (see \fig\ref{fig:AreaAgg_ExponentialSize}), 
 the start map consists of~$n=2k+1$ rectangular patches,
 and the goal map is simply the union of the~$n$ patches.
 The patches have area 
 sizes~$
-%\left( 
 100 + \frac{1}{n}, 99+ \frac{2}{n}, 
 100 + \frac{3}{n}, 99+ \frac{4}{n}, \ldots, 
 99 + \frac{n-1}{n}, \text{and~} 101 
-%\right)
 $, 
 from left to right.
-According to our rule, we always 
+According to our setting, we always 
 aggregate the smallest patch with one of its neighbors.
 Therefore, in the first~$k$ steps from the start map,
 we aggregate every other patch with one of its neighbors.
@@ -368,11 +366,11 @@ has exponential lower bound.
 Our idea is to obtain an optimal aggregation sequence through 
 computing a path with minimum weight, from the start to the goal 
 (see \fig\ref{fig:AreaAgg_SubdivisionName}).
-This idea obviously requires that the arc weights are 
-set such that a minimum-weight start--goal
-path does actually correspond to an aggregation sequence of 
+This idea obviously requires that the arc weights are set;
+then we try to find a minimum-weight start--goal
+path that does actually correspond to an aggregation sequence of 
 maximum cartographic quality.  
-Moreover, putting the idea to practice is far from trivial 
+Putting the idea to practice is far from trivial 
 since graph~$G_\mathrm{S}$ can be huge.
 We compare a greedy algorithm, \Astar, and an ILP-based algorithm
 in finding such paths.
@@ -386,24 +384,21 @@ than in general directed or undirected graphs.
 An off-the-shelf shortest-path algorithm for directed acyclic graphs
 %\parencite[e.g.,][\sect25.2]{Cormen2009},
 (e.g., \textcite[\sect25.2]{Cormen2009}),
-however, will explore the whole graph, which has exponential size.
-The \Astar algorithm can be seen as 
-a refinement of Dijkstra's algorithm, 
-which for a user-specified given source 
-computes shortest paths to all other nodes in an edge-weighted graph
-\parencite{Dijkstra1959}. 
-Even when using Dijkstra's algorithm 
-to compute only a single shortest path to a user-specified destination, 
-a large number of nodes need to be explored. 
+however, will explore the whole graph, 
+which has exponential size.
+Dijkstra's algorithm \parencite{Dijkstra1959},
+for a user-specified given source, 
+computes shortest paths to all other nodes in an edge-weighted graph.
+Dijkstra's algorithm need to explore a large number of nodes
+even when computing only a single shortest path
+to a user-specified destination.
 The same holds for shortest-path algorithms 
 that make use of a topological order of the nodes 
 in a directed acyclic graph. 
 Compared to these algorithms, 
 the \Astar algorithm can greatly reduce the number of explored nodes.
-The challenge in our work was to tune the A* algorithm such that it
-explores only a small fraction of the graph.
-
-
+The challenge in our work was to tune the \Astar algorithm such that 
+it explores only a small fraction of the graph.
 
 
 
@@ -544,7 +539,7 @@ but the distance from \emph{road} to \emph{building} is~$0$.
 
 For path $\Pistar=(P_{1,i_1}, P_{2,i_2}, \dots, 
 P_{\tstar,i_{\tstar}})$,
-we define the cost of type change %over the steps 
+we define the cost of type change over the steps 
 by
 \begin{equation}
 \label{eq:g_type}
@@ -556,8 +551,8 @@ g_\mathrm{type}(\Pistar)=
 \centering
 \includegraphics[page=2]{AreaAgg_CostsAndEstimations}
 \caption{An aggregation step, 
-	where patch~$u$, the dark patch at the top,
-	is aggregated into patch~$v$.
+	where patch~$u$	is aggregated into patch~$v$; 
+    see \figs(a) and~(b).
 	\figs(c) and~(d) respectively show the number of 
 	edges and the lengths of the interior polylines after 
 	the aggregation.}
@@ -750,8 +745,8 @@ we define a gray vertex and a black vertex,
 which we connect with an edge. 
 For each edge $\{u,v\}$ of~$G_\mathrm{A}$, 
 we define two white vertices and 
-connect each of them both with the black vertex for $u$
-and the black vertex for $v$
+connect each of them both with the black vertex for~$u$
+and the black vertex for~$v$
 (\fig\ref{fig:AreaAgg_Reduction}b).
 
 \begin{figure}[tb]
@@ -765,7 +760,7 @@ and the black vertex for $v$
 
 We define the weights of the vertices 
 in \fig\ref{fig:AreaAgg_Reduction}b as follows:
-\begin{itemize}
+\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
 \item Every white vertex has weight~$1$.
 \item Every black vertex has weight~$2$.
 \item Every gray vertex has weight~$2|V_\mathrm{A}| + 2|E_\mathrm{A}|$,
@@ -778,7 +773,7 @@ we require the smallest area to be aggregated with one of its neighbors.
 The area sizes correspond to the weights of the vertices in \fig\ref{fig:AreaAgg_Reduction}b.   
 Therefore, our definition of the weights to a certain degree determines 
 the order in which the vertices are selected:
-\begin{itemize}
+\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
 \item \emph{Phase I}: In each of the first~$2|E_\mathrm{A}|$ steps, 
 a white vertex is selected and merged with one of its neighbors, 
 such that the white vertex receives the neighbor's color or vice versa
@@ -1250,7 +1245,7 @@ h_\mathrm{lgth}(\Pnode)=
 \end{equation}
 
 
-\begin{figure*}[htb]
+\begin{figure*}[tb]
 \centering
 \includegraphics[page=5]{AreaAgg_CostsAndEstimations}
 \caption{An "aggregation sequence" for computing 
@@ -1302,14 +1297,14 @@ h_2(\Pnode)=
 to optimize a \emph{linear objective}
 subject to a set of \emph{linear constraints}
 with some \emph{variables}.
-For example, suppose that we are selling coffee.
+Suppose that we are selling coffee.
 We have~$3.5\,$kg of coffee powder and~$10\,$kg of water.
 We mix the powder and the water to provide two kinds coffee 
 with different intensities in terms of mass:~$40\%$ and~$20\%$.
-The profits of the two kinds of coffee 
+The profits of them
 are respectively~$5\,$\euro~and~$4\,$\euro.
 Our aim is to maximize the total profit of selling coffee.
-If we offer respectively~$x\,$kg and~$y\,$kg 
+If we offer~$x\,$kg and~$y\,$kg 
 of the two kinds of coffee,
 then~$x$ and~$y$ are our variables.
 Our objective is to
@@ -1318,8 +1313,8 @@ $$
 $$
 To provide~$x\,$kg of coffee with intensity~$40\%$,
 we need to use~$0.4x\,$kg of coffee powder 
-and~$0.6x\,$kg water.
-Analogously, it consumes~$0.2y\,$kg of coffee powder 
+and~$0.6x\,$kg of water.
+Analogously, we need~$0.2y\,$kg of powder 
 and~$0.8y\,$kg of water to produce~$y\,$kg of coffee
 with intensity~$20\%$.
 As a result, we have four constraints:
@@ -1356,6 +1351,17 @@ when the dashed line hits point~$A$,
 where the profit is~$5 \cdot 4 + 4 \cdot 9.5 =58\,$\euro.
 \textcite{Karmarkar1984LP}
 proved that an LP can be solved in polynomial time.
+
+\begin{figure*}[tb]
+\centering
+\includegraphics[page=4]{AreaAgg_ILP}
+\caption{Examples of linear programming (a)
+	and integer linear programming (b).
+    In (a), any point in the gray area is a feasible solution;
+    in (b), only the gray points are feasible solutions.
+}
+\label{fig:AreaAgg_ILPIllustration}
+\end{figure*}
 
 Now we change our problem a bit.
 We wish to sell coffee in jugs,
@@ -1421,16 +1427,7 @@ because it is more intuitive
 to model our problem using binary variables
 than using other integers.
 
-\begin{figure*}[tb]
-\centering
-\includegraphics[page=4]{AreaAgg_ILP}
-\caption{Examples of linear programming (a)
-	and integer linear programming (b).
-    In (a), any point in the gray area is a feasible solution;
-    in (b), only the gray points are feasible solutions.
-}
-\label{fig:AreaAgg_ILPIllustration}
-\end{figure*}
+
 
 We want to compare the \Astar algorithm with 
 integer linear programming in finding 
@@ -2899,9 +2896,9 @@ This would probably require a user study.
 	obtained by \Astar with different cost functions.
 	The numbers indicate the numbers of patches.
     The step from $8$ patches to $7$ patches 
-    when using cost function~$g1$ is a bad move; see figure (b). 
+    when using cost function~$g_1$ is a bad move; see figure (b). 
     Instead, we expect the result of figure (a). 
-    Using cost function~$g2$, we had a similar problem. 
+    Using cost function~$g_2$, we had a similar problem. 
     The subdivision with $7$ patches is such an example, 
     where we expect the result of figure (c).
 }
