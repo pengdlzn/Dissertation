@@ -2596,15 +2596,14 @@ is shown in \fig\ref{fig:AreaAgg_CaseStudy1_Rg53}.
 \caption{Aggregation sequences of region~$85$ 
 	obtained by \Astar and the greedy algorithm.
 	In order to save space, we did not show the results 
-	when there are~$4$ or~$5$ patches, 
-	which one can easily deduce.
+	when there are~$4$ or~$5$ patches.
 	The numbers indicate the numbers of patches.
     %
     In the sequence obtained by \Astar, 
     the type of the largest polygon on the start map 
     changed only once, which is good; 
-    while the type of the largest polygon changed twice 
-    in the sequence obtained by the greedy algorithm.}
+    while by the greedy algorithm, 
+    the type of the largest polygon changed twice.}
 \label{fig:AreaAgg_CaseStudy1_Rg85}
 \end{figure}
 
@@ -2690,7 +2689,7 @@ overestimation:~$5.3\%$ of the regions
 caused~$92.3\%$ of the total running time.
 The solutions by \Astar cost~$438.2$ in total, 
 which is~$3.9\%$ less than~$455.8$, 
-the total cost of the solutions by the greedy algorithm.
+the total cost of the greedy algorithm.
 
 \begin{table*}[tb]
 \caption{A comparison of the greedy algorithm, 
@@ -2820,7 +2819,6 @@ when using the two time limits, i.e., $100\,$s and~$200\,$s.
 \caption{The percentage of regions that were solved 
 	optimally by the greedy algorithm, \Astar, and our ILP.
 	Note that the numbers of regions according to~$n$ 
-	(the number of polygons on the start map in one region) 
 	are shown in \fig\ref{fig:AreaAgg_NumRegion}.}
 \label{fig:AreaAgg_CaseStudy2_Percentage_Optimal}
 %
@@ -2831,7 +2829,6 @@ when using the two time limits, i.e., $100\,$s and~$200\,$s.
 \caption{The percentage of regions for which we found at 
 	least feasible solutions by the three algorithms.
 	Note that the numbers of regions according to~$n$ 
-	(the number of polygons on the start map in one region) 
 	are shown in \fig\ref{fig:AreaAgg_NumRegion}.}
 \label{fig:AreaAgg_CaseStudy2_Percentage_Feasible}
 \end{figure}
